@@ -7,6 +7,6 @@ public enum PlayerState
     JUMPIN, 
     JUMPING, 
     JUMPOUT, 
-    DEFENSE, 
+    BLOCK,
     ATTACK
 }

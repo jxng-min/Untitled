@@ -16,7 +16,14 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
+        if(Input.GetKey(KeyCode.E))
+        {
+            m_player_ctrl.ChangeState(PlayerState.BLOCK);
+        }
+        
         m_player_ctrl.Jump(m_player_ctrl.JumpPower);
+
+        m_player_ctrl.Attack();
 
         if(m_player_ctrl.FallTime > 0.3f)
         {
