@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
+    #region State Variables
     private IState<PlayerCtrl> m_idle_state;
     private IState<PlayerCtrl> m_walk_state;
     private IState<PlayerCtrl> m_run_state;
@@ -10,21 +11,37 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_jump_out_state;
     private IState<PlayerCtrl> m_attack_state;
     private IState<PlayerCtrl> m_block_state;
+    private IState<PlayerCtrl> m_damage_state;
+    private IState<PlayerCtrl> m_block_damage_state;
+    #endregion
 
-    public Rigidbody Rigidbody { get; private set; }
+    #region Properties
     public Transform Model { get; private set; }
     public Transform CameraArm { get; private set; }
     public Animator Animator { get; private set; }
-    public Vector3 Direction { get; set; }
-    public bool IsGround { get; set; }
-    public PlayerStateContext StateContext { get; set; }
+    public DataManager Data { get; private set;}
+
+    [Header("Move Component")]
+    public Rigidbody Rigidbody { get; private set; }
+    public Vector3 Direction { get; set; }    
+
+    [Header("Jump Component")]
     public float FallTime { get; set; }
     public float JumpPower { get; set; } = 7f;
+    public bool IsGround { get; set; }
+
+    [Header("Attack Component")]
     public float AttackDelay { get; set; }
     public bool AttackReady { get; set; }
     public WeaponCtrl Weapon { get; set; }
+
+    [Header("Block Component")]
     public bool IsBlock { get; set; }
     public float BlockTime { get; set; }
+
+    [Header("State Component")]
+    public PlayerStateContext StateContext { get; set; }
+    #endregion
 
     private void Awake()
     {
@@ -33,6 +50,7 @@ public class PlayerCtrl : MonoBehaviour
         CameraArm = GameObject.Find("CameraArm").GetComponent<Transform>();
         Animator = Model.GetComponent<Animator>();
         Weapon = FindAnyObjectByType<WeaponCtrl>();
+        Data =  GameObject.Find("DataManager").GetComponent<DataManager>();
         
     
         StateContext = new PlayerStateContext(this);
@@ -45,6 +63,8 @@ public class PlayerCtrl : MonoBehaviour
         m_jump_out_state = gameObject.AddComponent<PlayerJumpOutState>();
         m_attack_state = gameObject.AddComponent<PlayerAttackState>();
         m_block_state = gameObject.AddComponent<PlayerBlockState>();
+        m_damage_state = gameObject.AddComponent<PlayerDamageState>();
+        m_block_damage_state = gameObject.AddComponent<PlayerBlockDamageState>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -57,26 +77,16 @@ public class PlayerCtrl : MonoBehaviour
         CheckFalling();
         CheckBlocking();
 
-        if(IsGround)
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if(Direction.magnitude > 0f)
-            {
-                if(!IsBlock && Input.GetKey(KeyCode.LeftShift))
-                {
-                    ChangeState(PlayerState.RUN);
-                }
-                else
-                {
-                    ChangeState(PlayerState.WALK);
-                }
-            }
-            else
-            {
-                ChangeState(PlayerState.IDLE);
-            }
+            GetDamage(10);
         }
+    }
 
+    private void FixedUpdate()
+    {
         StateContext.ExecuteUpdate();
+        //Debug.Log($"{StateContext.Current}");
     }
 
     public void Move(float speed)
@@ -118,13 +128,19 @@ public class PlayerCtrl : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        //
         if(IsBlock)
         {
-            // 80퍼센트 감소한 데미지
+            // 방어 이펙트가 있었으면 함.
+            Debug.Log($"{damage * 0.2f}의 피해를 입었다.");
+            ChangeState(PlayerState.BLOCKDAMAGE);
+            Data.PlayerStat.HP = damage * 0.2f;
         }
         else
         {
-            // 0퍼센트 감소한 데미지
+            Debug.Log($"{damage}의 피해를 입었다.");
+            ChangeState(PlayerState.DAMAGE);
+            Data.PlayerStat.HP = damage;
         }
     }
 
@@ -163,23 +179,31 @@ public class PlayerCtrl : MonoBehaviour
             case PlayerState.BLOCK:
                 StateContext.Transition(m_block_state);
                 break;
+            
+            case PlayerState.BLOCKDAMAGE:
+                StateContext.Transition(m_block_damage_state);
+                break;
+
+            case PlayerState.DAMAGE:
+                StateContext.Transition(m_damage_state);
+                break;
         }
     }
 
     private void CheckGround()
     {
-        if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit_info, 0.3f))
+        if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit_info, 0.4f))
         {
             if(hit_info.collider != null && !hit_info.collider.CompareTag("Player"))
             {
-                Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.3f, Color.green);
+                Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.4f, Color.green);
                 IsGround = true;
             }
 
         }
         else
         {
-            Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.3f, Color.red);
+            Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.4f, Color.red);
             IsGround = false;
         }
     }

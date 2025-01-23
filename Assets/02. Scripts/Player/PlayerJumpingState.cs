@@ -9,7 +9,10 @@ public class PlayerJumpingState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            m_player_ctrl.Animator.SetTrigger("Jumping");
+            if(!m_player_ctrl.IsGround)
+            {
+                m_player_ctrl.Animator.SetTrigger("Jumping");
+            }
         }
     }
 
@@ -17,7 +20,7 @@ public class PlayerJumpingState : MonoBehaviour, IState<PlayerCtrl>
     {
         m_player_ctrl.Move(5f);
 
-        if(m_player_ctrl.FallTime > 0.3f)
+        if(m_player_ctrl.IsGround)
         {
             m_player_ctrl.ChangeState(PlayerState.JUMPOUT);
         }

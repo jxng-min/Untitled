@@ -9,6 +9,8 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
+            m_player_ctrl.FallTime = 0f;
+
             m_player_ctrl.Animator.SetBool("IsMove", true);
             m_player_ctrl.Animator.SetBool("LShift", true);
         }
@@ -20,20 +22,36 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.ChangeState(PlayerState.BLOCK);
         }
-        
-        m_player_ctrl.Jump(m_player_ctrl.JumpPower);
-
-        m_player_ctrl.Attack();
-
-        if(m_player_ctrl.FallTime > 0.3f)
+        else
         {
-            m_player_ctrl.ChangeState(PlayerState.JUMPING);
-        }
-        
-        m_player_ctrl.Move(7f);
+            m_player_ctrl.Jump(m_player_ctrl.JumpPower);
 
-        m_player_ctrl.Animator.SetFloat("MoveZ", m_player_ctrl.Direction.z);
-        m_player_ctrl.Animator.SetFloat("MoveX", m_player_ctrl.Direction.x);
+            m_player_ctrl.Attack();
+
+            if(m_player_ctrl.FallTime > 0.3f)
+            {
+                m_player_ctrl.ChangeState(PlayerState.JUMPING);
+            }
+            
+            if(m_player_ctrl.Direction.magnitude > 0f)
+            {
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    m_player_ctrl.Move(7f);
+
+                    m_player_ctrl.Animator.SetFloat("MoveZ", m_player_ctrl.Direction.z);
+                    m_player_ctrl.Animator.SetFloat("MoveX", m_player_ctrl.Direction.x);
+                }
+                else
+                {
+                    m_player_ctrl.ChangeState(PlayerState.WALK);
+                }
+            }
+            else
+            {
+                m_player_ctrl.ChangeState(PlayerState.IDLE);
+            }
+        }
     }
 
     public void ExecuteExit(PlayerCtrl sender)

@@ -8,5 +8,8 @@ public enum PlayerState
     JUMPING, 
     JUMPOUT, 
     BLOCK,
-    ATTACK
+    DAMAGE,
+    BLOCKDAMAGE,
+    ATTACK,
+    DIE,
 }
