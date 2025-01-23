@@ -9,7 +9,6 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_jumping_state;
     private IState<PlayerCtrl> m_jump_out_state;
     private IState<PlayerCtrl> m_attack_state;
-
     private IState<PlayerCtrl> m_block_state;
 
     public Rigidbody Rigidbody { get; private set; }
