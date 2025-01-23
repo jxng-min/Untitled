@@ -6,8 +6,8 @@ public enum EnemyState
     PATROL,
     FOLLOW,
     BACK,
-    BLOCK,
+    READY,
     ATTACK,
     GETDAMAGE,
-    DEATH
+    DEAD
 }
