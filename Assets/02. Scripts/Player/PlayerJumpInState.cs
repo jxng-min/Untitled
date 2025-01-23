@@ -19,7 +19,6 @@ public class PlayerJumpInState : MonoBehaviour, IState<PlayerCtrl>
 
         if(m_player_ctrl.FallTime > 0.3f)
         {
-            Debug.Log("호출");
             m_player_ctrl.ChangeState(PlayerState.JUMPING);
         }
     }

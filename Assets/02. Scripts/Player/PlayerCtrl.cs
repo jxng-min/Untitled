@@ -8,6 +8,9 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_jump_in_state;
     private IState<PlayerCtrl> m_jumping_state;
     private IState<PlayerCtrl> m_jump_out_state;
+    private IState<PlayerCtrl> m_attack_state;
+
+    private IState<PlayerCtrl> m_block_state;
 
     public Rigidbody Rigidbody { get; private set; }
     public Transform Model { get; private set; }
@@ -18,6 +21,11 @@ public class PlayerCtrl : MonoBehaviour
     public PlayerStateContext StateContext { get; set; }
     public float FallTime { get; set; }
     public float JumpPower { get; set; } = 7f;
+    public float AttackDelay { get; set; }
+    public bool AttackReady { get; set; }
+    public WeaponCtrl Weapon { get; set; }
+    public bool IsBlock { get; set; }
+    public float BlockTime { get; set; }
 
     private void Awake()
     {
@@ -25,6 +33,8 @@ public class PlayerCtrl : MonoBehaviour
         Model = GameObject.Find("PlayerModel").GetComponent<Transform>();
         CameraArm = GameObject.Find("CameraArm").GetComponent<Transform>();
         Animator = Model.GetComponent<Animator>();
+        Weapon = FindAnyObjectByType<WeaponCtrl>();
+        
     
         StateContext = new PlayerStateContext(this);
 
@@ -34,6 +44,8 @@ public class PlayerCtrl : MonoBehaviour
         m_jump_in_state = gameObject.AddComponent<PlayerJumpInState>();
         m_jumping_state = gameObject.AddComponent<PlayerJumpingState>();
         m_jump_out_state = gameObject.AddComponent<PlayerJumpOutState>();
+        m_attack_state = gameObject.AddComponent<PlayerAttackState>();
+        m_block_state = gameObject.AddComponent<PlayerBlockState>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -44,12 +56,13 @@ public class PlayerCtrl : MonoBehaviour
 
         CheckGround();
         CheckFalling();
+        CheckBlocking();
 
         if(IsGround)
         {
             if(Direction.magnitude > 0f)
             {
-                if(Input.GetKey(KeyCode.LeftShift))
+                if(!IsBlock && Input.GetKey(KeyCode.LeftShift))
                 {
                     ChangeState(PlayerState.RUN);
                 }
@@ -91,6 +104,31 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        AttackDelay += Time.deltaTime;
+        AttackReady = AttackDelay > Weapon.Info.Rate;
+
+        if(AttackReady && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
+        {
+            Weapon.Use();
+            ChangeState(PlayerState.ATTACK);
+            AttackDelay = 0;
+        }
+    }
+
+    public void GetDamage(float damage)
+    {
+        if(IsBlock)
+        {
+            // 80퍼센트 감소한 데미지
+        }
+        else
+        {
+            // 0퍼센트 감소한 데미지
+        }
+    }
+
     public void ChangeState(PlayerState state)
     {
         switch(state)
@@ -117,6 +155,14 @@ public class PlayerCtrl : MonoBehaviour
             
             case PlayerState.JUMPOUT:
                 StateContext.Transition(m_jump_out_state);
+                break;
+            
+            case PlayerState.ATTACK:
+                StateContext.Transition(m_attack_state);
+                break;
+            
+            case PlayerState.BLOCK:
+                StateContext.Transition(m_block_state);
                 break;
         }
     }
@@ -148,6 +194,18 @@ public class PlayerCtrl : MonoBehaviour
         else
         {
             FallTime += Time.deltaTime;
+        }
+    }
+
+    private void CheckBlocking()
+    {
+        if(IsBlock)
+        {
+            BlockTime += Time.deltaTime;
+        }
+        else
+        {
+            BlockTime = 0f;
         }
     }
 }
