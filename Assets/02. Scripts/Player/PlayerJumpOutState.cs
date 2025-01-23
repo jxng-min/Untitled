@@ -16,10 +16,13 @@ public class PlayerJumpOutState : MonoBehaviour, IState<PlayerCtrl>
     public void Execute(PlayerCtrl sender)
     {
         m_player_ctrl.Move(5f);
+        
+        m_player_ctrl.ChangeState(PlayerState.IDLE);
     }
 
     public void ExecuteExit(PlayerCtrl sender)
     {
+        m_player_ctrl.Animator.ResetTrigger("Jumping");
         m_player_ctrl.Animator.ResetTrigger("JumpOut");
     }
 }
