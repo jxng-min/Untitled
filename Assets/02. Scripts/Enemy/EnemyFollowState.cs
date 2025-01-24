@@ -6,6 +6,7 @@ namespace Junyoung
     public class EnemyFollowState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
         private EnemyCtrl m_enemy_ctrl;
+        private GameObject m_player;
         private NavMeshAgent m_agent;
         private bool m_can_follow;
 
@@ -15,29 +16,24 @@ namespace Junyoung
             {
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
+                m_player = GameObject.FindWithTag("Player");
             }
             m_can_follow = false;
 
             m_enemy_ctrl.Animator.SetTrigger("PlayerFound");
             m_enemy_ctrl.Animator.SetBool("isFollowing", true);
-            Invoke("FollowStart", 2f);
+            Invoke("FollowStart", 2f); // 플레이어 발견 애니메이션 종료 후 추격 시작
             m_agent.stoppingDistance = 3f;
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
             if (!m_can_follow) return;
 
-            Collider[] colliders = Physics.OverlapSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.CombatRadius);
-
-            foreach(Collider col in colliders)
+            if (Vector3.Distance(m_player.transform.position,m_enemy_ctrl.transform.position) <= m_enemy_ctrl.FollowRadius)
             {
-                if(col.CompareTag("Player"))
-                {
-                    m_agent.SetDestination(col.transform.position);
-                    Debug.Log($"{m_agent.destination}");
-                }
+                m_agent.SetDestination(m_player.transform.position);
             }
-
+            
             if (m_agent.pathPending) return;
 
             if (m_agent.remainingDistance <= m_agent.stoppingDistance)
@@ -54,7 +50,7 @@ namespace Junyoung
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.CombatRadius);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.FollowRadius);
         }
 
         void FollowStart()

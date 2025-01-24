@@ -33,7 +33,7 @@ namespace Junyoung
         public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0);
         public int RayCount { get; set; } = 20;
 
-        public float CombatRadius { get; set; } = 20f;
+        public float FollowRadius { get; set; } = 25f;
         
 
 
