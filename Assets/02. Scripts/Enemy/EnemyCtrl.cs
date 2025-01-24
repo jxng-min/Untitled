@@ -9,6 +9,7 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_idle_state;
         IEnemyState<EnemyCtrl> m_enemy_patrol_state;
         IEnemyState<EnemyCtrl> m_enemy_back_state;
+        IEnemyState<EnemyCtrl> m_enemy_found_player_state;
         IEnemyState<EnemyCtrl> m_enemy_follow_state;
         IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
         IEnemyState<EnemyCtrl> m_enemy_dead_state;
@@ -34,6 +35,7 @@ namespace Junyoung
         public int RayCount { get; set; } = 20;
 
         public float FollowRadius { get; set; } = 25f;
+        public float CombatRadius { get; set; } = 5f;
         
 
 
@@ -43,7 +45,8 @@ namespace Junyoung
             m_enemy_attack_state= gameObject.AddComponent<EnemyAttackState>();
             m_enemy_back_state= gameObject.AddComponent<EnemyBackState>();
             m_enemy_dead_state= gameObject.AddComponent<EnemyDeadState>();
-            m_enemy_follow_state= gameObject.AddComponent<EnemyFollowState>();
+            m_enemy_found_player_state = gameObject.AddComponent<EnemyFoundPlayerState>();
+            m_enemy_follow_state = gameObject.AddComponent<EnemyFollowState>();
             m_enemy_get_damage_state= gameObject.AddComponent<EnemyGetDamageState>();
             m_enemy_patrol_state= gameObject.AddComponent<EnemyPatrolState>();
             m_enemy_ready_state= gameObject.AddComponent<EnemyReadyState>();
@@ -76,6 +79,8 @@ namespace Junyoung
                     StateContext.Transition(m_enemy_patrol_state); break;
                 case EnemyState.READY:
                     StateContext.Transition(m_enemy_ready_state); break;
+                case EnemyState.FOUNDPLAYER:
+                    StateContext.Transition(m_enemy_found_player_state); break;
                 case EnemyState.FOLLOW:
                     StateContext.Transition(m_enemy_follow_state); break;
                 case EnemyState.GETDAMAGE:
@@ -101,7 +106,7 @@ namespace Junyoung
                     if(hit.collider.CompareTag("Player"))
                     {
                         Debug.Log("플레이어 감지");
-                        ChangeState(EnemyState.FOLLOW);
+                        ChangeState(EnemyState.FOUNDPLAYER);
                         Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.red);
                     }
                 }
