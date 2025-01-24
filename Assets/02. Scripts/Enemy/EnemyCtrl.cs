@@ -36,7 +36,8 @@ namespace Junyoung
 
         public float FollowRadius { get; set; } = 25f;
         public float CombatRadius { get; set; } = 5f;
-        
+
+        public Vector3 BackPosition { get; set; }
 
 
         void Start()

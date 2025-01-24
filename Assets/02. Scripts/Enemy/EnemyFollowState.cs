@@ -26,7 +26,10 @@ namespace Junyoung
             {
                 m_agent.SetDestination(m_player.transform.position);
             }
-            
+            else
+            {
+                m_enemy_ctrl.ChangeState(EnemyState.BACK);
+            }
             if (m_agent.pathPending) return;
 
             if (m_agent.remainingDistance <= m_agent.stoppingDistance)
