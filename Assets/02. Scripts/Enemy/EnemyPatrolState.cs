@@ -18,7 +18,7 @@ namespace Junyoung
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
             }
-
+            m_agent.stoppingDistance = 1f;
             Vector3 pos = RandomPos(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange); // 범위 내에 랜덤한 위치 생성
             m_agent.SetDestination(pos);
             Debug.Log($"PATROL state 진입 랜덤 위치 생성");
@@ -26,8 +26,7 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            //플레이어 탐색
-
+            m_enemy_ctrl.DetectPlayer();
 
             if(m_agent.remainingDistance <= m_agent.stoppingDistance) // (도착 여부)남은 거리와, 목적지로 부터 떨어져서 멈춰야 하는 거리 비교
             {

@@ -17,7 +17,8 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            //플레이어 탐색
+            m_enemy_ctrl.DetectPlayer();
+
             m_idling_time -= Time.deltaTime;
             if (m_idling_time<=0)
             {

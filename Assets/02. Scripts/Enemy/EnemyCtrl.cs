@@ -28,6 +28,14 @@ namespace Junyoung
         private Transform m_patrol_center;
         public Transform PatrolCenter { get { return m_patrol_center; } set { m_patrol_center = value; } }
 
+        public float DetectAngle { get; set; } = 45f;
+        public float DetectDistance { get; set; } = 20f;
+        public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0);
+        public int RayCount { get; set; } = 20;
+
+        public float CombatRadius { get; set; } = 20f;
+        
+
 
         void Start()
         {
@@ -74,6 +82,33 @@ namespace Junyoung
                     StateContext.Transition(m_enemy_get_damage_state); break;
                 case EnemyState.DEAD:
                     StateContext.Transition(m_enemy_dead_state); break;
+            }
+        }
+
+        public void DetectPlayer()
+        {
+            float start_angle = -DetectAngle;
+            float offset_angle = DetectAngle / RayCount;
+
+            for(int i =0; i< RayCount; i++)
+            {
+                float angle = start_angle + offset_angle * i;
+                Vector3 dir = Quaternion.Euler(0,angle, 0) * transform.forward;
+
+                Ray ray = new Ray(transform.position + DetectHeight, dir);
+                if (Physics.Raycast(ray, out RaycastHit hit, DetectDistance))
+                {
+                    if(hit.collider.CompareTag("Player"))
+                    {
+                        Debug.Log("플레이어 감지");
+                        ChangeState(EnemyState.FOLLOW);
+                        Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.red);
+                    }
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.green);
+                }
             }
         }
     }
