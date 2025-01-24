@@ -18,6 +18,10 @@ namespace Junyoung
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
             }
+
+            Vector3 pos = RandomPos(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange); // 범위 내에 랜덤한 위치 생성
+            m_agent.SetDestination(pos);
+            Debug.Log($"PATROL state 진입 랜덤 위치 생성");
             m_enemy_ctrl.Animator.SetBool("isPatrol", true);
         }
         public void OnStateUpdate(EnemyCtrl sender)
@@ -27,20 +31,20 @@ namespace Junyoung
 
             if(m_agent.remainingDistance <= m_agent.stoppingDistance) // (도착 여부)남은 거리와, 목적지로 부터 떨어져서 멈춰야 하는 거리 비교
             {
-                Vector3 pos;
-                pos = RandomPos(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange);
-                Debug.DrawRay(pos, Vector3.up, Color.green, 3.0f);
-                m_agent.SetDestination(pos);
+                Debug.Log($"목적지 도착 IDLE로 전환");
+                m_enemy_ctrl.ChangeState(EnemyState.IDLE); // 목적지 도착시 IDLE로 전환
             }
         }
         public void OnStateExit(EnemyCtrl sender)
         {
+            m_agent.ResetPath();
             m_enemy_ctrl.Animator.SetBool("isPatrol", false);
         }
 
         Vector3 RandomPos(Vector3 center, float range)
         {
-            Vector3 randPos = center + Random.insideUnitSphere* range; // Random.insideUnitSphere 반지름이 1인 구 내부에서 무작위로 점을 생성함
+            Vector3 randPos = center + Random.insideUnitSphere* range;
+            randPos.y = center.y;
             NavMeshHit pos;
 
             for (int i = 0; i < 100; i++)
@@ -53,13 +57,14 @@ namespace Junyoung
             return m_agent.destination;
             
         }
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()// PatrolCenter를 기준으로 PatrolRange 반지름의 구를 그림
         {
             if (m_enemy_ctrl == null) return;
-
-            // PatrolCenter를 기준으로 PatrolRange 반지름의 구를 그림
+            
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange);
         }
+
+
     }
 }

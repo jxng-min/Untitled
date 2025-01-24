@@ -45,11 +45,11 @@ namespace Junyoung
             Animator = GetComponent<Animator>();
             Agent = GetComponent<NavMeshAgent>();
 
-            ChangeState(EnemyState.PATROL);
+            ChangeState(EnemyState.IDLE);
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             StateContext.OnStateUpdate();
         }
