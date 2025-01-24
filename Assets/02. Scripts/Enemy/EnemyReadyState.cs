@@ -12,7 +12,7 @@ namespace Junyoung
             if (m_enemy_ctrl == null)
             {
                 m_enemy_ctrl = sender;
-                m_player = GameObject.FindWithTag("Player");
+                m_player = m_enemy_ctrl.Player;
             }
         }
         public void OnStateUpdate(EnemyCtrl sender)
@@ -22,7 +22,10 @@ namespace Junyoung
                 m_enemy_ctrl.ChangeState(EnemyState.FOLLOW);
             }
 
-            //공격 쿨타임 대기후 공격 스테이트로 전환 가능하게 변경
+            if(m_enemy_ctrl.CanAtk && (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) <= m_enemy_ctrl.EnemyStat.AtkRange))
+            {
+                m_enemy_ctrl.ChangeState(EnemyState.ATTACK);
+            }
         }
         public void OnStateExit(EnemyCtrl sender)
         {

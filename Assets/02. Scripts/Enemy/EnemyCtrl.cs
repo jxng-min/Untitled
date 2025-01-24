@@ -16,8 +16,17 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_ready_state;
         IEnemyState<EnemyCtrl> m_enemy_attack_state;
 
-        public EnemyStateContext StateContext { get; private set; }
+        public GameObject Player;
 
+        [SerializeField]
+        private EnemyStat m_origin_enemy_stat;
+        public EnemyStat OriginEnemyStat { get {return m_origin_enemy_stat; } set { m_origin_enemy_stat=value; } }
+
+        [SerializeField]
+        private EnemyStat m_enemy_stat;
+        public EnemyStat EnemyStat { get { return m_enemy_stat; } }
+
+        public EnemyStateContext StateContext { get; private set; }
         public Animator Animator { get; private set; }
         public NavMeshAgent Agent { get; private set; }
 
@@ -39,6 +48,10 @@ namespace Junyoung
 
         public Vector3 BackPosition { get; set; }
 
+        public bool CanAtk { get; set; }
+
+        public float TotalAtkRate { get; set; }
+
 
         void Start()
         {
@@ -54,15 +67,41 @@ namespace Junyoung
 
             StateContext= new EnemyStateContext(this);
 
+            Player =GameObject.FindWithTag("Player");
+
             Animator = GetComponent<Animator>();
             Agent = GetComponent<NavMeshAgent>();
 
             ChangeState(EnemyState.IDLE);
+            InitStat();
+        }
+
+        public void InitStat()
+        {
+            EnemyStat.HP = OriginEnemyStat.HP;
+            EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
+            EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
+            EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
+            EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
+            EnemyStat.AtkAniLength= OriginEnemyStat.AtkAniLength;
+            EnemyStat.AtkAniSpeed = OriginEnemyStat.AtkAniSpeed;
+
+            CanAtk = true;
+            TotalAtkRate = EnemyStat.AtkAniLength / EnemyStat.AtkAniSpeed + EnemyStat.AtkRate; // 애니메이션이 재생 시간 + 개체의 공격 쿨타임
+            Agent.speed = EnemyStat.MoveSpeed;
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
+            if(TotalAtkRate >= 0)
+            {
+                TotalAtkRate -= Time.deltaTime;
+            }
+            else
+            {
+                if(!CanAtk) CanAtk = true;
+            }
             StateContext.OnStateUpdate();
         }
 

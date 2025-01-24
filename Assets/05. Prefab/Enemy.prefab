@@ -176,5 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d28495ac127a2649b29049a4cfb8e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  m_origin_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
+  m_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_patrol_range: 0
   m_patrol_center: {fileID: 0}

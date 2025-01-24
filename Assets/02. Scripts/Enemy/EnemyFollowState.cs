@@ -15,7 +15,7 @@ namespace Junyoung
             {
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
-                m_player = GameObject.FindWithTag("Player");
+                m_player = m_enemy_ctrl.Player;
             }         
             m_enemy_ctrl.Animator.SetBool("isFollowing", true);
             m_agent.stoppingDistance = 3f;
@@ -45,7 +45,7 @@ namespace Junyoung
         void OnDrawGizmos()
         {
             if (m_enemy_ctrl == null) return;
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.FollowRadius);
         }
     }
