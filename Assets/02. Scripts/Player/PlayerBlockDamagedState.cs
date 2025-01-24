@@ -15,7 +15,7 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
-        Invoke("IdleWait", 0.5f);
+        Invoke("IdleWait", 0.4f);
     }
 
     private void IdleWait()
