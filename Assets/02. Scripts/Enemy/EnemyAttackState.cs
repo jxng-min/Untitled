@@ -13,7 +13,7 @@ namespace Junyoung
             m_enemy_ctrl.Animator.SetTrigger("Attack");
             m_player = gameObject.GetComponent<PlayerCtrl>();
             m_atk_ani_length = m_enemy_ctrl.EnemyStat.AtkAniLength;
-            m_player.GetDamage(m_enemy_ctrl.EnemyStat.AtkDamege);
+            //m_player.GetDamage(m_enemy_ctrl.EnemyStat.AtkDamege);
             //Debug.Log($"플레이어가{m_enemy_ctrl.EnemyStat.AtkDamege}의 데미지 입음");
         }
         public void OnStateUpdate(EnemyCtrl sender)
