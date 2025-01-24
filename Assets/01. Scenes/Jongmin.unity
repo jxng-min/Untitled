@@ -798,7 +798,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: f592430ceea54d847bd0866c570eb43d, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: d3716b3a647f7504e8d5a45f0e065355, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &149868349
 Terrain:
@@ -809,7 +809,7 @@ Terrain:
   m_GameObject: {fileID: 149868347}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: f592430ceea54d847bd0866c570eb43d, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: d3716b3a647f7504e8d5a45f0e065355, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -5586,6 +5586,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1996471662184344498, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
       propertyPath: m_Name
       value: PlayerModel
@@ -5686,8 +5690,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4143183, y: 1.798136, z: 0.2452547}
-  m_Center: {x: 0.002457142, y: 0.9111235, z: 0.001635768}
+  m_Size: {x: 0.4143183, y: 1.8403803, z: 0.2452547}
+  m_Center: {x: 0.0024571419, y: 0.89000136, z: 0.0016357675}
 --- !u!1001 &1206362706
 PrefabInstance:
   m_ObjectHideFlags: 0

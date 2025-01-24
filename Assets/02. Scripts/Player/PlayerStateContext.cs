@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerStateContext
 {
     private readonly PlayerCtrl m_player_ctrl;
@@ -11,6 +13,7 @@ public class PlayerStateContext
 
     public void Transition(IState<PlayerCtrl> state)
     {
+        Debug.Log(state);
         if(Current == state)
         {
             return;

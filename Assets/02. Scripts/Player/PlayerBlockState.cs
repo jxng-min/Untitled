@@ -9,6 +9,7 @@ public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
+            Debug.Log("방패 들음");
             m_player_ctrl.Animator.SetBool("IsBlock", true);
             m_player_ctrl.IsBlock = true;
 
@@ -36,6 +37,7 @@ public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
                 {
                     m_player_ctrl.Move(5f);
 
+                    m_player_ctrl.Animator.SetBool("IsMove", true);
                     m_player_ctrl.Animator.SetFloat("MoveZ", m_player_ctrl.Direction.z);
                     m_player_ctrl.Animator.SetFloat("MoveX", m_player_ctrl.Direction.x);
                 }
@@ -55,7 +57,7 @@ public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
                 {
                     if(Input.GetKey(KeyCode.LeftShift))
                     {
-                        m_player_ctrl.ChangeState(PlayerState.RUN);
+                    m_player_ctrl.ChangeState(PlayerState.RUN);
                     }
                     else
                     {
