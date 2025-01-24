@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
@@ -34,6 +36,7 @@ public class PlayerCtrl : MonoBehaviour
     public float AttackDelay { get; set; }
     public bool AttackReady { get; set; }
     public WeaponCtrl Weapon { get; set; }
+    public float AttackSpeed { get; set; }
 
     [Header("Block Component")]
     public bool IsBlock { get; set; }
@@ -69,6 +72,13 @@ public class PlayerCtrl : MonoBehaviour
         ChangeState(PlayerState.IDLE);
     }
 
+    private void Start()
+    {
+        // TODO: 위치 변경
+        AttackSpeed = Data.PlayerStat.Rate + Weapon.Info.Rate;
+        Animator.SetFloat("AttackSpeed", 1.5f / AttackSpeed);
+    }
+
     private void Update()
     {
         Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
@@ -76,17 +86,19 @@ public class PlayerCtrl : MonoBehaviour
         CheckGround();
         CheckFalling();
         CheckBlocking();
+        CheckAttackDelay();
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             GetDamage(10);
         }
+
+        StateContext.ExecuteUpdate();
     }
 
     private void FixedUpdate()
     {
-        StateContext.ExecuteUpdate();
-        //Debug.Log($"{StateContext.Current}");
+        
     }
 
     public void Move(float speed)
@@ -98,47 +110,43 @@ public class PlayerCtrl : MonoBehaviour
 
         Vector3 velocity = final_direction * speed;
 
-        Model.forward = Vector3.Lerp(forward_direction, Model.forward, Time.deltaTime * 15f);
+        Model.forward = Vector3.Lerp(forward_direction, Model.forward, Time.deltaTime);
 
         Vector3 new_position = Rigidbody.position + velocity * Time.deltaTime;
         Rigidbody.MovePosition(new_position);
     }
 
-    public void Jump(float power)
-    {
-        if(IsGround && Input.GetButtonDown("Jump"))
+        public void Jump(float power)
         {
-            Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
-            ChangeState(PlayerState.JUMPIN);
+            if(IsGround && Input.GetButtonDown("Jump"))
+            {
+                Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
+                Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
+                ChangeState(PlayerState.JUMPIN);
+            }
         }
-    }
 
     public void Attack()
     {
-        AttackDelay += Time.deltaTime;
-        AttackReady = AttackDelay > Weapon.Info.Rate;
-
         if(AttackReady && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
+            Debug.Log("클릭함");
             Weapon.Use();
-            ChangeState(PlayerState.ATTACK);
             AttackDelay = 0;
+            ChangeState(PlayerState.ATTACK);
         }
     }
 
     public void GetDamage(float damage)
     {
-        //
         if(IsBlock)
         {
             // 방어 이펙트가 있었으면 함.
-            Debug.Log($"{damage * 0.2f}의 피해를 입었다.");
             ChangeState(PlayerState.BLOCKDAMAGE);
             Data.PlayerStat.HP = damage * 0.2f;
         }
         else
         {
-            Debug.Log($"{damage}의 피해를 입었다.");
             ChangeState(PlayerState.DAMAGE);
             Data.PlayerStat.HP = damage;
         }
@@ -192,20 +200,51 @@ public class PlayerCtrl : MonoBehaviour
 
     private void CheckGround()
     {
-        if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit_info, 0.4f))
-        {
-            if(hit_info.collider != null && !hit_info.collider.CompareTag("Player"))
-            {
-                Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.4f, Color.green);
-                IsGround = true;
-            }
+        RaycastHit[] hit_infos = new RaycastHit[4];
+        Vector3[] ray_directions = new Vector3[4] 
+        { 
+            (Quaternion.Euler(45, 0, 0) * new Vector3(0, -transform.position.y, 0)).normalized,
+            (Quaternion.Euler(-45, 0, 0) * new Vector3(0, -transform.position.y, 0)).normalized,
+            (Quaternion.Euler(0, 0, 45) * new Vector3(0, -transform.position.y, 0)).normalized,
+            (Quaternion.Euler(0, 0, -45) * new Vector3(0, -transform.position.y, 0)).normalized 
+        };
 
-        }
-        else
+        for(int i = 0; i < 4; i++)
         {
-            Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 0.4f, Color.red);
-            IsGround = false;
+            
+            if(Physics.Raycast(transform.position + Vector3.up * 0.2f, ray_directions[i], out hit_infos[i], 1.3f))
+            {
+                Debug.DrawRay(transform.position + Vector3.up * 0.2f, ray_directions[i], Color.green);
+            }
+            else
+            {
+                Debug.DrawRay(transform.position + Vector3.up * 0.2f, ray_directions[i], Color.red);
+            }
         }
+
+        IsGround = false;
+        for(int i = 0; i < 4; i++)
+        {
+            if(hit_infos[i].collider != null && !hit_infos[i].collider.CompareTag("Player"))
+            {
+                IsGround = true;                
+            }
+        }
+
+        // if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit_info, 1f))
+        // {
+        //     if(hit_info.collider != null && !hit_info.collider.CompareTag("Player"))
+        //     {
+        //         Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 1f, Color.green);
+        //         IsGround = true;
+        //     }
+
+        // }
+        // else
+        // {
+        //     Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 1f, Color.red);
+        //     IsGround = false;
+        // }
     }
 
     private void CheckFalling()
@@ -230,5 +269,16 @@ public class PlayerCtrl : MonoBehaviour
         {
             BlockTime = 0f;
         }
+    }
+
+    private void CheckAttackDelay()
+    {
+        if(AttackDelay <= AttackSpeed)
+        {
+            AttackDelay += Time.deltaTime;
+        }
+        
+
+        AttackReady = AttackDelay >= AttackSpeed;
     }
 }
