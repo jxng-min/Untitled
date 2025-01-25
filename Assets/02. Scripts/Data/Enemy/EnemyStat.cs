@@ -22,12 +22,4 @@ public class EnemyStat : ScriptableObject
     [SerializeField]
     private float m_atk_range;
     public float AtkRange { get { return m_atk_range; } set { m_atk_range = value;} }
-
-    [SerializeField]
-    private float m_atk_ani_length; 
-    public float AtkAniLength { get { return m_atk_ani_length;} set {m_atk_ani_length= value;} }
-
-    [SerializeField]
-    private float m_atk_ani_speed;
-    public float AtkAniSpeed { get { return m_atk_ani_speed;} set {m_atk_ani_speed= value;} }
 }
