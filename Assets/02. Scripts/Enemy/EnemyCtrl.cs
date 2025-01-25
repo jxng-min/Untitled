@@ -50,7 +50,8 @@ namespace Junyoung
 
         public bool CanAtk { get; set; }
 
-        public float TotalAtkRate { get; set; }
+        public float TotalAtkRate { get; set; } = 0;
+        public float AttackDelay { get; set; } = 0f;
 
 
         void Start()
@@ -83,24 +84,22 @@ namespace Junyoung
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
-            EnemyStat.AtkAniLength= OriginEnemyStat.AtkAniLength;
-            EnemyStat.AtkAniSpeed = OriginEnemyStat.AtkAniSpeed;
 
             CanAtk = true;
-            TotalAtkRate = EnemyStat.AtkAniLength / EnemyStat.AtkAniSpeed + EnemyStat.AtkRate; // 애니메이션이 재생 시간 + 개체의 공격 쿨타임
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            if(TotalAtkRate >= 0)
+            if(TotalAtkRate >= AttackDelay)
             {
-                TotalAtkRate -= Time.deltaTime;
+                AttackDelay += Time.deltaTime;
+                if (CanAtk) CanAtk = false;
             }
             else
             {
-                if(!CanAtk) CanAtk = true;
+                if (!CanAtk) CanAtk = true;
             }
             StateContext.OnStateUpdate();
         }
@@ -128,6 +127,48 @@ namespace Junyoung
                 case EnemyState.DEAD:
                     StateContext.Transition(m_enemy_dead_state); break;
             }
+        }
+
+        public float GetAniLength(string clip_name)
+        {
+            RuntimeAnimatorController controller = Animator.runtimeAnimatorController;
+            float length=1.0f;
+            
+            foreach (AnimationClip clip in controller.animationClips) // clip_name의 length 값을 반환
+            {
+                if (clip.name == clip_name)
+                {
+                    length = clip.length;
+                    break;
+                }
+            }
+
+            AnimatorStateInfo state_info = Animator.GetCurrentAnimatorStateInfo(0); // 현재 재생중인 상태의 정보 가져오기
+            float speed=1.0f;
+
+            if (state_info.IsName(clip_name))
+            {
+                speed = state_info.speed * state_info.speedMultiplier;
+            }
+            else
+            {
+                Debug.Log($"현재 상태가 '{clip_name}'과 일치하지 않습니다.");
+            }
+
+            Debug.Log($"{clip_name}의 길이 : {length}");
+            Debug.Log($"{clip_name}의 속도 : {speed}");
+
+            float real_length = length / speed;
+
+            return real_length;
+        }
+
+
+
+        public void GetDamage(float damage)
+        {
+            (m_enemy_get_damage_state as EnemyGetDamageState).Damage = damage;
+            ChangeState(EnemyState.GETDAMAGE);
         }
 
         public void DetectPlayer()

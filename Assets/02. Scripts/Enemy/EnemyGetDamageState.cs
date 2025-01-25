@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Junyoung
@@ -5,19 +6,45 @@ namespace Junyoung
     public class EnemyGetDamageState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
         private EnemyCtrl m_enemy_ctrl;
+        public float Damage { get; set; }
+        private float m_get_damage_ani_length;
+
         public void OnStateEnter(EnemyCtrl sender)
         {
-            m_enemy_ctrl = sender;
+            if(m_enemy_ctrl == null)  // 애니메이션 재생 속도를 불러와서 상태 유지 시간으로 설정
+            {
+                m_enemy_ctrl = sender;
+
+            }           
             m_enemy_ctrl.Animator.SetTrigger("GetDamage");
-            //체력 감소
+            StartCoroutine(GetAniLength());
+            m_enemy_ctrl.EnemyStat.HP -= Damage;
+            if(m_enemy_ctrl.EnemyStat.HP<=0)
+            {
+                m_enemy_ctrl.ChangeState(EnemyState.DEAD);
+            }
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-
+            if(m_get_damage_ani_length >= 0)
+            {
+                m_get_damage_ani_length -= Time.deltaTime;
+            }
+            else
+            {
+                m_enemy_ctrl.ChangeState(EnemyState.READY);
+            }
         }
         public void OnStateExit(EnemyCtrl sender)
         {
 
+        }
+
+        public IEnumerator GetAniLength()
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            m_get_damage_ani_length = m_enemy_ctrl.GetAniLength("Get Damage") - 0.1f;
         }
     }
 }
