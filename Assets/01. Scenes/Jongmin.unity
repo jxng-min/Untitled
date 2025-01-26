@@ -5588,7 +5588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1996471662184344498, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
       propertyPath: m_Name
@@ -5613,6 +5613,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1196694649}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1196694652}
     - targetCorrespondingSourceObject: {fileID: -1996471662184344498, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1196694648}
@@ -5692,6 +5695,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4143183, y: 1.8403803, z: 0.2452547}
   m_Center: {x: 0.0024571419, y: 0.89000136, z: 0.0016357675}
+--- !u!114 &1196694652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196694646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a508ca4d5f61a0fa12845f5038cc56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
 --- !u!1001 &1206362706
 PrefabInstance:
   m_ObjectHideFlags: 0
