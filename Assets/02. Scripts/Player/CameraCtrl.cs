@@ -51,7 +51,7 @@ public class CameraCtrl : MonoBehaviour
         Debug.DrawRay(m_player.position, ray_direction * m_camera_distance, Color.red);
         if(Physics.Raycast(m_player.position, ray_direction, out RaycastHit ray_info, m_camera_distance))
         {
-            if(!ray_info.collider.CompareTag("Player") && ray_info.collider != null)
+            if(!ray_info.collider.CompareTag("Player") && !ray_info.collider.CompareTag("Enemy") && !ray_info.collider.CompareTag("Weapon") &&  ray_info.collider != null)
             {
                 m_camera.position = ray_info.point - ray_direction * 0.3f;
                 return;

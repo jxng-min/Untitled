@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
@@ -33,10 +31,9 @@ public class PlayerCtrl : MonoBehaviour
     public bool IsGround { get; set; }
 
     [Header("Attack Component")]
-    public float AttackDelay { get; set; }
-    public bool AttackReady { get; set; }
     public WeaponCtrl Weapon { get; set; }
     public float AttackSpeed { get; set; }
+    public bool IsAttack { get; set; }
 
     [Header("Block Component")]
     public bool IsBlock { get; set; }
@@ -86,19 +83,8 @@ public class PlayerCtrl : MonoBehaviour
         CheckGround();
         CheckFalling();
         CheckBlocking();
-        CheckAttackDelay();
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            GetDamage(10);
-        }
 
         StateContext.ExecuteUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     public void Move(float speed)
@@ -128,11 +114,10 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Attack()
     {
-        if(AttackReady && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
+        if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
             Debug.Log("클릭함");
             Weapon.Use();
-            AttackDelay = 0;
             ChangeState(PlayerState.ATTACK);
         }
     }
@@ -230,21 +215,6 @@ public class PlayerCtrl : MonoBehaviour
                 IsGround = true;                
             }
         }
-
-        // if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit_info, 1f))
-        // {
-        //     if(hit_info.collider != null && !hit_info.collider.CompareTag("Player"))
-        //     {
-        //         Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 1f, Color.green);
-        //         IsGround = true;
-        //     }
-
-        // }
-        // else
-        // {
-        //     Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.down * 1f, Color.red);
-        //     IsGround = false;
-        // }
     }
 
     private void CheckFalling()
@@ -269,16 +239,5 @@ public class PlayerCtrl : MonoBehaviour
         {
             BlockTime = 0f;
         }
-    }
-
-    private void CheckAttackDelay()
-    {
-        if(AttackDelay <= AttackSpeed)
-        {
-            AttackDelay += Time.deltaTime;
-        }
-        
-
-        AttackReady = AttackDelay >= AttackSpeed;
     }
 }
