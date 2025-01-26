@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
       propertyPath: m_Controller
       value: 
@@ -88,6 +92,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8734326968776725499}
+    - targetCorrespondingSourceObject: {fileID: 201253961220923684, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1451401260523299198}
   m_SourcePrefab: {fileID: 100100000, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
 --- !u!1 &2336451690660199492 stripped
 GameObject:
@@ -181,3 +188,23 @@ MonoBehaviour:
   m_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_patrol_range: 0
   m_patrol_center: {fileID: 0}
+--- !u!1 &3343686155191377969 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 201253961220923684, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
+  m_PrefabInstance: {fileID: 3219466523519500565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1451401260523299198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343686155191377969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a92cd6ccc722745bf5dfab0986d9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_box_size: {x: 0.36, y: 0.16, z: 1.32}
+  m_box_center: {x: 0.03, y: -0.09, z: 0.78}
+  m_enemy_ctrl: {fileID: 0}
