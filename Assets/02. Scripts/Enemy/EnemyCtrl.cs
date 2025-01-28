@@ -181,6 +181,10 @@ namespace Junyoung
 
         public void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
         {
+            if(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
+            {
+                return;
+            }
             float start_angle = -DetectAngle;
             float offset_angle = DetectAngle / RayCount;
 

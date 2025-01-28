@@ -21,6 +21,7 @@ namespace Junyoung
                 m_player_ctrl = m_player.GetComponent<PlayerCtrl>();
 
             }
+
             m_enemy_ctrl.Animator.SetTrigger("Attack");
             m_is_hitting = false;
             StartCoroutine(GetAniLength());

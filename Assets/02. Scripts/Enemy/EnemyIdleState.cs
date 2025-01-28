@@ -13,7 +13,6 @@ namespace Junyoung
             m_enemy_ctrl.Animator.SetBool("isPatrol", false);
 
             m_idling_time = UnityEngine.Random.Range(2.0f, 7.0f); // invoke로 하면 도중에 follow state로 전환 되어도 그대로 동작함
-            Debug.Log($"Idle State Entered. Idling Time: {m_idling_time}");
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
