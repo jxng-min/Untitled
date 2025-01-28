@@ -10,12 +10,13 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
         if(m_player_ctrl)
         {
             m_player_ctrl.Animator.SetTrigger("BlockDamaged");
+            Invoke("IdleWait", 0.75f);
         }
     }
 
     public void Execute(PlayerCtrl sender)
     {
-        Invoke("IdleWait", 0.4f);
+
     }
 
     private void IdleWait()
@@ -46,6 +47,10 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
                 {
                     m_player_ctrl.ChangeState(PlayerState.WALK);
                 }
+            }
+            else
+            {
+                m_player_ctrl.ChangeState(PlayerState.IDLE);
             }
         }        
     }

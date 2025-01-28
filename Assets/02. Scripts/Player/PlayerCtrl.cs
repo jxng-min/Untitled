@@ -73,7 +73,9 @@ public class PlayerCtrl : MonoBehaviour
     {
         // TODO: 위치 변경
         AttackSpeed = Data.PlayerStat.Rate + Weapon.Info.Rate;
-        Animator.SetFloat("AttackSpeed", 1.5f / AttackSpeed);
+        Animator.SetFloat("AttackSpeed1", 1.5f / AttackSpeed);
+        Animator.SetFloat("AttackSpeed2", 1.67f / AttackSpeed);
+        Animator.SetFloat("AttackSpeed3", 1.28f / AttackSpeed);
     }
 
     private void Update()
@@ -116,9 +118,8 @@ public class PlayerCtrl : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
-            Debug.Log("클릭함");
-            Weapon.Use();
             ChangeState(PlayerState.ATTACK);
+            return;
         }
     }
 
@@ -127,11 +128,13 @@ public class PlayerCtrl : MonoBehaviour
         if(IsBlock)
         {
             // 방어 이펙트가 있었으면 함.
+            Debug.Log("방어하면서 맞음");
             ChangeState(PlayerState.BLOCKDAMAGE);
             Data.PlayerStat.HP = damage * 0.2f;
         }
         else
         {
+            Debug.Log("방어도 못하고 맞음");
             ChangeState(PlayerState.DAMAGE);
             Data.PlayerStat.HP = damage;
         }

@@ -10,15 +10,16 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
         if(m_player_ctrl)
         {
             m_player_ctrl.Animator.SetTrigger("Damaged");
+            Invoke("Wait", 0.75f);
         }
     }
 
     public void Execute(PlayerCtrl sender)
     {
-        Invoke("IdleWait", 0.4f);
+        
     }
 
-    private void IdleWait()
+    private void Wait()
     {
         if(m_player_ctrl.IsGround)
         {
@@ -47,7 +48,11 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
                     m_player_ctrl.ChangeState(PlayerState.WALK);
                 }
             }
-        }        
+            else
+            {
+                m_player_ctrl.ChangeState(PlayerState.IDLE);
+            }
+        }     
     }
 
     public void ExecuteExit(PlayerCtrl sender)
