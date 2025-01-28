@@ -15619,6 +15619,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8734326968776725499, guid: 0d3f5f69d540e7d4ea097993b4c04541, type: 3}
+      propertyPath: m_enemy_stat
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -8734326968776725499, guid: 0d3f5f69d540e7d4ea097993b4c04541, type: 3}
       propertyPath: m_patrol_range
       value: 20
       objectReference: {fileID: 0}
@@ -30030,7 +30034,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: 4206ffcf50a2b8643b86d021d9e919c0, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: d3716b3a647f7504e8d5a45f0e065355, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &2112180013
 Terrain:
@@ -30041,7 +30045,7 @@ Terrain:
   m_GameObject: {fileID: 2112180011}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 4206ffcf50a2b8643b86d021d9e919c0, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: d3716b3a647f7504e8d5a45f0e065355, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5

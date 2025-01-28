@@ -250,7 +250,7 @@ AnimatorStateMachine:
     m_Position: {x: 470, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3976745481138277586}
-    m_Position: {x: -30, y: -130, z: 0}
+    m_Position: {x: -30, y: -150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8742187067088709581}
     m_Position: {x: 200, y: -130, z: 0}
@@ -276,7 +276,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -10, y: -60, z: 0}
   m_EntryPosition: {x: 220, y: 220, z: 0}
-  m_ExitPosition: {x: 220, y: -350, z: 0}
+  m_ExitPosition: {x: 0, y: -200, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -4440865270978776827}
 --- !u!1102 &-3291504971551731806
@@ -386,12 +386,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Dead
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: FoundPlayer
     m_Type: 9
     m_DefaultFloat: 0
@@ -409,6 +403,12 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Dead
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
@@ -543,7 +543,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 24ba21a16dd489347b298207909510aa, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: d276a729cedaa0f45bf3bf1164d5a061, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
