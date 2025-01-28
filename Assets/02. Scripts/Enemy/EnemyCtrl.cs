@@ -60,7 +60,7 @@ namespace Junyoung
         //공격
         public float CombatRadius { get; set; } = 5f; // 플레이어를 공격하는 범위
         public bool CanAtk { get; set; } //공격 가능 여부
-        public bool IsHit { get; set; } // 공격이 적중 했는지 여부
+        public bool IsHit { get; set; }  // 공격이 적중 했는지 여부
 
         public float TotalAtkRate { get; set; } = 0; // 공격 애니메이션 재생 시간 + 공격간 대기 시간
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate값에 도달하면 CanAtk을 활성화 시키는 값
@@ -98,11 +98,14 @@ namespace Junyoung
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
 
             CanAtk = true;
+            IsHit = false;
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
         void FixedUpdate()
         {
+            Debug.Log(StateContext.NowState.ToString());
+
             //공격 쿨타임 계산
             if(TotalAtkRate >= AttackDelay)
             {
@@ -168,8 +171,8 @@ namespace Junyoung
                 Debug.Log($"현재 상태가 '{clip_name}'과 일치하지 않습니다.");
             }
 
-            Debug.Log($"{clip_name}의 길이 : {length}");
-            Debug.Log($"{clip_name}의 속도 : {speed}");
+            //Debug.Log($"{clip_name}의 길이 : {length}");
+            //Debug.Log($"{clip_name}의 속도 : {speed}");
 
             float real_length = length / speed;
 

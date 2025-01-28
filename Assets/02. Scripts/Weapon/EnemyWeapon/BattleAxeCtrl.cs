@@ -27,7 +27,7 @@ namespace Junyoung
 
             foreach (Collider col in hit_colliders)
             {
-                if (col.CompareTag("Player"))
+                if (col.CompareTag("Player") && m_enemy_ctrl.StateContext.NowState is EnemyAttackState)
                 {
                     m_enemy_ctrl.IsHit= true;
                 }
@@ -36,7 +36,14 @@ namespace Junyoung
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.green;
+            if(m_enemy_ctrl&&m_enemy_ctrl.IsHit)
+            {
+                Gizmos.color = Color.red;
+            }
+            else
+            {
+                Gizmos.color = Color.green;
+            }
             Gizmos.matrix= Matrix4x4.TRS(transform.TransformPoint(m_box_center), transform.rotation,Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, m_box_size);
         }

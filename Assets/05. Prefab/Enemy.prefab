@@ -205,6 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a92cd6ccc722745bf5dfab0986d9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_box_size: {x: 0.36, y: 0.16, z: 1.32}
-  m_box_center: {x: 0.03, y: -0.09, z: 0.78}
+  m_box_size: {x: 0.21, y: 0.07, z: 1.32}
+  m_box_center: {x: 0.09, y: 0.06, z: 0.78}
   m_enemy_ctrl: {fileID: 0}
