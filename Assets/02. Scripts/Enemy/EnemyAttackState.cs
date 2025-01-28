@@ -8,10 +8,8 @@ namespace Junyoung
         private EnemyCtrl m_enemy_ctrl;
         private PlayerCtrl m_player_ctrl;
         private GameObject m_player;
-        private GameObject m_enemy;
         private float m_atk_ani_length;
         private bool m_is_hitting;
-        private float m_rotation_speed = 5f;
 
         public void OnStateEnter(EnemyCtrl sender)
         {
@@ -19,7 +17,6 @@ namespace Junyoung
             {
                 m_enemy_ctrl = sender;
 
-                m_enemy = m_enemy_ctrl.gameObject;
                 m_player = m_enemy_ctrl.Player;
                 m_player_ctrl = m_player.GetComponent<PlayerCtrl>();
 
@@ -28,7 +25,6 @@ namespace Junyoung
             m_is_hitting = false;
             StartCoroutine(GetAniLength());
             m_enemy_ctrl.AttackDelay = 0;
-            //Debug.Log($"�÷��̾{m_enemy_ctrl.EnemyStat.AtkDamege}�� ������ ����");
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
