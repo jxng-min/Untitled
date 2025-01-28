@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AnimationEventSender : MonoBehaviour
 {
-    public PlayerAttackState Player;
+    private PlayerAttackState Player;
 
     private void Start()
     {

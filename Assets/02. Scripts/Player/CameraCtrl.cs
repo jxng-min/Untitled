@@ -53,11 +53,11 @@ public class CameraCtrl : MonoBehaviour
         {
             if(!ray_info.collider.CompareTag("Player") && !ray_info.collider.CompareTag("Enemy") && !ray_info.collider.CompareTag("Weapon") &&  ray_info.collider != null)
             {
-                m_camera.position = ray_info.point - ray_direction * 0.3f;
+                m_camera.position = Vector3.Lerp(m_camera.position, ray_info.point - ray_direction * 0.3f, Time.deltaTime * 10f);
                 return;
             }
         }
         
-        m_camera.position = m_player.position + ray_direction * m_camera_distance;
+        m_camera.position = Vector3.Lerp(m_camera.position, m_player.position + ray_direction * m_camera_distance, Time.deltaTime * 10f);
     }
 }

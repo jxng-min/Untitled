@@ -20,6 +20,8 @@ public class PlayerIdleState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
+        Dead();
+
         if(m_player_ctrl.IsGround)
         {
             if(Input.GetKey(KeyCode.E))
@@ -47,6 +49,14 @@ public class PlayerIdleState : MonoBehaviour, IState<PlayerCtrl>
                     m_player_ctrl.ChangeState(PlayerState.WALK);
                 }
             }
+        }
+    }
+
+    private void Dead()
+    {
+        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        {
+            m_player_ctrl.ChangeState(PlayerState.DEAD);
         }
     }
 

@@ -13,13 +13,14 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_block_state;
     private IState<PlayerCtrl> m_damage_state;
     private IState<PlayerCtrl> m_block_damage_state;
+    private IState<PlayerCtrl> m_dead_state;
     #endregion
 
     #region Properties
     public Transform Model { get; private set; }
     public Transform CameraArm { get; private set; }
     public Animator Animator { get; private set; }
-    public DataManager Data { get; private set;}
+    public DataManager Data { get; private set; }
 
     [Header("Move Component")]
     public Rigidbody Rigidbody { get; private set; }
@@ -65,6 +66,7 @@ public class PlayerCtrl : MonoBehaviour
         m_block_state = gameObject.AddComponent<PlayerBlockState>();
         m_damage_state = gameObject.AddComponent<PlayerDamageState>();
         m_block_damage_state = gameObject.AddComponent<PlayerBlockDamageState>();
+        m_dead_state = gameObject.AddComponent<PlayerDeadState>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -127,16 +129,16 @@ public class PlayerCtrl : MonoBehaviour
         if(IsBlock)
         {
             // 방어 이펙트가 있었으면 함.
-            Debug.Log("방어하면서 맞음");
             ChangeState(PlayerState.BLOCKDAMAGE);
-            Data.PlayerStat.HP = damage * 0.2f;
+            Data.PlayerStat.HP -= damage * 0.2f;
         }
         else
         {
-            Debug.Log("방어도 못하고 맞음");
             ChangeState(PlayerState.DAMAGE);
-            Data.PlayerStat.HP = damage;
+            Data.PlayerStat.HP -= damage;
         }
+
+        Data.StatusUI.UpdateStatus();
     }
 
     public void ChangeState(PlayerState state)
@@ -181,6 +183,10 @@ public class PlayerCtrl : MonoBehaviour
 
             case PlayerState.DAMAGE:
                 StateContext.Transition(m_damage_state);
+                break;
+            
+            case PlayerState.DEAD:
+                StateContext.Transition(m_dead_state);
                 break;
         }
     }

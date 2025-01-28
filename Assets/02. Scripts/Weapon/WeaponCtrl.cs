@@ -6,7 +6,10 @@ using System.Collections;
 public abstract class WeaponCtrl : MonoBehaviour
 {
     [SerializeField] protected Weapon m_info;
-    public Weapon Info { get { return m_info; } set { m_info = value; } }
+    public Weapon Info { 
+        get { return m_info; } 
+        set { m_info = value; } 
+    }
 
     [SerializeField] protected BoxCollider m_area;
     [SerializeField] protected TrailRenderer m_trail_effect;
@@ -40,8 +43,6 @@ public abstract class WeaponCtrl : MonoBehaviour
 
             yield return null;
         }
-
-        Debug.Log($"몬스터 큐에 들어가 있는 요소의 개수: {m_enemies_queue.Count}");
     }
 
     protected void DestroyEnemies(float damage)
@@ -51,8 +52,6 @@ public abstract class WeaponCtrl : MonoBehaviour
             var enemy = m_enemies_queue.Dequeue();
             enemy.GetDamage(damage);
             m_enemies_set.Remove(enemy);
-
-            Debug.Log($"적에게 {damage}의 피해를 주었다.");
         }
     }
 
