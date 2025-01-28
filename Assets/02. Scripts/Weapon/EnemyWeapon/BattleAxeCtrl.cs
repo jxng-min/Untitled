@@ -45,7 +45,7 @@ namespace Junyoung
                 Gizmos.color = Color.green;
             }
             Gizmos.matrix= Matrix4x4.TRS(transform.TransformPoint(m_box_center), transform.rotation,Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, m_box_size);
+            Gizmos.DrawWireCube(Vector3.zero, m_box_size*2);
         }
     }
 }

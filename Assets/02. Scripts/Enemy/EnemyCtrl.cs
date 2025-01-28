@@ -56,12 +56,9 @@ namespace Junyoung
         public float FollowRadius { get; set; } = 25f; // �÷��̾� �߰� ���� �߰��ϴ� ����
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
 
-
         //����
-        public float CombatRadius { get; set; } = 5f; // �÷��̾ �����ϴ� ����
         public bool CanAtk { get; set; } //���� ���� ����
         public bool IsHit { get; set; }  // ������ ���� �ߴ��� ����
-
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
@@ -80,7 +77,7 @@ namespace Junyoung
 
             StateContext= new EnemyStateContext(this);
 
-            Player =GameObject.FindWithTag("Player");
+            Player = GameObject.Find("Player");
 
             Animator = GetComponent<Animator>();
             Agent = GetComponent<NavMeshAgent>();
@@ -104,7 +101,6 @@ namespace Junyoung
 
         void FixedUpdate()
         {
-            //���� ��Ÿ�� ���
             if(TotalAtkRate >= AttackDelay)
             {
                 AttackDelay += Time.deltaTime;
@@ -176,9 +172,6 @@ namespace Junyoung
 
             return real_length;
         }
-
-
-
         public void GetDamage(float damage)//�ǰݽ� ȣ��
         {
             (m_enemy_get_damage_state as EnemyGetDamageState).Damage = damage;
