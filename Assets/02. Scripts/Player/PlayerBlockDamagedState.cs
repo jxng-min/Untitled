@@ -16,7 +16,7 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
-        
+
     }
 
     private void IdleWait()

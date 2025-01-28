@@ -119,6 +119,7 @@ public class PlayerCtrl : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
             ChangeState(PlayerState.ATTACK);
+            return;
         }
     }
 
@@ -127,11 +128,13 @@ public class PlayerCtrl : MonoBehaviour
         if(IsBlock)
         {
             // 방어 이펙트가 있었으면 함.
+            Debug.Log("방어하면서 맞음");
             ChangeState(PlayerState.BLOCKDAMAGE);
             Data.PlayerStat.HP = damage * 0.2f;
         }
         else
         {
+            Debug.Log("방어도 못하고 맞음");
             ChangeState(PlayerState.DAMAGE);
             Data.PlayerStat.HP = damage;
         }

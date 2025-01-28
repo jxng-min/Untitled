@@ -7,6 +7,7 @@ public class SwordCtrl : WeaponCtrl
     public PlayerCtrl Player { get; set; }
     public PlayerAttackState PlayerAttackInfo { get; private set; }
 
+
     private void Start()
     {
         Player = GameObject.Find("Player").GetComponent<PlayerCtrl>();

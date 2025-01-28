@@ -3,18 +3,16 @@ using UnityEngine;
 public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
 {
     private PlayerCtrl m_player_ctrl;
-
-    public bool ComboExist { get; set; }
-    public bool ComboEnable { get; set; }
     public int ComboIndex { get; set; }
+    public bool ComboEnable { get; set; }
+    public bool ComboExist { get; set; }
 
     public void ExecuteEnter(PlayerCtrl sender)
     {
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            m_player_ctrl.IsAttack = true;
-            m_player_ctrl.Animator.SetBool("IsAttack", m_player_ctrl.IsAttack);
+            m_player_ctrl.Animator.SetTrigger("IsAttack");
         }
     }
 
@@ -27,15 +25,20 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
 
         if(Input.GetKeyDown(KeyCode.Mouse0) == false)
         {
+            m_player_ctrl.Animator.SetInteger("AttackCount", 0);
             return;
         }
 
-        if(ComboEnable)
+        if(m_player_ctrl.Direction.magnitude > 0f)
         {
-            ComboEnable = false;
-            ComboExist = true;
-
-            return;
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                m_player_ctrl.ChangeState(PlayerState.RUN);
+            }
+            else
+            {
+                m_player_ctrl.ChangeState(PlayerState.WALK);
+            }
         }
 
         if(m_player_ctrl.IsAttack)
@@ -67,20 +70,14 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
         if(!ComboExist)
         {
             m_player_ctrl.ChangeState(PlayerState.IDLE);
-            return;
         }
-
-        ComboExist = false;
-        
-        ComboIndex++;
-        m_player_ctrl.Animator.SetTrigger("NextCombo");
     }
-
 
     public void ExecuteExit(PlayerCtrl sender)
     {
-        m_player_ctrl.IsAttack = false;
-        m_player_ctrl.Animator.SetBool("IsAttack", m_player_ctrl.IsAttack);
-        ComboIndex = 0;
+        if(m_player_ctrl)
+        {
+            m_player_ctrl.Animator.ResetTrigger("IsAttack");
+        }
     }
 }

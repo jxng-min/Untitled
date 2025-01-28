@@ -9,7 +9,6 @@ public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            Debug.Log("방패 들음");
             m_player_ctrl.Animator.SetBool("IsBlock", true);
             m_player_ctrl.IsBlock = true;
 
