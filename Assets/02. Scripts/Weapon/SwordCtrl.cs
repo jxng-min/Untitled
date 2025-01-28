@@ -1,16 +1,20 @@
 using System.Collections;
-using Junyoung;
 using UnityEngine;
 
 public class SwordCtrl : WeaponCtrl
 {
     private DataManager m_data_manager; 
-    public PlayerAttackState Player { get; private set; }
+    public PlayerCtrl Player { get; private set; }
+    public PlayerAttackState PlayerAttackInfo { get; private set; }
+    public float FinalDamage { get; set; }
 
     private void Start()
     {
-        Player = GameObject.Find("Player").GetComponent<PlayerAttackState>();
+        Player = GameObject.Find("Player").GetComponent<PlayerCtrl>();
+        PlayerAttackInfo = GameObject.Find("Player").GetComponent<PlayerAttackState>();
         m_data_manager = GameObject.Find("DataManager").GetComponent<DataManager>();
+
+        FinalDamage = m_data_manager.PlayerStat.ATK + Info.Damage;
     }
 
     public override void Use()
@@ -23,35 +27,34 @@ public class SwordCtrl : WeaponCtrl
     {
         yield return new WaitForSeconds(0.1f);
         m_area.enabled = true;
-        //m_trail_effect.enabled = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.05f);
+        GetEnemy();
+        yield return new WaitForSeconds(Player.AttackSpeed);
+        yield return StartCoroutine(DamageToEnemy(1));
+
         m_area.enabled = false;
-
-        yield return new WaitForSeconds(0.3f);
-        //m_trail_effect.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider obj)
+    private IEnumerator DamageToEnemy(int index)
     {
-        if(obj.CompareTag("Enemy"))
+        yield return null;
+
+        float damage = FinalDamage;
+        switch(index)
         {
-            float damage = m_data_manager.PlayerStat.ATK + Info.Damage;
-            switch(Player.ComboIndex)
-            {
-                case 1:
-                damage += damage * 0.2f;
-                    break;
-                
-                case 2:
-                damage += damage * 0.3f;
-                    break;
+            case 1:
+                damage += FinalDamage * 0.1f;
+                break;
+            
+            case 2:
+                damage += FinalDamage * 0.3f;
+                break;
 
-                default:
-                    break;
-            }
-
-            obj.GetComponent<EnemyCtrl>().GetDamage(damage);
+            default:
+                break;
         }
+
+        DropEnemy(damage);
     }
 }

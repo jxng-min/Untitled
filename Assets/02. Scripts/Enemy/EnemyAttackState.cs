@@ -17,8 +17,8 @@ namespace Junyoung
             StartCoroutine(GetAniLength());
             m_enemy_ctrl.AttackDelay = 0;
 
-            //m_player.GetDamage(m_enemy_ctrl.EnemyStat.AtkDamege);
-            Debug.Log($"ÇÃ·¹ÀÌ¾î°¡{m_enemy_ctrl.EnemyStat.AtkDamege}ÀÇ µ¥¹ÌÁö ÀÔÀ½");
+            m_player.GetDamage(m_enemy_ctrl.EnemyStat.AtkDamege);
+            Debug.Log($"ï¿½Ã·ï¿½ï¿½Ì¾î°¡{m_enemy_ctrl.EnemyStat.AtkDamege}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
@@ -35,9 +35,9 @@ namespace Junyoung
         {
         }
 
-        private IEnumerator GetAniLength() // Attack Æ®¸®°Å°¡ È£Ãâ µÆÁö¸¸ µô·¹ÀÌ°¡ ÀÖ¾î¼­ StateInfo°¡ ¾Ö´Ï¸ÞÀÌ¼Ç ÀüÈ¯ Àü¿¡ È£ÃâµÇ´Â ¹®Á¦ ¶§¹®¿¡ »ç¿ë
+        private IEnumerator GetAniLength() // Attack Æ®ï¿½ï¿½ï¿½Å°ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ö¾î¼­ StateInfoï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         {
-            yield return new WaitForSeconds(0.1f); // ¾à°£ÀÇ ´ë±â ½Ã°£À» ÁÖ¾î ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ ÀüÈ¯À» ±â´Ù¸²          
+            yield return new WaitForSeconds(0.1f); // ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½          
             m_atk_ani_length = m_enemy_ctrl.GetAniLength("Attack");
 
             Debug.Log(m_atk_ani_length);
