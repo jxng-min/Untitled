@@ -7,7 +7,7 @@ namespace Junyoung
     {
         private EnemyCtrl m_enemy_ctrl;
         private PlayerCtrl m_player_ctrl;
-        private float m_atk_ani_length = 1f;
+        private float m_atk_ani_length;
         private bool m_is_hitting;
 
         public void OnStateEnter(EnemyCtrl sender)
@@ -60,14 +60,12 @@ namespace Junyoung
 
         private IEnumerator GetAniLength() // Attack 트리거가 호출 됐지만 딜레이가 있어서 StateInfo가 애니메이션 전환 전에 호출되는 문제 때문에 사용
         {
+            m_atk_ani_length = 1f; // 대기 시간동안 OnStateUpdate에 의해서 READY state로 전환되지 않기 위해
             yield return new WaitForSeconds(0.1f); // 약간의 대기 시간을 주어 애니메이션 상태 전환을 기다림          
             m_atk_ani_length = m_enemy_ctrl.GetAniLength("Attack");
 
-            Debug.Log(m_atk_ani_length);
             if (m_enemy_ctrl.TotalAtkRate == 0)
                 m_enemy_ctrl.TotalAtkRate = m_atk_ani_length + m_enemy_ctrl.EnemyStat.AtkRate - 0.1f;
-
-            Debug.Log(m_enemy_ctrl.TotalAtkRate);
 
         }
     }
