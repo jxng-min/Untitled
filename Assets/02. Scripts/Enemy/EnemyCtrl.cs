@@ -29,7 +29,7 @@ namespace Junyoung
 
         [SerializeField]
         private EnemyStat m_enemy_stat;
-        public EnemyStat EnemyStat { get { return m_enemy_stat; } }
+        public EnemyStat EnemyStat { get { return m_enemy_stat; } private set { m_enemy_stat = value; } }
 
         //�ִϸ�����
         public Animator Animator { get; private set; }
@@ -88,6 +88,7 @@ namespace Junyoung
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
         {
+            EnemyStat = new EnemyStat();
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
@@ -180,6 +181,10 @@ namespace Junyoung
 
         public void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
         {
+            if(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
+            {
+                return;
+            }
             float start_angle = -DetectAngle;
             float offset_angle = DetectAngle / RayCount;
 

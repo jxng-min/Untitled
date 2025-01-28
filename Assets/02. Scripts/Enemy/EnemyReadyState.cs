@@ -20,6 +20,12 @@ namespace Junyoung
         {
             LookPlayer();
 
+            if (m_player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
+            {
+                m_enemy_ctrl.Animator.SetTrigger("CombatEnd");
+                m_enemy_ctrl.ChangeState(EnemyState.IDLE);             
+            }
+
             if (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) >= m_enemy_ctrl.EnemyStat.AtkRange)
             {
                 m_enemy_ctrl.ChangeState(EnemyState.FOLLOW);
