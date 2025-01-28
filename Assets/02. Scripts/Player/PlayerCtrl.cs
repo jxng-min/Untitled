@@ -119,7 +119,6 @@ public class PlayerCtrl : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
             ChangeState(PlayerState.ATTACK);
-            return;
         }
     }
 

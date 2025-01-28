@@ -12,6 +12,7 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
+            m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("IsAttack");
         }
     }
@@ -25,20 +26,15 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
 
         if(Input.GetKeyDown(KeyCode.Mouse0) == false)
         {
-            m_player_ctrl.Animator.SetInteger("AttackCount", 0);
             return;
         }
 
-        if(m_player_ctrl.Direction.magnitude > 0f)
+        if(ComboEnable)
         {
-            if(Input.GetKey(KeyCode.LeftShift))
-            {
-                m_player_ctrl.ChangeState(PlayerState.RUN);
-            }
-            else
-            {
-                m_player_ctrl.ChangeState(PlayerState.WALK);
-            }
+            ComboEnable = false;
+            ComboExist = true;
+
+            return;
         }
 
         if(m_player_ctrl.IsAttack)
@@ -70,14 +66,22 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
         if(!ComboExist)
         {
             m_player_ctrl.ChangeState(PlayerState.IDLE);
+            return;
         }
+
+        ComboExist = false;
+
+        ComboIndex++;
+        m_player_ctrl.Animator.SetTrigger("NextCombo");
     }
 
     public void ExecuteExit(PlayerCtrl sender)
     {
         if(m_player_ctrl)
         {
-            m_player_ctrl.Animator.ResetTrigger("IsAttack");
+            m_player_ctrl.IsAttack = false;
+            m_player_ctrl.Animator.SetBool("IsAttack", m_player_ctrl.IsAttack);
+            ComboIndex = 0;
         }
     }
 }
