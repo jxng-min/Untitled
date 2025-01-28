@@ -15,11 +15,21 @@ public class PlayerJumpInState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
+        Dead();
+        
         m_player_ctrl.Move(5f);
 
         if(m_player_ctrl.FallTime > 0.3f)
         {
             m_player_ctrl.ChangeState(PlayerState.JUMPING);
+        }
+    }
+
+    private void Dead()
+    {
+        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        {
+            m_player_ctrl.ChangeState(PlayerState.DEAD);
         }
     }
 

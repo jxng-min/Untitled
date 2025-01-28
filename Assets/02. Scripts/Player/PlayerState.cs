@@ -11,5 +11,5 @@ public enum PlayerState
     DAMAGE,
     BLOCKDAMAGE,
     ATTACK,
-    DIE,
+    DEAD,
 }

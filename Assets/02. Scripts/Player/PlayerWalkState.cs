@@ -17,6 +17,8 @@ public class PlayerWalkState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
+        Dead();
+        
         if(Input.GetKey(KeyCode.E))
         {
             m_player_ctrl.ChangeState(PlayerState.BLOCK);
@@ -50,6 +52,14 @@ public class PlayerWalkState : MonoBehaviour, IState<PlayerCtrl>
             {
                 m_player_ctrl.ChangeState(PlayerState.IDLE);
             }
+        }
+    }
+
+    private void Dead()
+    {
+        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        {
+            m_player_ctrl.ChangeState(PlayerState.DEAD);
         }
     }
 
