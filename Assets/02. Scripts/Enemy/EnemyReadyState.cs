@@ -17,7 +17,7 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            if (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) >= m_enemy_ctrl.CombatRadius)
+            if (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) >= m_enemy_ctrl.EnemyStat.AtkRange)
             {
                 m_enemy_ctrl.ChangeState(EnemyState.FOLLOW);
             }
@@ -35,7 +35,7 @@ namespace Junyoung
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.CombatRadius);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.EnemyStat.AtkRange);
         }
     }
 }

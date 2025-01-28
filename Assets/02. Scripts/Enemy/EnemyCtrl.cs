@@ -58,7 +58,6 @@ namespace Junyoung
 
 
         //공격
-        public float CombatRadius { get; set; } = 5f; // 플레이어를 공격하는 범위
         public bool CanAtk { get; set; } //공격 가능 여부
         public bool IsHit { get; set; }  // 공격이 적중 했는지 여부
 
@@ -104,8 +103,6 @@ namespace Junyoung
 
         void FixedUpdate()
         {
-            Debug.Log(StateContext.NowState.ToString());
-
             //공격 쿨타임 계산
             if(TotalAtkRate >= AttackDelay)
             {
