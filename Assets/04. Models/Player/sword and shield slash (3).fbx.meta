@@ -55,21 +55,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.16768329
+      - time: 0.1663019
         functionName: Combo_Enable
         data: 
         objectReferenceParameter: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4465873
+      - time: 0.45210695
         functionName: Combo_Disable
         data: 
         objectReferenceParameter: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.54058594
+      - time: 0.5332399
         functionName: Combo_Exist
         data: 
         objectReferenceParameter: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}

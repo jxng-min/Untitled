@@ -19,10 +19,10 @@ namespace Junyoung
 
         public EnemyStateContext StateContext { get; private set; }
 
-        //ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® Á¢±Ù¿ë
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Ù¿ï¿½
         public GameObject Player;
 
-        //Enemy ½ºÅÈ
+        //Enemy ï¿½ï¿½ï¿½ï¿½
         [SerializeField]
         private EnemyStat m_origin_enemy_stat;
         public EnemyStat OriginEnemyStat { get {return m_origin_enemy_stat; } set { m_origin_enemy_stat=value; } }
@@ -31,38 +31,36 @@ namespace Junyoung
         private EnemyStat m_enemy_stat;
         public EnemyStat EnemyStat { get { return m_enemy_stat; } }
 
-        //¾Ö´Ï¸ÞÀÌÅÍ
+        //ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½
         public Animator Animator { get; private set; }
         
         //Nav
         public NavMeshAgent Agent { get; private set; }
 
-        //¼øÂû
+        //ï¿½ï¿½ï¿½ï¿½
         [SerializeField]
-        private float m_patrol_range; // ÀÎ½ºÆåÅÍ¿¡¼­ Á¢±ÙÇÏ±â À§ÇØ º¯¼ö ¼±¾ð
+        private float m_patrol_range; // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public float PatrolRange { get { return m_patrol_range; } set { m_patrol_range = value; } }
 
         [SerializeField]
         private Transform m_patrol_center;
         public Transform PatrolCenter { get { return m_patrol_center; } set { m_patrol_center = value; } }
 
-        //ÇÃ·¹ÀÌ¾î Å½»ö
-        public float DetectAngle { get; set; } = 45f; // Å½Áö °¢µµ
-        public float DetectDistance { get; set; } = 20f; // Å½Áö °Å¸®
-        public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0); //Ray ¹ß»ç À§Ä¡ offset°ª
-        public int RayCount { get; set; } = 20; // ¹ß»çµÇ´Â ray ¼ö
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å½ï¿½ï¿½
+        public float DetectAngle { get; set; } = 45f; // Å½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        public float DetectDistance { get; set; } = 20f; // Å½ï¿½ï¿½ ï¿½Å¸ï¿½
+        public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0); //Ray ï¿½ß»ï¿½ ï¿½ï¿½Ä¡ offsetï¿½ï¿½
+        public int RayCount { get; set; } = 20; // ï¿½ß»ï¿½Ç´ï¿½ ray ï¿½ï¿½
 
-        //Ãß°Ý
-        public float FollowRadius { get; set; } = 25f; // ÇÃ·¹ÀÌ¾î ¹ß°ß ÀÌÈÄ Ãß°ÝÇÏ´Â ¹üÀ§
-        public Vector3 BackPosition { get; set; } //ÀúÀåÇØµÎ¾ú´Ù°¡ Ãß°Ý Á¾·á½Ã º¹±ÍÇÏ´Â À§Ä¡
+        //ï¿½ß°ï¿½
+        public float FollowRadius { get; set; } = 25f; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+        public Vector3 BackPosition { get; set; } //ï¿½ï¿½ï¿½ï¿½ï¿½ØµÎ¾ï¿½ï¿½Ù°ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡
 
-
-        //°ø°Ý
-        public bool CanAtk { get; set; } //°ø°Ý °¡´É ¿©ºÎ
-        public bool IsHit { get; set; }  // °ø°ÝÀÌ ÀûÁß Çß´ÂÁö ¿©ºÎ
-
-        public float TotalAtkRate { get; set; } = 0; // °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý ½Ã°£ + °ø°Ý°£ ´ë±â ½Ã°£
-        public float AttackDelay { get; set; } = 0f; // TotalAtkRate°ª¿¡ µµ´ÞÇÏ¸é CanAtkÀ» È°¼ºÈ­ ½ÃÅ°´Â °ª
+        //ï¿½ï¿½ï¿½ï¿½
+        public bool CanAtk { get; set; } //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        public bool IsHit { get; set; }  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        public float TotalAtkRate { get; set; } = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ + ï¿½ï¿½ï¿½Ý°ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+        public float AttackDelay { get; set; } = 0f; // TotalAtkRateï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ CanAtkï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½
 
 
         void Start()
@@ -88,7 +86,7 @@ namespace Junyoung
             InitStat();
         }
 
-        public void InitStat() // ½ºÅÈ,±âº»°ª ÃÊ±âÈ­
+        public void InitStat() // ï¿½ï¿½ï¿½ï¿½,ï¿½âº»ï¿½ï¿½ ï¿½Ê±ï¿½È­
         {
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
@@ -103,7 +101,6 @@ namespace Junyoung
 
         void FixedUpdate()
         {
-            //°ø°Ý ÄðÅ¸ÀÓ °è»ê
             if(TotalAtkRate >= AttackDelay)
             {
                 AttackDelay += Time.deltaTime;
@@ -113,11 +110,11 @@ namespace Junyoung
             {
                 if (!CanAtk) CanAtk = true;
             }
-            //FSM ÆÐÅÏ
+            //FSM ï¿½ï¿½ï¿½ï¿½
             StateContext.OnStateUpdate();
         }
 
-        public void ChangeState(EnemyState state) // State ÀüÈ¯
+        public void ChangeState(EnemyState state) // State ï¿½ï¿½È¯
         {
             switch (state)
             {
@@ -142,12 +139,12 @@ namespace Junyoung
             }
         }
 
-        public float GetAniLength(string clip_name) // ¾Ö´Ï¸ÞÀÌ¼Ç speed¸¦ °í·ÁÇÑ ¾Ö´Ï¸ÞÀÌ¼Ç ÃÑ Àç»ý½Ã°£
+        public float GetAniLength(string clip_name) // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½
         {
             RuntimeAnimatorController controller = Animator.runtimeAnimatorController;
             float length=1.0f;
             
-            foreach (AnimationClip clip in controller.animationClips) // clip_nameÀÇ length °ªÀ» ¹ÝÈ¯
+            foreach (AnimationClip clip in controller.animationClips) // clip_nameï¿½ï¿½ length ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
             {
                 if (clip.name == clip_name)
                 {
@@ -156,7 +153,7 @@ namespace Junyoung
                 }
             }
 
-            AnimatorStateInfo state_info = Animator.GetCurrentAnimatorStateInfo(0); // ÇöÀç Àç»ýÁßÀÎ »óÅÂÀÇ Á¤º¸ °¡Á®¿À±â
+            AnimatorStateInfo state_info = Animator.GetCurrentAnimatorStateInfo(0); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             float speed=1.0f;
 
             if (state_info.IsName(clip_name))
@@ -165,24 +162,23 @@ namespace Junyoung
             }
             else
             {
-                Debug.Log($"ÇöÀç »óÅÂ°¡ '{clip_name}'°ú ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ '{clip_name}'ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
             }
 
-            //Debug.Log($"{clip_name}ÀÇ ±æÀÌ : {length}");
-            //Debug.Log($"{clip_name}ÀÇ ¼Óµµ : {speed}");
+            //Debug.Log($"{clip_name}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : {length}");
+            //Debug.Log($"{clip_name}ï¿½ï¿½ ï¿½Óµï¿½ : {speed}");
 
             float real_length = length / speed;
 
             return real_length;
         }
-
-        public void GetDamage(float damage)//ÇÇ°Ý½Ã È£Ãâ
+        public void GetDamage(float damage)//ï¿½Ç°Ý½ï¿½ È£ï¿½ï¿½
         {
             (m_enemy_get_damage_state as EnemyGetDamageState).Damage = damage;
             ChangeState(EnemyState.GETDAMAGE);
         }
 
-        public void DetectPlayer() // RayCast¸¦ »ç¿ëÇÑ ÇÃ·¹ÀÌ¾î Å½Áö 
+        public void DetectPlayer() // RayCastï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å½ï¿½ï¿½ 
         {
             float start_angle = -DetectAngle;
             float offset_angle = DetectAngle / RayCount;
@@ -197,7 +193,7 @@ namespace Junyoung
                 {
                     if(hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("ÇÃ·¹ÀÌ¾î °¨Áö");
+                        Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½");
                         ChangeState(EnemyState.FOUNDPLAYER);
                         Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.red);
                     }

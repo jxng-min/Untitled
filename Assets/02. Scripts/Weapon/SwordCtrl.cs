@@ -1,57 +1,55 @@
 using System.Collections;
-using Junyoung;
 using UnityEngine;
 
 public class SwordCtrl : WeaponCtrl
 {
     private DataManager m_data_manager; 
-    public PlayerAttackState Player { get; private set; }
+    public PlayerCtrl Player { get; set; }
+    public PlayerAttackState PlayerAttackInfo { get; private set; }
+
 
     private void Start()
     {
-        Player = GameObject.Find("Player").GetComponent<PlayerAttackState>();
+        Player = GameObject.Find("Player").GetComponent<PlayerCtrl>();
+        PlayerAttackInfo = GameObject.Find("Player").GetComponent<PlayerAttackState>();
         m_data_manager = GameObject.Find("DataManager").GetComponent<DataManager>();
     }
 
     public override void Use()
     {
-        StopCoroutine(Attack1());
-        StartCoroutine(Attack1());
+        StopCoroutine(Attack());
+        StartCoroutine(Attack());
     }
 
-    private IEnumerator Attack1()
+    private IEnumerator Attack()
     {
         yield return new WaitForSeconds(0.1f);
         m_area.enabled = true;
-        //m_trail_effect.enabled = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return StartCoroutine(GetEnemies(0.5f));
+
+        Damage();
         m_area.enabled = false;
-
-        yield return new WaitForSeconds(0.3f);
-        //m_trail_effect.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider obj)
+    private void Damage()
     {
-        if(obj.CompareTag("Enemy"))
+        float damage = m_data_manager.PlayerStat.ATK + Info.Damage;
+
+        switch(PlayerAttackInfo.ComboIndex)
         {
-            float damage = m_data_manager.PlayerStat.ATK + Info.Damage;
-            switch(Player.ComboIndex)
-            {
-                case 1:
+            case 1:
+                damage += damage * 0.1f;
+                break;
+
+            case 2:
                 damage += damage * 0.2f;
-                    break;
-                
-                case 2:
-                damage += damage * 0.3f;
-                    break;
+                break;
 
-                default:
-                    break;
-            }
-
-            obj.GetComponent<EnemyCtrl>().GetDamage(damage);
+            default:
+                break;
         }
+
+        DestroyEnemies(damage);
     }
 }
