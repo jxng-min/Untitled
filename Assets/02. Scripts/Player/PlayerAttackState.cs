@@ -10,7 +10,6 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
 
     public void ExecuteEnter(PlayerCtrl sender)
     {
-        Debug.Log("공격 시작");
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
@@ -21,6 +20,11 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
 
     public void Execute(PlayerCtrl sender)
     {
+        if(ComboIndex >= 2)
+        {
+            return;
+        }
+
         if(Input.GetKeyDown(KeyCode.Mouse0) == false)
         {
             return;
@@ -46,6 +50,11 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
     public void Combo_Enable()
     {
         ComboEnable = true;
+
+        if(ComboIndex < 3)
+        {
+            m_player_ctrl.Weapon.Use();
+        }
     }
 
     public void Combo_Disable()

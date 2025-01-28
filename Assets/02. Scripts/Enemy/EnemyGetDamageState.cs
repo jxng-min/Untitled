@@ -11,7 +11,7 @@ namespace Junyoung
 
         public void OnStateEnter(EnemyCtrl sender)
         {
-            if(m_enemy_ctrl == null)  // ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý ¼Óµµ¸¦ ºÒ·¯¿Í¼­ »óÅÂ À¯Áö ½Ã°£À¸·Î ¼³Á¤
+            if(m_enemy_ctrl == null)  // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 m_enemy_ctrl = sender;
 
