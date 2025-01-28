@@ -6,6 +6,7 @@ namespace Junyoung
     {
         private EnemyCtrl m_enemy_ctrl;
         private GameObject m_player;
+        private float m_rotation_speed = 3.5f;
 
         public void OnStateEnter(EnemyCtrl sender)
         {
@@ -17,6 +18,8 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
+            LookPlayer();
+
             if (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) >= m_enemy_ctrl.EnemyStat.AtkRange)
             {
                 m_enemy_ctrl.ChangeState(EnemyState.FOLLOW);
@@ -31,6 +34,14 @@ namespace Junyoung
         {
 
         }
+
+        private void LookPlayer()
+        {
+            Vector3 dir = m_player.transform.position - m_enemy_ctrl.gameObject.transform.position;
+            Quaternion player_rotation = Quaternion.LookRotation(dir);
+            m_enemy_ctrl.gameObject.transform.rotation = Quaternion.Slerp(m_enemy_ctrl.gameObject.transform.rotation, player_rotation, m_rotation_speed * Time.deltaTime);
+        }
+
         void OnDrawGizmos()
         {
             if (m_enemy_ctrl == null) return;

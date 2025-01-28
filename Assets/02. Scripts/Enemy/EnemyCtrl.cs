@@ -79,7 +79,7 @@ namespace Junyoung
 
             StateContext= new EnemyStateContext(this);
 
-            Player =GameObject.FindWithTag("Player");
+            Player = GameObject.Find("Player");
 
             Animator = GetComponent<Animator>();
             Agent = GetComponent<NavMeshAgent>();
@@ -175,8 +175,6 @@ namespace Junyoung
 
             return real_length;
         }
-
-
 
         public void GetDamage(float damage)//피격시 호출
         {
