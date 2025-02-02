@@ -48,7 +48,7 @@ namespace Junyoung
 
         //�÷��̾� Ž��
         public float DetectAngle { get; set; } = 45f; // Ž�� ����
-        public float DetectDistance { get; set; } = 20f; // Ž�� �Ÿ�
+        public float DetectDistance { get; set; } = 7f; // Ž�� �Ÿ�
         public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0); //Ray �߻� ��ġ offset��
         public int RayCount { get; set; } = 20; // �߻�Ǵ� ray ��
 

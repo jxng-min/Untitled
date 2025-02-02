@@ -40,15 +40,16 @@ namespace Junyoung
             m_enemy_ctrl.Animator.SetBool("isPatrol", false);
         }
 
-        Vector3 RandomPos(Vector3 center, float range)
+        Vector3 RandomPos(Vector3 center, float range)//
         {
-            Vector3 randPos = center + Random.insideUnitSphere* range;
-            randPos.y = center.y;
+            Vector2 cir_pos = Random.insideUnitCircle * range;
+            Vector3 rand_pos = new Vector3(center.x + cir_pos.x, center.y, center.z + cir_pos.y);
+
             NavMeshHit pos;
 
             for (int i = 0; i < 100; i++)
             {
-                if (NavMesh.SamplePosition(randPos, out pos, 1.0f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(rand_pos, out pos, 1.0f, NavMesh.AllAreas))
                 {
                     return pos.position;
                 }
