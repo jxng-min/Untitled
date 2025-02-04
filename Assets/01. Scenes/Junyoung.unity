@@ -11918,7 +11918,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_max_enemy_size: 0f0000000a00000001000000
-  m_spawn_transforms: []
+  m_spawn_transforms:
+  - {fileID: 235724055}
+  - {fileID: 287555239}
+  - {fileID: 1360190808}
+  - {fileID: 1562143246}
+  - {fileID: 1753147862}
 --- !u!114 &813597402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11933,7 +11938,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy_stat_list:
   - {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
+  - {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
+  - {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_enemy_prefab:
+  - {fileID: 2336451690660199492, guid: 0d3f5f69d540e7d4ea097993b4c04541, type: 3}
+  - {fileID: 2336451690660199492, guid: 0d3f5f69d540e7d4ea097993b4c04541, type: 3}
   - {fileID: 2336451690660199492, guid: 0d3f5f69d540e7d4ea097993b4c04541, type: 3}
 --- !u!4 &813597403
 Transform:

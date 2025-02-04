@@ -32,8 +32,10 @@ namespace Junyoung
                 }              
                 foreach(EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
                 {
+                    Debug.Log($"위치 {spawn_pos} 타입 {type} 현재 수 {m_active_enemy_counts[spawn_pos][type]} 최대 수 {m_max_enemy_by_type[type]}");
                     if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
                     {
+
                         m_enemy_factory.SpawnEnemy(type, spawn_pos);
                     }
                 }
