@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
@@ -11,7 +12,7 @@ public class PlayerBlockState : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.Animator.SetBool("IsBlock", true);
             m_player_ctrl.IsBlock = true;
-
+            
             if(m_player_ctrl.Direction.magnitude > 0f)
             {
                 m_player_ctrl.Animator.SetBool("IsMove", true);

@@ -10,6 +10,7 @@ public class PlayerJumpOutState : MonoBehaviour, IState<PlayerCtrl>
         if(m_player_ctrl)
         {
             m_player_ctrl.Animator.SetTrigger("JumpOut");
+            m_player_ctrl.Camera.Shaking(0.05f, 0.05f);
         }
     }
 

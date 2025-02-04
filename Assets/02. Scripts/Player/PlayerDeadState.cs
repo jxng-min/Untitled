@@ -25,7 +25,7 @@ public class PlayerDeadState : MonoBehaviour, IState<PlayerCtrl>
 
     private void SetRandomTrigger()
     {
-        int value = Random.Range(0, 1);
+        int value = Random.Range(0, 2);
         if(value == 0)
         {
             m_player_ctrl.Animator.SetTrigger("Dead1");

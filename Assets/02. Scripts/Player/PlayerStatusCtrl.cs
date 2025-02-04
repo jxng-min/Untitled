@@ -1,23 +1,24 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class PlayerStatusCtrl : MonoBehaviour
 {
     public DataManager Data { get; private set; }
 
-    [SerializeField] private TMP_Text m_hp_text;
-    [SerializeField] private TMP_Text m_mp_text; 
+    [SerializeField] private Slider m_hp_slider;
+    [SerializeField] private Slider m_mp_slider;
+
     
     private void Start()
     {
         Data = GetComponent<DataManager>();
-        UpdateStatus();
-        Debug.Log("업데이트함");
     }
 
-    public void UpdateStatus()
+    public void Update()
     {
-        m_hp_text.text = $"{Data.PlayerStat.HP}/{Data.MaxStat.HP} HP";
-        m_mp_text.text = $"{Data.PlayerStat.MP}/{Data.MaxStat.MP} MP";
+        m_hp_slider.value = Mathf.Lerp(m_hp_slider.value, Data.PlayerStat.HP / Data.MaxStat.HP, Time.deltaTime * 20f);
+        m_mp_slider.value = Mathf.Lerp(m_mp_slider.value, Data.PlayerStat.MP / Data.MaxStat.MP, Time.deltaTime * 20f);
+
+        // m_camera_health_ctrl.SetPlayerHealthSmoothly(Data.PlayerStat.HP / Data.MaxStat.HP, Time.deltaTime * 20f);
     }
 }

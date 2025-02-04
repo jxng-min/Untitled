@@ -12,4 +12,7 @@ public enum PlayerState
     BLOCKDAMAGE,
     ATTACK,
     DEAD,
+    SKILL1,
+    SKILL2,
+    SKILL3,
 }
