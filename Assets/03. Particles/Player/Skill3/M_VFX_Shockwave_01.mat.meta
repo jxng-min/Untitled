@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7285a4aecb2a39b44bc9618a3d714535
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 306143
+  packageName: Easy Shockwaves VFX - URP
+  packageVersion: 1.0
+  assetPath: Assets/03. Particles/Player/Skill3/M_VFX_Shockwave_01.mat
+  uploadId: 720127

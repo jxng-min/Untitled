@@ -13,6 +13,15 @@ public class SwordCtrl : WeaponCtrl
         Player = GameObject.Find("Player").GetComponent<PlayerCtrl>();
         PlayerAttackInfo = GameObject.Find("Player").GetComponent<PlayerAttackState>();
         m_data_manager = GameObject.Find("DataManager").GetComponent<DataManager>();
+
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(Color.yellow, 0.0f), new GradientColorKey(Color.white, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) }
+        );
+
+        Trail.colorGradient = gradient;
+        Trail.enabled = false;
     }
 
     public override void Use()
@@ -23,13 +32,17 @@ public class SwordCtrl : WeaponCtrl
 
     private IEnumerator Attack()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0f);
         m_area.enabled = true;
+        Trail.enabled = true;
 
-        yield return StartCoroutine(GetEnemies(0.5f));
+        yield return StartCoroutine(GetEnemies(0.1f));
 
         Damage();
         m_area.enabled = false;
+
+        yield return new WaitForSeconds(0.4f);
+        Trail.enabled = false;
     }
 
     private void Damage()

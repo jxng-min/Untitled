@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
@@ -65,7 +66,7 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
     {
         if(!ComboExist)
         {
-            m_player_ctrl.ChangeState(PlayerState.IDLE);
+            StartCoroutine(WaitIdle());
             return;
         }
 
@@ -83,5 +84,12 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
             m_player_ctrl.Animator.SetBool("IsAttack", m_player_ctrl.IsAttack);
             ComboIndex = 0;
         }
+    }
+
+    private IEnumerator WaitIdle()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        m_player_ctrl.ChangeState(PlayerState.IDLE);
     }
 }

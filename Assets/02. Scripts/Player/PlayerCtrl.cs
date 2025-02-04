@@ -14,11 +14,19 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_damage_state;
     private IState<PlayerCtrl> m_block_damage_state;
     private IState<PlayerCtrl> m_dead_state;
+    private IState<PlayerCtrl> m_skill1_state;
+    private IState<PlayerCtrl> m_skill2_state;
+    private IState<PlayerCtrl> m_skill3_state;
     #endregion
+
+    [SerializeField] private GameObject m_skill1_prefab;
+    [SerializeField] private GameObject m_skill2_prefab;
+    [SerializeField] private GameObject m_skill3_prefab;
 
     #region Properties
     public Transform Model { get; private set; }
     public Transform CameraArm { get; private set; }
+    public CameraShaker Camera { get; set; }
     public Animator Animator { get; private set; }
     public DataManager Data { get; private set; }
 
@@ -35,10 +43,24 @@ public class PlayerCtrl : MonoBehaviour
     public WeaponCtrl Weapon { get; set; }
     public float AttackSpeed { get; set; }
     public bool IsAttack { get; set; }
+    public GameObject Skill1Effect { get { return m_skill1_prefab; } }
+    public GameObject Skill2Effect { get { return m_skill2_prefab; } }
+    public GameObject Skill3Effect { get { return m_skill3_prefab; } }
 
     [Header("Block Component")]
     public bool IsBlock { get; set; }
     public float BlockTime { get; set; }
+
+    [Header("Skill Component")]
+    public bool Skill1Ready { get; set; }
+    public float Skill1Time { get; set; }
+    public float Skill1CoolTime { get; set; } = 10f;
+    public bool Skill2Ready { get; set; }
+    public float Skill2Time { get; set; }
+    public float Skill2CoolTime { get; set; } = 20f;
+    public bool Skill3Ready { get; set; }
+    public float Skill3Time { get; set; }
+    public float Skill3CoolTime { get; set; } = 7f;
 
     [Header("State Component")]
     public PlayerStateContext StateContext { get; set; }
@@ -49,9 +71,10 @@ public class PlayerCtrl : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody>();
         Model = GameObject.Find("PlayerModel").GetComponent<Transform>();
         CameraArm = GameObject.Find("CameraArm").GetComponent<Transform>();
+        Camera = CameraArm.GetComponentInChildren<CameraShaker>();
         Animator = Model.GetComponent<Animator>();
         Weapon = FindAnyObjectByType<WeaponCtrl>();
-        Data =  GameObject.Find("DataManager").GetComponent<DataManager>();
+        Data = GameObject.Find("DataManager").GetComponent<DataManager>();
         
     
         StateContext = new PlayerStateContext(this);
@@ -67,6 +90,9 @@ public class PlayerCtrl : MonoBehaviour
         m_damage_state = gameObject.AddComponent<PlayerDamageState>();
         m_block_damage_state = gameObject.AddComponent<PlayerBlockDamageState>();
         m_dead_state = gameObject.AddComponent<PlayerDeadState>();
+        m_skill1_state = gameObject.AddComponent<PlayerSkill1State>();
+        m_skill2_state = gameObject.AddComponent<PlayerSkill2State>();
+        m_skill3_state = gameObject.AddComponent<PlayerSkill3State>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -78,6 +104,10 @@ public class PlayerCtrl : MonoBehaviour
         Animator.SetFloat("AttackSpeed1", 1.5f / AttackSpeed);
         Animator.SetFloat("AttackSpeed2", 1.67f / AttackSpeed);
         Animator.SetFloat("AttackSpeed3", 1.28f / AttackSpeed);
+
+        Skill1Ready = true;
+        Skill2Ready = true;
+        Skill3Ready = true;
     }
 
     private void Update()
@@ -87,6 +117,10 @@ public class PlayerCtrl : MonoBehaviour
         CheckGround();
         CheckFalling();
         CheckBlocking();
+
+        CheckSkill1();
+        CheckSkill2();
+        CheckSkill3();
 
         StateContext.ExecuteUpdate();
     }
@@ -124,6 +158,30 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
+    public void Skill1()
+    {
+        if(Skill1Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha1) && IsGround)
+        {
+            ChangeState(PlayerState.SKILL1);
+        }
+    }
+
+    public void Skill2()
+    {
+        if(Skill2Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha2) && IsGround)
+        {
+            ChangeState(PlayerState.SKILL2);
+        }
+    }
+
+    public void Skill3()
+    {
+        if(Skill3Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha3) && IsGround)
+        {
+            ChangeState(PlayerState.SKILL3);
+        }
+    }
+
     public void GetDamage(float damage)
     {
         if(IsBlock)
@@ -138,7 +196,7 @@ public class PlayerCtrl : MonoBehaviour
             Data.PlayerStat.HP -= damage;
         }
 
-        Data.StatusUI.UpdateStatus();
+        Camera.Shaking(0.2f, 0.1f);
     }
 
     public void ChangeState(PlayerState state)
@@ -187,6 +245,18 @@ public class PlayerCtrl : MonoBehaviour
             
             case PlayerState.DEAD:
                 StateContext.Transition(m_dead_state);
+                break;
+            
+            case PlayerState.SKILL1:
+                StateContext.Transition(m_skill1_state);
+                break;
+            
+            case PlayerState.SKILL2:
+                StateContext.Transition(m_skill2_state);
+                break;
+            
+            case PlayerState.SKILL3:
+                StateContext.Transition(m_skill3_state);
                 break;
         }
     }
@@ -246,6 +316,57 @@ public class PlayerCtrl : MonoBehaviour
         else
         {
             BlockTime = 0f;
+        }
+    }
+
+    private void CheckSkill1()
+    {
+        if(!Skill1Ready)
+        {
+            Skill1Time += Time.deltaTime;
+
+            if(Skill1Time >= Skill1CoolTime)
+            {
+                Skill1Ready = true;
+            }
+        }
+        else
+        {
+            Skill1Time = 0f;
+        }
+    }
+
+    private void CheckSkill2()
+    {
+        if(!Skill2Ready)
+        {
+            Skill2Time += Time.deltaTime;
+
+            if(Skill2Time >= Skill2CoolTime)
+            {
+                Skill2Ready = true;
+            }
+        }
+        else
+        {
+            Skill2Time = 0f;
+        }
+    }
+
+    private void CheckSkill3()
+    {
+        if(!Skill3Ready)
+        {
+            Skill3Time += Time.deltaTime;
+
+            if(Skill3Time >= Skill3CoolTime)
+            {
+                Skill3Ready = true;
+            }
+        }
+        else
+        {
+            Skill3Time = 0f;
         }
     }
 }

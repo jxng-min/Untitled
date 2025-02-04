@@ -13,6 +13,11 @@ public abstract class WeaponCtrl : MonoBehaviour
 
     [SerializeField] protected BoxCollider m_area;
     [SerializeField] protected TrailRenderer m_trail_effect;
+    public TrailRenderer Trail
+    {
+        get { return m_trail_effect; }
+        set { m_trail_effect = value;}
+    }
 
     protected Queue<EnemyCtrl> m_enemies_queue = new Queue<EnemyCtrl>();
     protected HashSet<EnemyCtrl> m_enemies_set = new HashSet<EnemyCtrl>();
