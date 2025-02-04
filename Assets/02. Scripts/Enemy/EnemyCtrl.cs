@@ -1,6 +1,7 @@
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 namespace Junyoung
 {
@@ -30,6 +31,10 @@ namespace Junyoung
         [SerializeField]
         private EnemyStat m_enemy_stat;
         public EnemyStat EnemyStat { get { return m_enemy_stat; } private set { m_enemy_stat = value; } }
+
+        [SerializeField]
+        private EnemySpawnData m_enemy_spawn_data;
+        public EnemySpawnData EnemySpawnData { get { return m_enemy_spawn_data;}set{ m_enemy_spawn_data = value; } }
 
         //�ִϸ�����
         public Animator Animator { get; private set; }
@@ -63,6 +68,9 @@ namespace Junyoung
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
 
+        public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
+
+
         void Start()
         {
             m_enemy_idle_state = gameObject.AddComponent<EnemyIdleState>();
@@ -88,18 +96,30 @@ namespace Junyoung
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
         {
-            EnemyStat = new EnemyStat();
+            EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
 
+            EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
+
             CanAtk = true;
             IsHit = false;
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
+        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool)
+        {
+            ManagedPool = pool;
+        }
+
+        public void ReturnToPool()
+        {
+            Debug.Log($"{this.name} 반환");
+            ManagedPool.Release(this);
+        }
         void FixedUpdate()
         {
             if(TotalAtkRate >= AttackDelay)
