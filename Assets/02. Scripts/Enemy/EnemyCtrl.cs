@@ -192,9 +192,9 @@ namespace Junyoung
 
             return real_length;
         }
-        public void GetDamage(float damage)//�ǰݽ� ȣ��
+        public void UpdateHP(float value)//�ǰݽ� ȣ��
         {
-            (m_enemy_get_damage_state as EnemyGetDamageState).Damage = damage;
+            (m_enemy_get_damage_state as EnemyGetDamageState).Damage = value;
             ChangeState(EnemyState.GETDAMAGE);
         }
 

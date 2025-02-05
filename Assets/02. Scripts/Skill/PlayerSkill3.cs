@@ -1,4 +1,3 @@
-using System.Collections;
 using Junyoung;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ public class PlayerSkill3 : MonoBehaviour
     {
         if (coll.CompareTag("Enemy"))
         {
-            coll.GetComponent<EnemyCtrl>().GetDamage(m_damage);
+            coll.GetComponent<EnemyCtrl>().UpdateHP(-m_damage);
         }
     }
 }

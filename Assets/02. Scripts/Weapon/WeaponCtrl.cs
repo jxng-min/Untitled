@@ -55,7 +55,7 @@ public abstract class WeaponCtrl : MonoBehaviour
         while(m_enemies_queue.Count > 0)
         {
             var enemy = m_enemies_queue.Dequeue();
-            enemy.GetDamage(damage);
+            enemy.UpdateHP(-damage);
             m_enemies_set.Remove(enemy);
         }
     }

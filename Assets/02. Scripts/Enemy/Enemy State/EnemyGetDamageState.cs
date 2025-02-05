@@ -16,7 +16,9 @@ namespace Junyoung
                 m_enemy_ctrl = sender;
 
             }           
-            m_enemy_ctrl.EnemyStat.HP -= Damage;
+            m_enemy_ctrl.EnemyStat.HP += Damage;
+            var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
+            indicator.Init(transform.position + Vector3.up * 3f, Damage, Damage < 0f ? Color.red : Color.green);
             Debug.Log($"{m_enemy_ctrl.gameObject.name}의 HP : {m_enemy_ctrl.EnemyStat.HP}");
             if(m_enemy_ctrl.EnemyStat.HP<=0)
             {

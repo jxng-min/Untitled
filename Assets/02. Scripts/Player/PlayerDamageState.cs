@@ -9,18 +9,22 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            m_player_ctrl.Animator.SetTrigger("Damaged");
-            Invoke("Wait", 0.75f);
+            //m_player_ctrl.Animator.SetTrigger("Damaged");
+            //Invoke("Wait", 0.75f);
+
+            // TODO: 이펙트
         }
     }
 
     public void Execute(PlayerCtrl sender)
     {
-        
+        Wait();
     }
 
     private void Wait()
     {
+        Dead();
+
         if(m_player_ctrl.IsGround)
         {
             if(Input.GetKey(KeyCode.E))
@@ -55,8 +59,16 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
         }     
     }
 
+    private void Dead()
+    {
+        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        {
+            m_player_ctrl.ChangeState(PlayerState.DEAD);
+        }
+    }
+
     public void ExecuteExit(PlayerCtrl sender)
     {
-        m_player_ctrl.Animator.ResetTrigger("Damaged");
+        //m_player_ctrl.Animator.ResetTrigger("Damaged");
     }
 }
