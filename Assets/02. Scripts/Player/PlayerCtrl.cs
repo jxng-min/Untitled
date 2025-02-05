@@ -204,7 +204,7 @@ public class PlayerCtrl : MonoBehaviour
         Data.PlayerStat.HP += final_value;
 
         var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
-        indicator.Init(transform.position + Vector3.up * 2f, final_value, final_value < 0 ? Color.red : Color.green);
+        indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.red : Color.green);
 
         Camera.Shaking(0.2f, 0.1f);
     }
