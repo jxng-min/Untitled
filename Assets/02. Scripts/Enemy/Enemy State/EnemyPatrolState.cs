@@ -19,7 +19,7 @@ namespace Junyoung
                 m_agent = m_enemy_ctrl.Agent;
             }
             m_agent.stoppingDistance = 1f;
-            Vector3 pos = RandomPos(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange); // 범위 내에 랜덤한 위치 생성
+            Vector3 pos = RandomPos(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.PatrolRange); // 범위 내에 랜덤한 위치 생성
             m_agent.SetDestination(pos);
             Debug.Log($"PATROL state 진입 랜덤 위치 생성");
             m_enemy_ctrl.Animator.SetBool("isPatrol", true);
@@ -62,7 +62,7 @@ namespace Junyoung
             if (m_enemy_ctrl == null) return;
             
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.PatrolCenter.position, m_enemy_ctrl.PatrolRange);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.PatrolRange);
         }
 
 

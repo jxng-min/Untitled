@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,29 +20,44 @@ namespace Junyoung
         void Start()
         {
             m_enemy_factory = GetComponent<EnemyFactory>();
+            StartCoroutine(SpawnMangement());
+        }
+        
+        IEnumerator SpawnMangement()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(2f);
+
+                foreach (var spawn_pos in m_spawn_transforms)
+                {
+                    if (!m_active_enemy_counts.ContainsKey(spawn_pos))
+                    {
+                        m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int>();
+
+                        foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                        {
+                            m_active_enemy_counts[spawn_pos][type] = 0;
+                        }
+                    }
+                    foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                    {
+                        if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
+                        {
+
+                            m_enemy_factory.SpawnEnemy(type, spawn_pos);
+                        }
+                    }
+
+
+                }
+            }
         }
 
         void Update()
         {
-            foreach ( var spawn_pos in m_spawn_transforms)
-            {
-                if(!m_active_enemy_counts.ContainsKey(spawn_pos))
-                {
-                    m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int> {
-                        {EnemyType.Axe,0 } };
-                }              
-                foreach(EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
-                {
-                    Debug.Log($"위치 {spawn_pos} 타입 {type} 현재 수 {m_active_enemy_counts[spawn_pos][type]} 최대 수 {m_max_enemy_by_type[type]}");
-                    if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
-                    {
-
-                        m_enemy_factory.SpawnEnemy(type, spawn_pos);
-                    }
-                }
-
-
-            }
+            
+            
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Junyoung
 
             NowState = enemy_state;
             NowState?.OnStateEnter(m_enemy_ctrl);
-            Debug.Log(enemy_state.ToString());
         }
 
 

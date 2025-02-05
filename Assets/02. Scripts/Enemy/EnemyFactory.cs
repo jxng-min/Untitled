@@ -20,51 +20,62 @@ namespace Junyoung
         private Dictionary<EnemyType, IObjectPool<EnemyCtrl>> m_enemy_pools;
 
         private EnemySpawnManager m_enemy_spawn_manager;
-
-        private EnemyType m_now_type;
-        private Transform m_now_transform;
         
         private void Awake()
         {
+            Debug.Log($"m_enemy_stat_list.Count: {m_enemy_stat_list.Count}");
+            Debug.Log($"m_enemy_prefab.Count: {m_enemy_prefab.Count}");
             m_enemy_spawn_manager = GetComponent<EnemySpawnManager>();
             m_enemy_pools = new Dictionary<EnemyType, IObjectPool<EnemyCtrl>>();
 
             for(int i =0; i< m_enemy_prefab.Count; i++)
             {
-                m_enemy_pools[(EnemyType)i] = new ObjectPool<EnemyCtrl>(() => CreateEnemy((EnemyType)i), OnGetEnemy, OnReturnEnemy,
+                EnemyType type = (EnemyType)i;
+                Debug.Log($"[디버그] ObjectPool 초기화, 타입: {type} (인덱스: {i})");
+                m_enemy_pools[type] = new ObjectPool<EnemyCtrl>(() => CreateEnemy(type), OnGetEnemy, OnReturnEnemy,
                                                                                 OnDestoryEnemy, maxSize: m_enemy_spawn_manager.m_max_enemy_size[i]);
-                Debug.Log($"{(EnemyType)i} 타입 ObjectPool 초기화");
+                Debug.Log($"{type} 타입 ObjectPool 초기화");
             }
         }
 
         public void SpawnEnemy(EnemyType type, Transform spawn_pos)
         {
             var new_enemy = m_enemy_pools[type].Get();
+
             new_enemy.OriginEnemyStat = m_enemy_stat_list[(int)type];
+            new_enemy.InitComponent();
             new_enemy.InitStat();
-            new_enemy.transform.position = spawn_pos.position ;
-            new_enemy.EnemySpawnData.SpawnTransform= spawn_pos ;
+            new_enemy.Agent.Warp(spawn_pos.position);
+            new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
             new_enemy.EnemySpawnData.EnemyType = type ;
-            new_enemy.PatrolCenter = spawn_pos;
+            
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
-        }
+            Debug.Log($"소환 위치 : {spawn_pos} 타입 : {type} 현재 소환 수 : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
+        } 
 
         private EnemyCtrl CreateEnemy(EnemyType type)
         {
-            var newEnemy = Instantiate(m_enemy_prefab[(int)type]).GetComponent<EnemyCtrl>();
-            newEnemy.SetEnemyPool(m_enemy_pools[type]);
-            return newEnemy;
+            Debug.Log($"CreateEnemy 타입 : {type} (인덱스: {(int)type})");
+            if ((int)type < 0 || (int)type >= m_enemy_prefab.Count)
+            {
+                Debug.LogError($"[Error] m_enemy_prefab에 {type}의 프리팹이 없음! (인덱스: {(int)type})");
+                return null;
+            }
+            var new_enemy = Instantiate(m_enemy_prefab[(int)type]).GetComponent<EnemyCtrl>();
+            new_enemy.SetEnemyPool(m_enemy_pools[type]);
+            return new_enemy;
         }
 
         private void OnGetEnemy(EnemyCtrl enemy)
         {
             enemy.gameObject.SetActive(true);
-            m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
         }
 
         public void OnReturnEnemy(EnemyCtrl enemy)
         {
             enemy.gameObject.SetActive(false);
+            m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
+            Debug.Log($"반환 위치 : {enemy.EnemySpawnData.SpawnTransform} 타입 : {enemy.EnemySpawnData.EnemyType} 현재 소환 수 : {m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]}");
         }
 
         private void OnDestoryEnemy(EnemyCtrl enemy)
