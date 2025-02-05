@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
@@ -161,6 +161,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill1()
     {
+        if(Data.PlayerStat.MP < 6f)
+        {
+            return;
+        }
+
         if(Skill1Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha1) && IsGround)
         {
             ChangeState(PlayerState.SKILL1);
@@ -169,6 +174,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill2()
     {
+        if(Data.PlayerStat.MP < 1f)
+        {
+            return;
+        }
+
         if(Skill2Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha2) && IsGround)
         {
             ChangeState(PlayerState.SKILL2);
@@ -177,6 +187,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill3()
     {
+        if(Data.PlayerStat.MP < 3f)
+        {
+            return;
+        }
+        
         if(Skill3Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha3) && IsGround)
         {
             ChangeState(PlayerState.SKILL3);
@@ -207,6 +222,16 @@ public class PlayerCtrl : MonoBehaviour
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.red : Color.green);
 
         Camera.Shaking(0.2f, 0.1f);
+    }
+
+    public void UpdateMP(float value)
+    {
+        float final_value = value;
+
+        Data.PlayerStat.MP += value;
+
+        var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
+        indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.magenta : Color.blue);
     }
 
     public void ChangeState(PlayerState state)
