@@ -1,4 +1,3 @@
-using System.Collections;
 using Junyoung;
 using UnityEngine;
 
