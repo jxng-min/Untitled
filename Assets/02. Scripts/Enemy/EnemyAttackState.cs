@@ -40,7 +40,7 @@ namespace Junyoung
 
             if (m_enemy_ctrl.IsHit && m_player_ctrl != null && !m_is_hitting)
             {
-                m_player_ctrl.GetDamage(m_enemy_ctrl.EnemyStat.AtkDamege);
+                m_player_ctrl.UpdateHP(-m_enemy_ctrl.EnemyStat.AtkDamege);
                 m_is_hitting = true;
             }
         }

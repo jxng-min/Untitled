@@ -9,18 +9,20 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            m_player_ctrl.Animator.SetTrigger("BlockDamaged");
-            Invoke("IdleWait", 0.75f);
+            //m_player_ctrl.Animator.SetTrigger("BlockDamaged");
+            //Invoke("Wait", 0.75f);
         }
     }
 
     public void Execute(PlayerCtrl sender)
     {
-
+        Wait();
     }
 
-    private void IdleWait()
+    private void Wait()
     {
+        Dead();
+        
         if(m_player_ctrl.IsGround)
         {
             if(Input.GetKey(KeyCode.E))
@@ -55,8 +57,16 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
         }        
     }
 
+    private void Dead()
+    {
+        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        {
+            m_player_ctrl.ChangeState(PlayerState.DEAD);
+        }
+    }
+
     public void ExecuteExit(PlayerCtrl sender)
     {
-        m_player_ctrl.Animator.ResetTrigger("BlockDamaged");
+        //m_player_ctrl.Animator.ResetTrigger("BlockDamaged");
     }
 }

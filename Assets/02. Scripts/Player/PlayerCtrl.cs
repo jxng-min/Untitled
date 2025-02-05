@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
@@ -182,19 +183,28 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
-    public void GetDamage(float damage)
+    public void UpdateHP(float value)
     {
-        if(IsBlock)
+        float final_value = value;
+
+        if(value < 0f)
         {
-            // 방어 이펙트가 있었으면 함.
-            ChangeState(PlayerState.BLOCKDAMAGE);
-            Data.PlayerStat.HP -= damage * 0.2f;
+            if(IsBlock)
+            {
+                // 방어 이펙트가 있었으면 함.
+                ChangeState(PlayerState.BLOCKDAMAGE);
+                final_value = value * 0.2f;
+            }
+            else
+            {
+                ChangeState(PlayerState.DAMAGE);
+            }
         }
-        else
-        {
-            ChangeState(PlayerState.DAMAGE);
-            Data.PlayerStat.HP -= damage;
-        }
+
+        Data.PlayerStat.HP += final_value;
+
+        var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
+        indicator.Init(transform.position + Vector3.up * 2f, final_value, final_value < 0 ? Color.red : Color.green);
 
         Camera.Shaking(0.2f, 0.1f);
     }

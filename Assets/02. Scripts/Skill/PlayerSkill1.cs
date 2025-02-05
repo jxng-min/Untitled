@@ -33,7 +33,7 @@ public class PlayerSkill1 : MonoBehaviour
     {
         while (enemy != null)
         {
-            enemy.GetComponent<EnemyCtrl>().GetDamage(m_damage);
+            enemy.GetComponent<EnemyCtrl>().UpdateHP(-m_damage);
 
             yield return new WaitForSeconds(m_interval);
         }
