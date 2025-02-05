@@ -26,8 +26,8 @@ namespace Junyoung
             }
             else
             {
-                m_enemy_ctrl.Animator.SetTrigger("GetDamage");
-                StartCoroutine(GetAniLength());
+                //m_enemy_ctrl.Animator.SetTrigger("GetDamage");
+                //StartCoroutine(GetAniLength());
             }
 
         }
@@ -44,9 +44,9 @@ namespace Junyoung
         }
         public void OnStateExit(EnemyCtrl sender)
         {
-            m_enemy_ctrl.Animator.ResetTrigger("GetDamage");
+            //m_enemy_ctrl.Animator.ResetTrigger("GetDamage");
         }
-
+        /*
         public IEnumerator GetAniLength()
         {
             m_get_damage_ani_length = 1f;
@@ -54,5 +54,6 @@ namespace Junyoung
 
             m_get_damage_ani_length = m_enemy_ctrl.GetAniLength("Get Damage") - 0.1f;
         }
+        */
     }
 }

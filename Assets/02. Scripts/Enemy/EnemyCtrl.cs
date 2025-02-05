@@ -1,6 +1,7 @@
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 namespace Junyoung
 {
@@ -31,6 +32,10 @@ namespace Junyoung
         private EnemyStat m_enemy_stat;
         public EnemyStat EnemyStat { get { return m_enemy_stat; } private set { m_enemy_stat = value; } }
 
+        [SerializeField]
+        private EnemySpawnData m_enemy_spawn_data;
+        public EnemySpawnData EnemySpawnData { get { return m_enemy_spawn_data;}set{ m_enemy_spawn_data = value; } }
+
         //�ִϸ�����
         public Animator Animator { get; private set; }
         
@@ -42,18 +47,14 @@ namespace Junyoung
         private float m_patrol_range; // �ν����Ϳ��� �����ϱ� ���� ���� ����
         public float PatrolRange { get { return m_patrol_range; } set { m_patrol_range = value; } }
 
-        [SerializeField]
-        private Transform m_patrol_center;
-        public Transform PatrolCenter { get { return m_patrol_center; } set { m_patrol_center = value; } }
-
         //�÷��̾� Ž��
         public float DetectAngle { get; set; } = 45f; // Ž�� ����
-        public float DetectDistance { get; set; } = 7f; // Ž�� �Ÿ�
+        public float DetectDistance { get; set; } = 10f; // Ž�� �Ÿ�
         public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0); //Ray �߻� ��ġ offset��
         public int RayCount { get; set; } = 20; // �߻�Ǵ� ray ��
 
         //�߰�
-        public float FollowRadius { get; set; } = 25f; // �÷��̾� �߰� ���� �߰��ϴ� ����
+        public float FollowRadius { get; set; } = 15f; // �÷��̾� �߰� ���� �߰��ϴ� ����
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
 
         //����
@@ -63,19 +64,26 @@ namespace Junyoung
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
 
-        void Start()
+        public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
+
+        private void OnEnable()
+        {
+
+        }
+
+        public void InitComponent()
         {
             m_enemy_idle_state = gameObject.AddComponent<EnemyIdleState>();
-            m_enemy_attack_state= gameObject.AddComponent<EnemyAttackState>();
-            m_enemy_back_state= gameObject.AddComponent<EnemyBackState>();
-            m_enemy_dead_state= gameObject.AddComponent<EnemyDeadState>();
+            m_enemy_attack_state = gameObject.AddComponent<EnemyAttackState>();
+            m_enemy_back_state = gameObject.AddComponent<EnemyBackState>();
+            m_enemy_dead_state = gameObject.AddComponent<EnemyDeadState>();
             m_enemy_found_player_state = gameObject.AddComponent<EnemyFoundPlayerState>();
             m_enemy_follow_state = gameObject.AddComponent<EnemyFollowState>();
-            m_enemy_get_damage_state= gameObject.AddComponent<EnemyGetDamageState>();
-            m_enemy_patrol_state= gameObject.AddComponent<EnemyPatrolState>();
-            m_enemy_ready_state= gameObject.AddComponent<EnemyReadyState>();
+            m_enemy_get_damage_state = gameObject.AddComponent<EnemyGetDamageState>();
+            m_enemy_patrol_state = gameObject.AddComponent<EnemyPatrolState>();
+            m_enemy_ready_state = gameObject.AddComponent<EnemyReadyState>();
 
-            StateContext= new EnemyStateContext(this);
+            StateContext = new EnemyStateContext(this);
 
             Player = GameObject.Find("Player");
 
@@ -83,23 +91,34 @@ namespace Junyoung
             Agent = GetComponent<NavMeshAgent>();
 
             ChangeState(EnemyState.IDLE);
-            InitStat();
         }
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
         {
-            EnemyStat = new EnemyStat();
+            EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
 
+            EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
+
             CanAtk = true;
             IsHit = false;
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
+        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool)
+        {
+            ManagedPool = pool;
+        }
+
+        public void ReturnToPool()
+        {
+            Debug.Log($"{this.name} 반환");
+            ManagedPool.Release(this);
+        }
         void FixedUpdate()
         {
             if(TotalAtkRate >= AttackDelay)

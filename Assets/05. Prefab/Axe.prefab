@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Axe
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}
       propertyPath: m_TagString
@@ -186,7 +186,8 @@ MonoBehaviour:
   Player: {fileID: 0}
   m_origin_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
-  m_patrol_range: 0
+  m_enemy_spawn_data: {fileID: 0}
+  m_patrol_range: 10
   m_patrol_center: {fileID: 0}
 --- !u!1 &3343686155191377969 stripped
 GameObject:

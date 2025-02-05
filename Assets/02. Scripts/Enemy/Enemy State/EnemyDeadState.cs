@@ -23,7 +23,7 @@ namespace Junyoung
 
         private void Destroy()
         {
-            //오브젝트 반환
+            m_enemy_ctrl.ReturnToPool();
         }
     }
 }
