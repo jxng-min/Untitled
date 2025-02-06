@@ -19,7 +19,7 @@ public class PlayerWalkState : MonoBehaviour, IState<PlayerCtrl>
     {
         Dead();
         
-        if(Input.GetKey(KeyCode.E))
+        if(Input.GetKey(KeyCode.Q))
         {
             m_player_ctrl.ChangeState(PlayerState.BLOCK);
         }

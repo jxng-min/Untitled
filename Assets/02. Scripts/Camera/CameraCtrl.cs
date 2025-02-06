@@ -28,27 +28,29 @@ public class CameraCtrl : MonoBehaviour
 
     private void Rotation()
     {
-        Delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        
-        Vector3 direction = transform.rotation.eulerAngles;
-        float final_x = Inversal ? (direction.x - Delta.y) : (direction.x + Delta.y);
-        if(final_x < 180f)
+        if(!InventoryMain.Active && !EquipmentInventory.Active)
         {
-            final_x = Mathf.Clamp(final_x, -1f, 60f);
-        }
-        else
-        {
-            final_x = Mathf.Clamp(final_x, 340f, 361f);
-        }
+            Delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            
+            Vector3 direction = transform.rotation.eulerAngles;
+            float final_x = Inversal ? (direction.x - Delta.y) : (direction.x + Delta.y);
+            if(final_x < 180f)
+            {
+                final_x = Mathf.Clamp(final_x, -1f, 60f);
+            }
+            else
+            {
+                final_x = Mathf.Clamp(final_x, 340f, 361f);
+            }
 
-        transform.rotation = Quaternion.Euler(final_x, direction.y + Delta.x, direction.z);
+            transform.rotation = Quaternion.Euler(final_x, direction.y + Delta.x, direction.z);
+        }
     }
 
     private void Translation()
     {
         Vector3 ray_direction = (m_camera.position - m_player.position).normalized;
 
-        Debug.DrawRay(m_player.position, ray_direction * m_camera_distance, Color.red);
         if(Physics.Raycast(m_player.position, ray_direction, out RaycastHit ray_info, m_camera_distance))
         {
             if(!ray_info.collider.CompareTag("Player") && !ray_info.collider.CompareTag("Enemy") && !ray_info.collider.CompareTag("Weapon") 

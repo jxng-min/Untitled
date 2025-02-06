@@ -27,7 +27,7 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
 
         if(m_player_ctrl.IsGround)
         {
-            if(Input.GetKey(KeyCode.E))
+            if(Input.GetKey(KeyCode.Q))
             {
                 m_player_ctrl.ChangeState(PlayerState.BLOCK);
             }

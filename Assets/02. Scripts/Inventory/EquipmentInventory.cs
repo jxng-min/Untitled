@@ -1,0 +1,40 @@
+using TMPro;
+using UnityEngine;
+
+public class EquipmentInventory : InventoryBase
+{
+    public static bool Active { get; set;} = false;
+
+    [Header("Player's Stats")]
+    [SerializeField] private TMP_Text m_attack_label;
+    [SerializeField] private TMP_Text m_attack_rate_label;
+    [SerializeField] private TMP_Text m_defense_label;
+
+    private new void Awake()
+    {
+        base.Awake();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            if(m_inventory_base.activeInHierarchy)
+            {
+                m_inventory_base.SetActive(false);
+                Active = false;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            else
+            {
+                m_inventory_base.SetActive(true);
+                Active = true;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+    } 
+}

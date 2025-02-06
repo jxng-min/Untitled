@@ -141,7 +141,7 @@ public class PlayerCtrl : MonoBehaviour
         Rigidbody.MovePosition(new_position);
     }
 
-        public void Jump(float power)
+    public void Jump(float power)
         {
             if(IsGround && Input.GetButtonDown("Jump"))
             {

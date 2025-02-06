@@ -20,7 +20,7 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
     {
         Dead();
         
-        if(Input.GetKey(KeyCode.E))
+        if(Input.GetKey(KeyCode.Q))
         {
             m_player_ctrl.ChangeState(PlayerState.BLOCK);
         }
