@@ -17,6 +17,12 @@ public class EquipmentInventory : InventoryBase
 
     private void Update()
     {
+        if(Active)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         if(Input.GetKeyDown(KeyCode.U))
         {
             if(m_inventory_base.activeInHierarchy)
@@ -32,8 +38,8 @@ public class EquipmentInventory : InventoryBase
                 m_inventory_base.SetActive(true);
                 Active = true;
 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     } 

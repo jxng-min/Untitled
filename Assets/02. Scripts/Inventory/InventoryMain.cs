@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InventoryMain : InventoryBase
 {
@@ -11,6 +12,12 @@ public class InventoryMain : InventoryBase
 
     private void Update()
     {
+        if(Active)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        
         TryOpenInventory();
     }
 
