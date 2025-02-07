@@ -54,6 +54,7 @@ namespace Junyoung
                     return pos.position;
                 }
             }
+            Debug.Log("이동할 수 없는 위치 반환 재자리");
             return m_agent.destination;
             
         }
