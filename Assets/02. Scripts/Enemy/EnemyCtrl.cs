@@ -64,6 +64,8 @@ namespace Junyoung
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
 
+        public GameObject[] m_drop_item_prefabs;
+
         public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
 
         private void OnEnable()
