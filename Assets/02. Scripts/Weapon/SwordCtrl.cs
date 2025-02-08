@@ -36,7 +36,7 @@ public class SwordCtrl : WeaponCtrl
         m_area.enabled = true;
         Trail.enabled = true;
 
-        yield return StartCoroutine(GetEnemies(0.1f));
+        yield return StartCoroutine(GetEnemies(0.2f));
 
         Damage();
         m_area.enabled = false;
