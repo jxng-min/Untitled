@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class ItemRaycast : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class ItemRaycast : MonoBehaviour
     [Header("레이어 마스크")]
     [SerializeField] private LayerMask m_layer_mask;
 
-
     [Header("레이 캐스팅 거리")]
     [SerializeField] private float m_ray_distance;
 
@@ -18,6 +18,9 @@ public class ItemRaycast : MonoBehaviour
 
     [Header("인벤토리 UI")]
     [SerializeField] private InventoryMain m_inventory;
+
+    [Header("아이템 인디케이터")]
+    [SerializeField] private TMP_Text m_indicator_label;
 
     private void Update()
     {
@@ -77,6 +80,15 @@ public class ItemRaycast : MonoBehaviour
                 }
 
                 m_current_item = raycasted_item;
+
+                m_indicator_label.gameObject.SetActive(true);
+
+                m_indicator_label.text = ItemDataManager.Instance.GetName(m_current_item.Item.ID);
+                
+                Vector3 final_position = new Vector3(Screen.width / 2f, Screen.height / 2f + m_current_item.IndicatorHeight, 0f);
+
+                m_indicator_label.GetComponent<RectTransform>().position = final_position;
+
                 m_is_pick_up_active = true;
 
                 return;
@@ -96,6 +108,7 @@ public class ItemRaycast : MonoBehaviour
     private void ItemInfoDisappear()
     {
         m_is_pick_up_active = false;
+        m_indicator_label.gameObject.SetActive(false);
 
         m_current_item = null;
     }
