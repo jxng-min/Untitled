@@ -10,9 +10,13 @@ public class StatInventory : InventoryBase
     [SerializeField] private TMP_Text m_attack_rate_label;
     [SerializeField] private TMP_Text m_defense_label;
 
+    private PlayerCtrl m_player_ctrl;
+
     private new void Awake()
     {
         base.Awake();
+
+        m_player_ctrl = GameObject.Find("Player").GetComponent<PlayerCtrl>();
     }
 
     private void Update()
@@ -21,6 +25,10 @@ public class StatInventory : InventoryBase
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            
+            m_attack_label.text = m_player_ctrl.AttackPower.ToString();
+            m_attack_rate_label.text = m_player_ctrl.AttackRate.ToString();
+            m_defense_label.text = m_player_ctrl.Defense.ToString();
         }
 
         if(Input.GetKeyDown(KeyCode.O))

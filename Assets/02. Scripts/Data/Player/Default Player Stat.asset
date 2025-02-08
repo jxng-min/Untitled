@@ -15,5 +15,5 @@ MonoBehaviour:
   m_health_point: 50
   m_mana_point: 30
   m_attack_point: 20
-  m_attack_rate: 0.5
+  m_attack_rate: 0.9
   m_defense_point: 1

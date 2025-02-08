@@ -42,7 +42,9 @@ public class PlayerCtrl : MonoBehaviour
 
     [Header("Attack Component")]
     public WeaponCtrl Weapon { get; set; }
-    public float AttackSpeed { get; set; }
+    public float AttackPower { get; set; }
+    public float AttackRate { get; set; }
+    public float Defense { get; set; }
     public bool IsAttack { get; set; }
     public GameObject Skill1Effect { get { return m_skill1_prefab; } }
     public GameObject Skill2Effect { get { return m_skill2_prefab; } }
@@ -65,6 +67,14 @@ public class PlayerCtrl : MonoBehaviour
 
     [Header("State Component")]
     public PlayerStateContext StateContext { get; set; }
+
+    [Header("장비 인벤토리")]
+    [SerializeField] private EquipmentInventory m_equipment_inventory;
+    public EquipmentInventory Equipment 
+    { 
+        get { return m_equipment_inventory; }
+    }
+
     #endregion
 
     private void Awake()
@@ -100,11 +110,7 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Start()
     {
-        // TODO: 위치 변경
-        AttackSpeed = Data.PlayerStat.Rate + Weapon.Info.Rate;
-        Animator.SetFloat("AttackSpeed1", 1.5f / AttackSpeed);
-        Animator.SetFloat("AttackSpeed2", 1.67f / AttackSpeed);
-        Animator.SetFloat("AttackSpeed3", 1.28f / AttackSpeed);
+        UpdateStat();
 
         Skill1Ready = true;
         Skill2Ready = true;
@@ -124,6 +130,17 @@ public class PlayerCtrl : MonoBehaviour
         CheckSkill3();
 
         StateContext.ExecuteUpdate();
+    }
+
+    public void UpdateStat()
+    {
+        AttackPower = Data.PlayerStat.ATK + m_equipment_inventory.CurrentEquipmentEffect.ATK;
+        AttackRate = Data.PlayerStat.Rate - m_equipment_inventory.CurrentEquipmentEffect.Rate;
+        Defense = Data.PlayerStat.DEF + m_equipment_inventory.CurrentEquipmentEffect.DEF;
+
+        Animator.SetFloat("AttackSpeed1", 1.5f / AttackRate);
+        Animator.SetFloat("AttackSpeed2", 1.67f / AttackRate);
+        Animator.SetFloat("AttackSpeed3", 1.28f / AttackRate);
     }
 
     public void Move(float speed)
@@ -204,6 +221,8 @@ public class PlayerCtrl : MonoBehaviour
 
         if(value < 0f)
         {
+            final_value -= Defense;
+
             if(IsBlock)
             {
                 // 방어 이펙트가 있었으면 함.

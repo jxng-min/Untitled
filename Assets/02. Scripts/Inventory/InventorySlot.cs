@@ -12,7 +12,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     }
 
     [Header("슬롯 타입 마스크")]
-    [SerializeField] private ItemType m_slot_mask;
+    [SerializeField] protected ItemType m_slot_mask;
+    public ItemType SlotMask
+    {
+        get { return m_slot_mask; }
+    }
 
     private int m_item_count;
 
@@ -91,7 +95,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
     }
 
-    private void ClearSlot()
+    public void ClearSlot()
     {
         m_item = null;
         m_item_count = 0;
@@ -240,6 +244,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     {
         if(m_item is not null)
         {
+            Debug.Log("아이템을 사용하긴 함");
             if(m_item.Interactivity is false)
             {
                 return;
@@ -250,7 +255,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 return;
             }
 
-            if(!m_item_action_manager.UseItem(m_item))
+            if(!m_item_action_manager.UseItem(m_item, this))
             {
                 return;
             }
@@ -260,11 +265,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 ItemCooltimeManager.Instance.AddCooltimeQueue(m_item.ID, m_item.Cooltime);
             }
 
-            if(m_item.Type >= ItemType.Equipment_HELMET && m_item.Type <= ItemType.Equipment_SHOES)
-            {
-                //ChangeEquipmentSlot();
-            }
-
             if(m_item is not null && m_item.Consumable)
             {
                 UpdateSlotCount(-1);
@@ -272,7 +272,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
             if(m_item is null)
             {
-                //m_item_description.CloseUI();
+                //m_tool_tip_script.CloseUI();
             }
         }
     }

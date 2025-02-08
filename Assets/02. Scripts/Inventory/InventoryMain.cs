@@ -103,4 +103,22 @@ public class InventoryMain : InventoryBase
     {
         return m_slots;
     }
+
+    public InventorySlot IsCanAquireItem(Item item)
+    {
+        foreach(var slot in m_slots)
+        {
+            if(item.Overlap && slot.Item.Type == item.Type)
+            {
+                return slot;
+            }
+
+            if(slot.Item is null)
+            {
+                return slot;
+            }
+        }
+
+        return null;
+    }
 }
