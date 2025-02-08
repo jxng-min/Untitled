@@ -1,15 +1,8 @@
-using TMPro;
 using UnityEngine;
 
 public class EquipmentInventory : InventoryBase
 {
-    public static bool Active { get; set;} = false;
-
-    [Header("Player's Stats")]
-    [SerializeField] private TMP_Text m_attack_label;
-    [SerializeField] private TMP_Text m_attack_rate_label;
-    [SerializeField] private TMP_Text m_defense_label;
-
+    public static bool Active { get; set; } = false;
     private new void Awake()
     {
         base.Awake();

@@ -28,7 +28,7 @@ public class CameraCtrl : MonoBehaviour
 
     private void Rotation()
     {
-        if(!InventoryMain.Active && !EquipmentInventory.Active)
+        if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active)
         {
             Delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             
