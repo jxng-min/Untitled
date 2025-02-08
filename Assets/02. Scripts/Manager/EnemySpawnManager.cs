@@ -15,7 +15,7 @@ namespace Junyoung
 
         public Dictionary<Transform, Dictionary<EnemyType, int>> m_active_enemy_counts = new Dictionary<Transform, Dictionary<EnemyType, int>>();
 
-        private Dictionary<EnemyType, int> m_max_enemy_by_type = new Dictionary<EnemyType, int> { { EnemyType.Axe, 3 },{ EnemyType.Bow ,0} ,{ EnemyType.Boss ,0} };
+        private Dictionary<EnemyType, int> m_max_enemy_by_type = new Dictionary<EnemyType, int> { { EnemyType.Axe, 2 },{ EnemyType.Bow ,1} ,{ EnemyType.Boss ,0} };
         
         void Start()
         {
@@ -27,7 +27,7 @@ namespace Junyoung
         {
             while (true)
             {
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(15f);
 
                 foreach (var spawn_pos in m_spawn_transforms)
                 {
