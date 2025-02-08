@@ -47,7 +47,7 @@ public class SwordCtrl : WeaponCtrl
 
     private void Damage()
     {
-        float damage = m_data_manager.PlayerStat.ATK + Info.Damage;
+        float damage = Player.AttackPower;
 
         switch(PlayerAttackInfo.ComboIndex)
         {

@@ -9,7 +9,7 @@ public class PlayerSkill1 : MonoBehaviour
 
     private void Start()
     {
-        m_damage = GameObject.Find("Player").GetComponent<PlayerCtrl>().Weapon.Info.Damage + GameObject.Find("DataManager").GetComponent<DataManager>().PlayerStat.ATK;
+        m_damage = GameObject.Find("Player").GetComponent<PlayerCtrl>().AttackPower;
         m_interval = 1f;
     }
 

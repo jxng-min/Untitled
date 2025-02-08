@@ -1,14 +1,15 @@
-using TMPro;
 using UnityEngine;
 
 public class EquipmentInventory : InventoryBase
 {
-    public static bool Active { get; set;} = false;
+    public static bool Active { get; set; } = false;
 
-    [Header("Player's Stats")]
-    [SerializeField] private TMP_Text m_attack_label;
-    [SerializeField] private TMP_Text m_attack_rate_label;
-    [SerializeField] private TMP_Text m_defense_label;
+    private EquipmentEffect m_current_equipment_effect;
+
+    public EquipmentEffect CurrentEquipmentEffect
+    {
+        get { return m_current_equipment_effect; }
+    }
 
     private new void Awake()
     {
@@ -42,5 +43,46 @@ public class EquipmentInventory : InventoryBase
                 Cursor.visible = true;
             }
         }
-    } 
+    }
+
+    public void CalculateEffect()
+    {
+        EquipmentEffect calculated_effect = new EquipmentEffect();
+
+        foreach(var slot in m_slots)
+        {
+            if(slot.Item is null)
+            {
+                continue;
+            }
+
+            calculated_effect += ((Item_Equipment)slot.Item).Effect;
+        }
+
+        Debug.Log(calculated_effect);
+        m_current_equipment_effect = calculated_effect;
+    }
+
+    public InventorySlot GetEquipmentSlot(ItemType type)
+    {
+        switch(type)
+        {
+            case ItemType.Equipment_HELMET:
+                return m_slots[0];
+            
+            case ItemType.Equipment_ARMORPLATE:
+                return m_slots[1];
+            
+            case ItemType.Equipment_WEAPON:
+                return m_slots[2];
+            
+            case ItemType.Equipment_SHIELD:
+                return m_slots[3];
+            
+            case ItemType.Equipment_SHOES:
+                return m_slots[4];
+        }
+
+        return null;
+    }
 }

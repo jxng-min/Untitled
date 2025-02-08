@@ -7,7 +7,7 @@ public class PlayerSkill3 : MonoBehaviour
 
     private void Start()
     {
-        m_damage = GameObject.Find("Player").GetComponent<PlayerCtrl>().Weapon.Info.Damage + GameObject.Find("DataManager").GetComponent<DataManager>().PlayerStat.ATK;
+        m_damage = GameObject.Find("Player").GetComponent<PlayerCtrl>().AttackPower;
     }
 
     private void OnTriggerEnter(Collider coll)

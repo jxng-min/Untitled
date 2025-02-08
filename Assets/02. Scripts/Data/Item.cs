@@ -52,4 +52,8 @@ public class Item : ScriptableObject
         get { return m_item_sprite; }
     }
 
+    public static bool CheckEquipmentType(ItemType type)
+    {
+        return type >= ItemType.Equipment_HELMET && type <= ItemType.Equipment_SHOES;
+    }
 }

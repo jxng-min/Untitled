@@ -27,17 +27,35 @@ public class DraggableUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         );
     }
 
-    public void OnDrag(PointerEventData eventData)
+public void OnDrag(PointerEventData eventData)
+{
+    if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        m_canvas.transform as RectTransform, 
+        eventData.position, 
+        eventData.pressEventCamera, 
+        out Vector2 local_point))
     {
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            m_canvas.transform as RectTransform, 
-            eventData.position, 
-            eventData.pressEventCamera, 
-            out Vector2 localPoint))
-        {
-            m_rect_transform.localPosition = localPoint - m_offset;
-        }
+        Vector2 newPosition = local_point - m_offset;
+
+        // 부모 Canvas의 RectTransform 가져오기
+        RectTransform canvasRect = m_canvas.transform as RectTransform;
+
+        // 현재 UI 요소의 크기
+        Vector2 uiSize = m_rect_transform.rect.size * m_rect_transform.lossyScale;
+
+        // 경계 설정
+        float minX = -canvasRect.rect.width / 2 + uiSize.x / 2;
+        float maxX = canvasRect.rect.width / 2 - uiSize.x / 2;
+        float minY = -canvasRect.rect.height / 2 + uiSize.y / 2;
+        float maxY = canvasRect.rect.height / 2 - uiSize.y / 2;
+
+        // 위치 클램핑
+        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        newPosition.y = Mathf.Clamp(newPosition.y, minY, maxY);
+
+        m_rect_transform.localPosition = newPosition;
     }
+}
 
     public void OnPointerUp(PointerEventData eventData)
     {
