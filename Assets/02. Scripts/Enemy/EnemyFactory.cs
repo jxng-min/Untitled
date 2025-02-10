@@ -48,19 +48,14 @@ namespace Junyoung
             new_enemy.Agent.Warp(spawn_pos.position);
             new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
             new_enemy.EnemySpawnData.EnemyType = type ;
-            
+            new_enemy.ChangeState(EnemyState.IDLE); //Detect에서 SpawnData의 타입을 확인하기 위해 여기서 호출
+
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
             Debug.Log($"소환 위치 : {spawn_pos} 타입 : {type} 현재 소환 수 : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
         } 
 
         private EnemyCtrl CreateEnemy(EnemyType type)
         {
-            Debug.Log($"CreateEnemy 타입 : {type} (인덱스: {(int)type})");
-            if ((int)type < 0 || (int)type >= m_enemy_prefab.Count)
-            {
-                Debug.LogError($"[Error] m_enemy_prefab에 {type}의 프리팹이 없음! (인덱스: {(int)type})");
-                return null;
-            }
             var new_enemy = Instantiate(m_enemy_prefab[(int)type]).GetComponent<EnemyCtrl>();
             new_enemy.SetEnemyPool(m_enemy_pools[type]);
             return new_enemy;
