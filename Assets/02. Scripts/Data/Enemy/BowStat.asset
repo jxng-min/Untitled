@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BowStat
   m_EditorClassIdentifier: 
   m_hp: 70
-  m_move_speed: 4
+  m_move_speed: 3.7
   m_atk_damage: 5
   m_atk_rate: 1.7
   m_atk_range: 15

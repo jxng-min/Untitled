@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: -4405547580718146569}
   - component: {fileID: 7626456484314712645}
   - component: {fileID: -6440722429044852861}
-  - component: {fileID: 7512067668887007651}
+  - component: {fileID: 2453574001527672759}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Animator:
   m_GameObject: {fileID: 443422164868913944}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9359e17e85a3a2c48bdc332810e5b2a8, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f16ca1bc88147d948a02cf35d00880a4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -198,7 +198,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7512067668887007651
+--- !u!114 &2453574001527672759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 443422164868913944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d28495ac127a2649b29049a4cfb8e3a, type: 3}
+  m_Script: {fileID: 11500000, guid: c7314142302387947819e17c325fa37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
@@ -581,7 +581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2361565731178937763
 Transform:
   m_ObjectHideFlags: 0

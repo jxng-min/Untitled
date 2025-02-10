@@ -102,9 +102,9 @@ namespace Junyoung
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
-        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool)
+        public void SetEnemyPool<T>(IObjectPool<T> pool) where T : EnemyCtrl
         {
-            ManagedPool = pool;
+            ManagedPool = pool as IObjectPool<EnemyCtrl>;
         }
 
         public void ReturnToPool()
