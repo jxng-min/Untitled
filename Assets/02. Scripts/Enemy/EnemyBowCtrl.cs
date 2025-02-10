@@ -1,0 +1,31 @@
+using UnityEngine;
+using UnityEngine.Pool;
+
+namespace Junyoung
+{
+
+    public class EnemyBowCtrl : EnemyCtrl
+    {
+        public new IObjectPool<EnemyBowCtrl> ManagedPool { get; set; }
+            
+
+        public override void InitComponent()
+        {
+            base.InitComponent();
+            base.m_enemy_attack_state = gameObject.AddComponent<EnemyBowAttackState>();
+        }
+
+
+        public void SetEnemyPool(IObjectPool<EnemyBowCtrl> pool)
+        {
+            Debug.Log("Bow풀 초기화");
+            this.ManagedPool = pool;
+        }
+
+        public override void ReturnToPool()
+        {
+            Debug.Log($"{this.name} 반환 (Bow)");
+            ManagedPool.Release(this as EnemyBowCtrl);  // 정확한 타입을 사용하여 풀로 반환
+        }
+    }
+}

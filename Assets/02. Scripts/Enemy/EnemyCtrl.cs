@@ -2,6 +2,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
+using UnityEngine.Rendering;
 
 namespace Junyoung
 {
@@ -16,7 +17,7 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
         IEnemyState<EnemyCtrl> m_enemy_dead_state;
         IEnemyState<EnemyCtrl> m_enemy_ready_state;
-        IEnemyState<EnemyCtrl> m_enemy_attack_state;
+        protected IEnemyState<EnemyCtrl> m_enemy_attack_state;
 
         public EnemyStateContext StateContext { get; private set; }
 
@@ -43,18 +44,9 @@ namespace Junyoung
         public NavMeshAgent Agent { get; private set; }
 
         //����
-        [SerializeField]
-        private float m_patrol_range; // �ν����Ϳ��� �����ϱ� ���� ���� ����
-        public float PatrolRange { get { return m_patrol_range; } set { m_patrol_range = value; } }
-
-        //�÷��̾� Ž��
-        public float DetectAngle { get; set; } = 45f; // Ž�� ����
-        public float DetectDistance { get; set; } = 10f; // Ž�� �Ÿ�
-        public Vector3 DetectHeight { get; set; } = new Vector3(0, 2.0f, 0); //Ray �߻� ��ġ offset��
-        public int RayCount { get; set; } = 20; // �߻�Ǵ� ray ��
+        public float PatrolRange { get; set; } = 10f;
 
         //�߰�
-        public float FollowRadius { get; set; } = 15f; // �÷��̾� �߰� ���� �߰��ϴ� ����
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
 
         //����
@@ -73,7 +65,7 @@ namespace Junyoung
 
         }
 
-        public void InitComponent()
+        public virtual void InitComponent()
         {
             m_enemy_idle_state = gameObject.AddComponent<EnemyIdleState>();
             m_enemy_attack_state = gameObject.AddComponent<EnemyAttackState>();
@@ -90,9 +82,7 @@ namespace Junyoung
             Player = GameObject.Find("Player");
 
             Animator = GetComponent<Animator>();
-            Agent = GetComponent<NavMeshAgent>();
-
-            ChangeState(EnemyState.IDLE);
+            Agent = GetComponent<NavMeshAgent>();           
         }
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
@@ -103,6 +93,8 @@ namespace Junyoung
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
+            EnemyStat.FollowRange = OriginEnemyStat.FollowRange;
+            EnemyStat.DetectRange= OriginEnemyStat.DetectRange;
 
             EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
 
@@ -111,16 +103,18 @@ namespace Junyoung
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
-        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool)
+        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool) 
         {
+            Debug.Log("Enemy풀 초기화");
             ManagedPool = pool;
         }
 
-        public void ReturnToPool()
+        public virtual void ReturnToPool()
         {
             Debug.Log($"{this.name} 반환");
             ManagedPool.Release(this);
         }
+
         void FixedUpdate()
         {
             if(TotalAtkRate >= AttackDelay)
@@ -202,31 +196,44 @@ namespace Junyoung
 
         public void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
         {
-            if(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
+            if (Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
             {
                 return;
             }
-            float start_angle = -DetectAngle;
-            float offset_angle = DetectAngle / RayCount;
 
-            for(int i =0; i< RayCount; i++)
+            int ray_count = (int)EnemyStat.DetectRange * 2;
+            Vector3 y_offset = new Vector3(0, 2.0f, 0);
+            float detect_angle = 45f;
+
+
+            float start_angle = -detect_angle;
+            float offset_angle = detect_angle / ray_count;
+
+            for(int i =0; i< ray_count; i++)
             {
                 float angle = start_angle + offset_angle * i;
                 Vector3 dir = Quaternion.Euler(0,angle, 0) * transform.forward;
 
-                Ray ray = new Ray(transform.position + DetectHeight, dir);
-                if (Physics.Raycast(ray, out RaycastHit hit, DetectDistance))
+                Ray ray = new Ray(transform.position + y_offset, dir);
+                if (Physics.Raycast(ray, out RaycastHit hit, EnemyStat.DetectRange))
                 {
                     if(hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("�÷��̾� ����");
-                        ChangeState(EnemyState.FOUNDPLAYER);
-                        Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.red);
-                    }
+                        if(EnemySpawnData.EnemyType == EnemyType.Axe)
+                        {
+                            ChangeState(EnemyState.FOUNDPLAYER);
+                            Debug.DrawRay(transform.position + y_offset, dir * EnemyStat.DetectRange, Color.red);
+                        }
+                        else
+                        {
+                            ChangeState(EnemyState.FOLLOW);
+                            Debug.DrawRay(transform.position + y_offset, dir * EnemyStat.DetectRange, Color.red);
+                        }                                       
+                    }                                                        
                 }
                 else
                 {
-                    Debug.DrawRay(transform.position + DetectHeight, dir * DetectDistance, Color.green);
+                    Debug.DrawRay(transform.position + y_offset, dir * EnemyStat.DetectRange, Color.green);
                 }
             }
         }

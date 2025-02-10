@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be0689716b7ca4646be37031978dbf19, type: 3}
-  m_Name: EnemyStat
+  m_Name: BowStat
   m_EditorClassIdentifier: 
-  m_hp: 100
-  m_move_speed: 3.5
+  m_hp: 70
+  m_move_speed: 3.7
   m_atk_damage: 5
   m_atk_rate: 1.7
-  m_atk_range: 4
+  m_atk_range: 15
+  m_detect_range: 15
+  m_follow_range: 20

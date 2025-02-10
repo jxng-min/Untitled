@@ -7,7 +7,6 @@ namespace Junyoung
     {
         private EnemyCtrl m_enemy_ctrl;
         public float Damage { get; set; }
-        private float m_get_damage_ani_length;
 
         public void OnStateEnter(EnemyCtrl sender)
         {
@@ -26,34 +25,20 @@ namespace Junyoung
             }
             else
             {
-                //m_enemy_ctrl.Animator.SetTrigger("GetDamage");
-                //StartCoroutine(GetAniLength());
-            }
-
-        }
-        public void OnStateUpdate(EnemyCtrl sender)
-        {
-            if(m_get_damage_ani_length >= 0)
-            {
-                m_get_damage_ani_length -= Time.deltaTime;
-            }
-            else
-            {
                 m_enemy_ctrl.ChangeState(EnemyState.READY);
             }
+
         }
+
+        public void OnStateUpdate(EnemyCtrl sender)
+        {
+
+        }
+
         public void OnStateExit(EnemyCtrl sender)
         {
-            //m_enemy_ctrl.Animator.ResetTrigger("GetDamage");
-        }
-        /*
-        public IEnumerator GetAniLength()
-        {
-            m_get_damage_ani_length = 1f;
-            yield return new WaitForSeconds(0.1f);
 
-            m_get_damage_ani_length = m_enemy_ctrl.GetAniLength("Get Damage") - 0.1f;
         }
-        */
+
     }
 }
