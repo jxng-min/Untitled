@@ -2,6 +2,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
+using UnityEngine.Rendering;
 
 namespace Junyoung
 {
@@ -102,16 +103,18 @@ namespace Junyoung
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
-        public void SetEnemyPool<T>(IObjectPool<T> pool) where T : EnemyCtrl
+        public void SetEnemyPool(IObjectPool<EnemyCtrl> pool) 
         {
-            ManagedPool = pool as IObjectPool<EnemyCtrl>;
+            Debug.Log("Enemy풀 초기화");
+            ManagedPool = pool;
         }
 
-        public void ReturnToPool()
+        public virtual void ReturnToPool()
         {
             Debug.Log($"{this.name} 반환");
             ManagedPool.Release(this);
         }
+
         void FixedUpdate()
         {
             if(TotalAtkRate >= AttackDelay)

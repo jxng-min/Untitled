@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Pool;
 
@@ -9,7 +9,7 @@ namespace Junyoung
 
     public class EnemyFactory : MonoBehaviour
     {
-        [Header("»ı¼ºµÇ´Â Àû Stat List")]
+        [Header("ìƒì„±ë˜ëŠ” ì  Stat List")]
         [SerializeField]
         private List<EnemyStat> m_enemy_stat_list;
         [SerializeField]
@@ -31,7 +31,7 @@ namespace Junyoung
             for (int i =0; i< m_enemy_prefab.Count; i++)
             {
                 EnemyType type = (EnemyType)i;
-                Debug.Log($"[µğ¹ö±×] ObjectPool ÃÊ±âÈ­, Å¸ÀÔ: {type} (ÀÎµ¦½º: {i})");
+                Debug.Log($"[ë””ë²„ê·¸] ObjectPool ì´ˆê¸°í™”, íƒ€ì…: {type} (ì¸ë±ìŠ¤: {i})");
                 switch (type)
                 {
                     case EnemyType.Bow:
@@ -50,7 +50,7 @@ namespace Junyoung
                         );
                         break;
                 }
-                Debug.Log($"{type} Å¸ÀÔ ObjectPool ÃÊ±âÈ­");
+                Debug.Log($"{type} íƒ€ì… ObjectPool ì´ˆê¸°í™”");
             }
         }
 
@@ -62,7 +62,8 @@ namespace Junyoung
                 case EnemyType.Bow:
                     {
                         new_enemy = m_bow_pools.Get();
-                        new_enemy.SetEnemyPool(m_bow_pools);
+                        (new_enemy as EnemyBowCtrl).SetEnemyPool(m_bow_pools); 
+                       
                     }
                     break;
                 case EnemyType.Axe:
@@ -79,10 +80,10 @@ namespace Junyoung
             new_enemy.Agent.Warp(spawn_pos.position);
             new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
             new_enemy.EnemySpawnData.EnemyType = type ;
-            new_enemy.ChangeState(EnemyState.IDLE); //Detect¿¡¼­ SpawnDataÀÇ Å¸ÀÔÀ» È®ÀÎÇÏ±â À§ÇØ ¿©±â¼­ È£Ãâ
+            new_enemy.ChangeState(EnemyState.IDLE); //Detectì—ì„œ SpawnDataì˜ íƒ€ì…ì„ í™•ì¸í•˜ê¸° ìœ„í•´ ì—¬ê¸°ì„œ í˜¸ì¶œ
 
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
-            Debug.Log($"¼ÒÈ¯ À§Ä¡ : {spawn_pos} Å¸ÀÔ : {type} ÇöÀç ¼ÒÈ¯ ¼ö : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
+            Debug.Log($"ì†Œí™˜ ìœ„ì¹˜ : {spawn_pos} íƒ€ì… : {type} í˜„ì¬ ì†Œí™˜ ìˆ˜ : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
         } 
 
         private T CreateEnemy<T>(EnemyType type) where T : EnemyCtrl
@@ -99,7 +100,7 @@ namespace Junyoung
         {
             enemy.gameObject.SetActive(false);
             m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
-            Debug.Log($"¹İÈ¯ À§Ä¡ : {enemy.EnemySpawnData.SpawnTransform} Å¸ÀÔ : {enemy.EnemySpawnData.EnemyType} ÇöÀç ¼ÒÈ¯ ¼ö : {m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]}");
+            Debug.Log($"ë°˜í™˜ ìœ„ì¹˜ : {enemy.EnemySpawnData.SpawnTransform} íƒ€ì… : {enemy.EnemySpawnData.EnemyType} í˜„ì¬ ì†Œí™˜ ìˆ˜ : {m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]}");
         }
 
         private void OnDestoryEnemy(EnemyCtrl enemy)

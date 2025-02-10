@@ -22,13 +22,12 @@ namespace Junyoung
             m_enemy_factory = GetComponent<EnemyFactory>();
             StartCoroutine(SpawnMangement());
         }
-        
-        IEnumerator SpawnMangement()
+
+        IEnumerator SpawnMangement() // 현재 소환되어있는 몬
         {
             while (true)
             {
                 yield return new WaitForSeconds(15f);
-
                 foreach (var spawn_pos in m_spawn_transforms)
                 {
                     if (!m_active_enemy_counts.ContainsKey(spawn_pos))
@@ -43,14 +42,12 @@ namespace Junyoung
                     foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
                     {
                         if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
-                        {
-
+                        {                           
                             m_enemy_factory.SpawnEnemy(type, spawn_pos);
+                            yield return new WaitForSeconds(5f);
                         }
                     }
-
-
-                }
+                }               
             }
         }
 
