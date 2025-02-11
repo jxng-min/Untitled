@@ -18,7 +18,7 @@ namespace Junyoung
                 m_player = m_enemy_ctrl.Player;
             }         
             m_enemy_ctrl.Animator.SetBool("isFollowing", true);
-            m_agent.stoppingDistance = 3f;
+            m_agent.stoppingDistance = m_enemy_ctrl.EnemyStat.AtkRange;
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
@@ -40,6 +40,8 @@ namespace Junyoung
         public void OnStateExit(EnemyCtrl sender)
         {
             m_enemy_ctrl.Animator.SetBool("isFollowing", false);
+            m_agent.stoppingDistance = 1f;
+            m_agent.ResetPath();
         }
 
         void OnDrawGizmos()
