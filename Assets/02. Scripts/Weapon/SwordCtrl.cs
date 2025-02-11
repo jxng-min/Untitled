@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SwordCtrl : WeaponCtrl
 {
-    private DataManager m_data_manager; 
     public PlayerCtrl Player { get; set; }
     public PlayerAttackState PlayerAttackInfo { get; private set; }
 
@@ -12,7 +11,6 @@ public class SwordCtrl : WeaponCtrl
     {
         Player = GameObject.Find("Player").GetComponent<PlayerCtrl>();
         PlayerAttackInfo = GameObject.Find("Player").GetComponent<PlayerAttackState>();
-        m_data_manager = GameObject.Find("DataManager").GetComponent<DataManager>();
 
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -47,7 +45,7 @@ public class SwordCtrl : WeaponCtrl
 
     private void Damage()
     {
-        float damage = Player.AttackPower;
+        float damage = DataManager.Instance.Data.Stat.ATK;
 
         switch(PlayerAttackInfo.ComboIndex)
         {

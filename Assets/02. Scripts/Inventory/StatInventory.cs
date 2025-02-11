@@ -26,9 +26,9 @@ public class StatInventory : InventoryBase
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             
-            m_attack_label.text = m_player_ctrl.AttackPower.ToString();
-            m_attack_rate_label.text = m_player_ctrl.AttackRate.ToString();
-            m_defense_label.text = m_player_ctrl.Defense.ToString();
+            m_attack_label.text = DataManager.Instance.Data.Stat.ATK.ToString();
+            m_attack_rate_label.text = DataManager.Instance.Data.Stat.Rate.ToString();
+            m_defense_label.text = DataManager.Instance.Data.Stat.DEF.ToString();
         }
 
         if(Input.GetKeyDown(KeyCode.O))

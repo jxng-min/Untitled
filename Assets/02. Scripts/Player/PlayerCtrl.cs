@@ -29,7 +29,6 @@ public class PlayerCtrl : MonoBehaviour
     public Transform CameraArm { get; private set; }
     public CameraShaker Camera { get; set; }
     public Animator Animator { get; private set; }
-    public DataManager Data { get; private set; }
 
     [Header("Move Component")]
     public Rigidbody Rigidbody { get; private set; }
@@ -42,9 +41,6 @@ public class PlayerCtrl : MonoBehaviour
 
     [Header("Attack Component")]
     public WeaponCtrl Weapon { get; set; }
-    public float AttackPower { get; set; }
-    public float AttackRate { get; set; }
-    public float Defense { get; set; }
     public bool IsAttack { get; set; }
     public GameObject Skill1Effect { get { return m_skill1_prefab; } }
     public GameObject Skill2Effect { get { return m_skill2_prefab; } }
@@ -85,8 +81,6 @@ public class PlayerCtrl : MonoBehaviour
         Camera = CameraArm.GetComponentInChildren<CameraShaker>();
         Animator = Model.GetComponent<Animator>();
         Weapon = FindAnyObjectByType<WeaponCtrl>();
-        Data = GameObject.Find("DataManager").GetComponent<DataManager>();
-        
     
         StateContext = new PlayerStateContext(this);
 
@@ -110,7 +104,9 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Start()
     {
-        UpdateStat();
+        transform.position = DataManager.Instance.Data.Position;
+
+        UpdateAttackSpeed();
 
         Skill1Ready = true;
         Skill2Ready = true;
@@ -119,6 +115,8 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Update()
     {
+        DataManager.Instance.Data.Position = transform.position;
+        
         Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         CheckGround();
@@ -132,15 +130,11 @@ public class PlayerCtrl : MonoBehaviour
         StateContext.ExecuteUpdate();
     }
 
-    public void UpdateStat()
+    public void UpdateAttackSpeed()
     {
-        AttackPower = Data.PlayerStat.ATK + m_equipment_inventory.CurrentEquipmentEffect.ATK;
-        AttackRate = Data.PlayerStat.Rate - m_equipment_inventory.CurrentEquipmentEffect.Rate;
-        Defense = Data.PlayerStat.DEF + m_equipment_inventory.CurrentEquipmentEffect.DEF;
-
-        Animator.SetFloat("AttackSpeed1", 1.5f / AttackRate);
-        Animator.SetFloat("AttackSpeed2", 1.67f / AttackRate);
-        Animator.SetFloat("AttackSpeed3", 1.28f / AttackRate);
+        Animator.SetFloat("AttackSpeed1", 1.5f / DataManager.Instance.GetMaxStat().Rate);
+        Animator.SetFloat("AttackSpeed2", 1.67f / DataManager.Instance.GetMaxStat().Rate);
+        Animator.SetFloat("AttackSpeed3", 1.28f / DataManager.Instance.GetMaxStat().Rate);
     }
 
     public void Move(float speed)
@@ -178,7 +172,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill1()
     {
-        if(Data.PlayerStat.MP < 6f)
+        if(DataManager.Instance.Data.Stat.MP < 6f)
         {
             return;
         }
@@ -191,7 +185,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill2()
     {
-        if(Data.PlayerStat.MP < 1f)
+        if(DataManager.Instance.Data.Stat.MP < 1f)
         {
             return;
         }
@@ -204,7 +198,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill3()
     {
-        if(Data.PlayerStat.MP < 3f)
+        if(DataManager.Instance.Data.Stat.MP < 3f)
         {
             return;
         }
@@ -221,7 +215,7 @@ public class PlayerCtrl : MonoBehaviour
 
         if(value < 0f)
         {
-            final_value -= Defense;
+            final_value -= DataManager.Instance.Data.Stat.DEF;
 
             if(IsBlock)
             {
@@ -237,20 +231,24 @@ public class PlayerCtrl : MonoBehaviour
             Camera.Shaking(0.2f, 0.1f);
         }
 
-        Data.PlayerStat.HP += final_value;
+        DataManager.Instance.Data.Stat.HP += final_value;
 
         var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.red : Color.green);
+
+        DataManager.Instance.SavePlayerData();
     }
 
     public void UpdateMP(float value)
     {
         float final_value = value;
 
-        Data.PlayerStat.MP += value;
+        DataManager.Instance.Data.Stat.MP += value;
 
         var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.magenta : Color.blue);
+
+        DataManager.Instance.SavePlayerData();
     }
 
     public void ChangeState(PlayerState state)

@@ -9,6 +9,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     public Item Item
     {
         get { return m_item; }
+        set { m_item = value; }
     }
 
     [Header("슬롯 타입 마스크")]
@@ -19,6 +20,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     }
 
     private int m_item_count;
+    public int Count
+    {
+        get { return m_item_count; }
+    }
 
     [Header("아이템 슬롯에 있는 UI 오브젝트")]
     [SerializeField] private Image m_item_image;
@@ -205,6 +210,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
                 UpdateSlotCount(changed_slot_count);
                 DragSlot.Instance.m_current_slot.UpdateSlotCount(-changed_slot_count);
+
+                DataManager.Instance.SavePlayerData();
                 return;
             }
 
@@ -216,11 +223,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 {
                     AddItem(DragSlot.Instance.m_current_slot.Item, 1);
                     DragSlot.Instance.m_current_slot.ClearSlot();
+
+                    DataManager.Instance.SavePlayerData();
                     return;
                 }
 
                 AddItem(DragSlot.Instance.m_current_slot.Item, changed_slot_count);
                 DragSlot.Instance.m_current_slot.UpdateSlotCount(-changed_slot_count);
+
+                DataManager.Instance.SavePlayerData();
                 return;
             }
         }
@@ -238,13 +249,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         {
             DragSlot.Instance.m_current_slot.ClearSlot();
         }
+
+        DataManager.Instance.SavePlayerData();
     }
 
     public void UseItem()
     {
         if(m_item is not null)
         {
-            Debug.Log("아이템을 사용하긴 함");
             if(m_item.Interactivity is false)
             {
                 return;

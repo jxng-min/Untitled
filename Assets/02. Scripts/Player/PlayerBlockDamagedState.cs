@@ -7,11 +7,6 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
     public void ExecuteEnter(PlayerCtrl sender)
     {
         m_player_ctrl = sender;
-        if(m_player_ctrl)
-        {
-            //m_player_ctrl.Animator.SetTrigger("BlockDamaged");
-            //Invoke("Wait", 0.75f);
-        }
     }
 
     public void Execute(PlayerCtrl sender)
@@ -59,7 +54,7 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
 
     private void Dead()
     {
-        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        if(DataManager.Instance.Data.Stat.HP <= 0f)
         {
             m_player_ctrl.ChangeState(PlayerState.DEAD);
         }
@@ -67,6 +62,6 @@ public class PlayerBlockDamageState : MonoBehaviour, IState<PlayerCtrl>
 
     public void ExecuteExit(PlayerCtrl sender)
     {
-        //m_player_ctrl.Animator.ResetTrigger("BlockDamaged");
+
     }
 }

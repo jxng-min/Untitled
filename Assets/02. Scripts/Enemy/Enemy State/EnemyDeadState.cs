@@ -15,6 +15,8 @@ namespace Junyoung
 
             DropItem();
 
+            DataManager.Instance.Data.EXP++;
+
             Invoke("Destroy", 4f);
         }
         public void OnStateUpdate(EnemyCtrl sender)
