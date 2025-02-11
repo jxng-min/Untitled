@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill1 : MonoBehaviour
 {
-    private float m_damage;
-    private float m_interval;
-
-    private void Start()
-    {
-        m_damage = GameObject.Find("Player").GetComponent<PlayerCtrl>().AttackPower;
-        m_interval = 1f;
-    }
+    private float m_interval = 1f;
 
     private void OnTriggerEnter(Collider coll)
     {
@@ -33,7 +26,7 @@ public class PlayerSkill1 : MonoBehaviour
     {
         while (enemy != null)
         {
-            enemy.GetComponent<EnemyCtrl>().UpdateHP(-m_damage);
+            enemy.GetComponent<EnemyCtrl>().UpdateHP(-DataManager.Instance.Data.Stat.ATK);
 
             yield return new WaitForSeconds(m_interval);
         }

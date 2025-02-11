@@ -61,7 +61,8 @@ public class ItemActionManager : MonoBehaviour
 
                 // TODO: 장비 착용 효과음 재생
                 m_equipment_inventory.CalculateEffect();
-                m_player_ctrl.UpdateStat();
+                DataManager.Instance.UpdateStat();
+                m_player_ctrl.UpdateAttackSpeed();
 
                 return false;
 
@@ -96,7 +97,8 @@ public class ItemActionManager : MonoBehaviour
         {
             // TODO: 장비 착용 효과음 재생
             m_equipment_inventory.CalculateEffect();
-            m_player_ctrl.UpdateStat();
+            DataManager.Instance.UpdateStat();
+            m_player_ctrl.UpdateAttackSpeed();
         }
     }
 }

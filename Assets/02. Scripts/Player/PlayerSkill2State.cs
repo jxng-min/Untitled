@@ -16,7 +16,7 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
             m_player_ctrl.Animator.SetTrigger("Skill2");
             m_player_ctrl.Skill2Ready = false;
             m_player_ctrl.UpdateMP(-1f);
-            m_origin_attack = m_player_ctrl.Data.PlayerStat.ATK;
+            m_origin_attack = DataManager.Instance.Data.Stat.ATK;
 
             StartCoroutine(Skill2EffectBegin());
         }
@@ -39,7 +39,7 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
         m_effect = Instantiate(m_player_ctrl.Skill2Effect, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(1.3f);
 
-        m_player_ctrl.Data.PlayerStat.ATK = m_origin_attack + m_origin_attack * 0.5f;
+        DataManager.Instance.Data.Stat.ATK = m_origin_attack + m_origin_attack * 0.5f;
 
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -54,7 +54,7 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
     {
         yield return new WaitForSeconds(10f);
 
-        m_player_ctrl.Data.PlayerStat.ATK = m_origin_attack;
+        DataManager.Instance.Data.Stat.ATK = m_origin_attack;
 
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -67,7 +67,7 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
 
     private void Dead()
     {
-        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        if(DataManager.Instance.Data.Stat.HP <= 0f)
         {
             m_player_ctrl.ChangeState(PlayerState.DEAD);
         }

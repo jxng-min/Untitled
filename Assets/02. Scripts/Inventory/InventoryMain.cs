@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class InventoryMain : InventoryBase
 {
@@ -70,6 +69,8 @@ public class InventoryMain : InventoryBase
         {
             target_slot.AddItem(item, count);
         }
+
+        DataManager.Instance.SavePlayerData();
     }
 
     public void AcquireItem(Item item, int count = 1)
@@ -83,6 +84,8 @@ public class InventoryMain : InventoryBase
                     if(m_slots[i].Item.ID == item.ID)
                     {
                         m_slots[i].UpdateSlotCount(count);
+                        DataManager.Instance.SavePlayerData();
+
                         return;
                     }
                 }
@@ -94,6 +97,8 @@ public class InventoryMain : InventoryBase
             if(m_slots[i].Item == null && m_slots[i].IsMask(item))
             {
                 m_slots[i].AddItem(item, count);
+                DataManager.Instance.SavePlayerData();
+                
                 return;
             }
         }

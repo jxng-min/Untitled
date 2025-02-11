@@ -58,7 +58,7 @@ public class PlayerIdleState : MonoBehaviour, IState<PlayerCtrl>
 
     private void Dead()
     {
-        if(m_player_ctrl.Data.PlayerStat.HP <= 0f)
+        if(DataManager.Instance.Data.Stat.HP <= 0f)
         {
             m_player_ctrl.ChangeState(PlayerState.DEAD);
         }

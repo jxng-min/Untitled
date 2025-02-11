@@ -59,7 +59,6 @@ public class EquipmentInventory : InventoryBase
             calculated_effect += ((Item_Equipment)slot.Item).Effect;
         }
 
-        Debug.Log(calculated_effect);
         m_current_equipment_effect = calculated_effect;
     }
 
