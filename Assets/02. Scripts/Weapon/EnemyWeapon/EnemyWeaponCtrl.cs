@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace Junyoung
 {
 
-    public class BattleAxeCtrl : MonoBehaviour
+    public class EnemyWeaponCtrl : MonoBehaviour
     {
         [SerializeField]
         private Vector3 m_box_size;
