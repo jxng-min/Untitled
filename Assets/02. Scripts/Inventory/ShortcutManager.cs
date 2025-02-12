@@ -1,4 +1,3 @@
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 public class ShortcutManager : MonoBehaviour

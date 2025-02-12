@@ -23,6 +23,12 @@ public class ItemDataManager : Singleton<ItemDataManager>
     private Dictionary<int, string> m_item_name_dics;
     private Dictionary<int, string> m_item_description_dics;
 
+    [SerializeField] private Item[] m_item_object_data;
+    public Item[] ItemObject
+    {
+        get { return m_item_object_data; }
+    }
+
     private void Start()
     {
         m_item_data_path = Path.Combine(Application.persistentDataPath, "ItemData.json");

@@ -9,7 +9,7 @@ namespace Junyoung
 
     public class EnemyFactory : MonoBehaviour
     {
-        [Header("»ý¼ºµÇ´Â Àû Stat List")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ Stat List")]
         [SerializeField]
         private List<EnemyStat> m_enemy_stat_list;
         [SerializeField]
@@ -23,18 +23,14 @@ namespace Junyoung
         
         private void Awake()
         {
-            Debug.Log($"m_enemy_stat_list.Count: {m_enemy_stat_list.Count}");
-            Debug.Log($"m_enemy_prefab.Count: {m_enemy_prefab.Count}");
             m_enemy_spawn_manager = GetComponent<EnemySpawnManager>();
             m_enemy_pools = new Dictionary<EnemyType, IObjectPool<EnemyCtrl>>();
 
             for(int i =0; i< m_enemy_prefab.Count; i++)
             {
                 EnemyType type = (EnemyType)i;
-                Debug.Log($"[µð¹ö±×] ObjectPool ÃÊ±âÈ­, Å¸ÀÔ: {type} (ÀÎµ¦½º: {i})");
                 m_enemy_pools[type] = new ObjectPool<EnemyCtrl>(() => CreateEnemy(type), OnGetEnemy, OnReturnEnemy,
                                                                                 OnDestoryEnemy, maxSize: m_enemy_spawn_manager.m_max_enemy_size[i]);
-                Debug.Log($"{type} Å¸ÀÔ ObjectPool ÃÊ±âÈ­");
             }
         }
 
@@ -50,15 +46,12 @@ namespace Junyoung
             new_enemy.EnemySpawnData.EnemyType = type ;
             
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
-            Debug.Log($"¼ÒÈ¯ À§Ä¡ : {spawn_pos} Å¸ÀÔ : {type} ÇöÀç ¼ÒÈ¯ ¼ö : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
         } 
 
         private EnemyCtrl CreateEnemy(EnemyType type)
         {
-            Debug.Log($"CreateEnemy Å¸ÀÔ : {type} (ÀÎµ¦½º: {(int)type})");
             if ((int)type < 0 || (int)type >= m_enemy_prefab.Count)
             {
-                Debug.LogError($"[Error] m_enemy_prefab¿¡ {type}ÀÇ ÇÁ¸®ÆÕÀÌ ¾øÀ½! (ÀÎµ¦½º: {(int)type})");
                 return null;
             }
             var new_enemy = Instantiate(m_enemy_prefab[(int)type]).GetComponent<EnemyCtrl>();
@@ -75,7 +68,6 @@ namespace Junyoung
         {
             enemy.gameObject.SetActive(false);
             m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
-            Debug.Log($"¹ÝÈ¯ À§Ä¡ : {enemy.EnemySpawnData.SpawnTransform} Å¸ÀÔ : {enemy.EnemySpawnData.EnemyType} ÇöÀç ¼ÒÈ¯ ¼ö : {m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]}");
         }
 
         private void OnDestoryEnemy(EnemyCtrl enemy)
