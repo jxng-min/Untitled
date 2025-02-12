@@ -16,6 +16,7 @@ public class DataManager : Singleton<DataManager>
 
     [SerializeField] private InventoryMain m_main_inventory;
     [SerializeField] private EquipmentInventory m_equipment_inventory;
+    [SerializeField] private ShortcutManager m_quick_inventory;
 
     public PlayerStatusCtrl StatusUI { get; private set; }
 
@@ -72,6 +73,30 @@ public class DataManager : Singleton<DataManager>
                 Data.m_main_map[i] = new Map { m_item_code = (ItemCode)m_main_inventory.Slots[i].Item.ID, m_item_count = m_main_inventory.Slots[i].Count };
             }
         }
+
+        for(int i = 0; i < m_equipment_inventory.Slots.Length; i++)
+        {
+            if(m_equipment_inventory.Slots[i].Item is null)
+            {
+                Data.m_equipment_map[i] = new Map { m_item_code = ItemCode.NONE, m_item_count = m_equipment_inventory.Slots[i].Count };
+            }
+            else
+            {
+                Data.m_equipment_map[i] = new Map { m_item_code = (ItemCode)m_equipment_inventory.Slots[i].Item.ID, m_item_count = m_equipment_inventory.Slots[i].Count };
+            }
+        }
+
+        for(int i = 0; i < m_quick_inventory.Slots.Length; i++)
+        {
+            if(m_quick_inventory.Slots[i].Item is null)
+            {
+                Data.m_quick_map[i] = new Map { m_item_code = ItemCode.NONE, m_item_count = m_quick_inventory.Slots[i].Count };
+            }
+            else
+            {
+                Data.m_quick_map[i] = new Map { m_item_code = (ItemCode)m_quick_inventory.Slots[i].Item.ID, m_item_count = m_quick_inventory.Slots[i].Count };
+            }
+        }
     }
 
     public void LoadInventory()
@@ -93,9 +118,44 @@ public class DataManager : Singleton<DataManager>
             }
         }
 
-        // 장비 인벤토리 정보도 불러와야 함.
+        for(int i = 0; i < Data.m_equipment_map.Length; i++)
+        {
+            Debug.Log(i);
+            if(Data.m_equipment_map[i].m_item_code == ItemCode.NONE)
+            {
+                m_equipment_inventory.Slots[i].ClearSlot();
+            }
+            else
+            {
+                var item = GetItemByCode(Data.m_equipment_map[i].m_item_code);
 
-        // 단축키 정보도 불러와야 함.
+                if(item is not null)
+                {
+                    m_equipment_inventory.LoadItem(item, m_equipment_inventory.Slots[i], Data.m_equipment_map[i].m_item_count);
+                }
+            }
+        }
+
+        m_equipment_inventory.CalculateEffect();
+        UpdateStat();
+
+        for(int i = 0; i < Data.m_quick_map.Length; i++)
+        {
+            if(Data.m_quick_map[i].m_item_code == ItemCode.NONE)
+            {
+                m_quick_inventory.Slots[i].ClearSlot();
+            }
+            else
+            {
+                Debug.Log($"{Data.m_quick_map[i].m_item_code} 불러오는데 성공");
+                var item = GetItemByCode(Data.m_quick_map[i].m_item_code);
+
+                if(item is not null)
+                {
+                    m_quick_inventory.LoadItem(item, m_quick_inventory.Slots[i], Data.m_quick_map[i].m_item_count);
+                }
+            }
+        }
     }
 
     public void SavePlayerData()
