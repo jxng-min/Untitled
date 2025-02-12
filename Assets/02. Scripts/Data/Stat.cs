@@ -84,12 +84,13 @@ public class Stat
 
     public static Stat operator*(Stat stat, int level)
     {
-        Stat temp_stat = stat;
+        Stat temp_stat = new Stat();
 
-        temp_stat.HP *= level;
-        temp_stat.MP *= level;
-        temp_stat.ATK *= level;
-        temp_stat.DEF *= level;
+        temp_stat.HP = stat.HP * level;
+        temp_stat.MP = stat.MP * level;
+        temp_stat.ATK = stat.ATK * level;
+        temp_stat.Rate = stat.Rate;
+        temp_stat.DEF = stat.DEF * level;
 
         return temp_stat;
     }

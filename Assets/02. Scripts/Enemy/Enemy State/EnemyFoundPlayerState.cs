@@ -34,13 +34,12 @@ namespace Junyoung
         {
 
         }
-        private IEnumerator GetAniLength() // Attack Æ®¸®°Å°¡ È£Ãâ µÆÁö¸¸ µô·¹ÀÌ°¡ ÀÖ¾î¼­ StateInfo°¡ ¾Ö´Ï¸ÞÀÌ¼Ç ÀüÈ¯ Àü¿¡ È£ÃâµÇ´Â ¹®Á¦ ¶§¹®¿¡ »ç¿ë
+        private IEnumerator GetAniLength() // Attack Æ®ï¿½ï¿½ï¿½Å°ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ö¾î¼­ StateInfoï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         {
             m_found_player_ani_length = 1f;
-            yield return new WaitForSeconds(0.1f); // ¾à°£ÀÇ ´ë±â ½Ã°£À» ÁÖ¾î ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ ÀüÈ¯À» ±â´Ù¸²          
+            yield return new WaitForSeconds(0.1f); // ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½          
            
             m_found_player_ani_length = m_enemy_ctrl.GetAniLength("Found Player") - 0.1f;
-            Debug.Log(m_found_player_ani_length);
         }
     }
 }

@@ -1,5 +1,7 @@
 public enum ItemCode
 {
+    NONE = -1,
+
     // 소비 아이템 0~
     SMALL_HP_POTION = 0,
     SMALL_MP_POTION = 1,

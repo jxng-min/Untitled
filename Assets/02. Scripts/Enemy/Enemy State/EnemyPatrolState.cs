@@ -19,19 +19,17 @@ namespace Junyoung
                 m_agent = m_enemy_ctrl.Agent;
             }
             m_agent.stoppingDistance = 1f;
-            Vector3 pos = RandomPos(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.PatrolRange); // ¹üÀ§ ³»¿¡ ·£´ýÇÑ À§Ä¡ »ý¼º
+            Vector3 pos = RandomPos(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.PatrolRange); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
             m_agent.SetDestination(pos);
-            Debug.Log($"PATROL state ÁøÀÔ ·£´ý À§Ä¡ »ý¼º");
             m_enemy_ctrl.Animator.SetBool("isPatrol", true);
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
             m_enemy_ctrl.DetectPlayer();
 
-            if(m_agent.remainingDistance <= m_agent.stoppingDistance) // (µµÂø ¿©ºÎ)³²Àº °Å¸®¿Í, ¸ñÀûÁö·Î ºÎÅÍ ¶³¾îÁ®¼­ ¸ØÃç¾ß ÇÏ´Â °Å¸® ºñ±³
+            if(m_agent.remainingDistance <= m_agent.stoppingDistance) // (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½
             {
-                Debug.Log($"¸ñÀûÁö µµÂø IDLE·Î ÀüÈ¯");
-                m_enemy_ctrl.ChangeState(EnemyState.IDLE); // ¸ñÀûÁö µµÂø½Ã IDLE·Î ÀüÈ¯
+                m_enemy_ctrl.ChangeState(EnemyState.IDLE); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDLEï¿½ï¿½ ï¿½ï¿½È¯
             }
         }
         public void OnStateExit(EnemyCtrl sender)
@@ -54,11 +52,10 @@ namespace Junyoung
                     return pos.position;
                 }
             }
-            Debug.Log("ÀÌµ¿ÇÒ ¼ö ¾ø´Â À§Ä¡ ¹ÝÈ¯ ÀçÀÚ¸®");
             return m_agent.destination;
             
         }
-        private void OnDrawGizmosSelected()// PatrolCenter¸¦ ±âÁØÀ¸·Î PatrolRange ¹ÝÁö¸§ÀÇ ±¸¸¦ ±×¸²
+        private void OnDrawGizmosSelected()// PatrolCenterï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PatrolRange ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
         {
             if (m_enemy_ctrl == null) return;
             
