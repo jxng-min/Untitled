@@ -11,7 +11,6 @@ namespace Junyoung
 
         public IObjectPool<ArrowCtrl> ManagedArrowPool { get; set; }
 
-
         public void SetArrowPool(IObjectPool<ArrowCtrl> pool)
         {
             ManagedArrowPool = pool;

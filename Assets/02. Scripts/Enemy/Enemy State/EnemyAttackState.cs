@@ -5,11 +5,11 @@ namespace Junyoung
 {
     public class EnemyAttackState : MonoBehaviour,IEnemyState<EnemyCtrl>
     {
-        private EnemyCtrl m_enemy_ctrl;
-        private PlayerCtrl m_player_ctrl;
-        private GameObject m_player;
-        private float m_atk_ani_length;
-        private bool m_is_hitting;
+        protected EnemyCtrl m_enemy_ctrl;
+        protected PlayerCtrl m_player_ctrl;
+        protected GameObject m_player;
+        protected float m_atk_ani_length;
+        protected bool m_is_hitting;
 
         public virtual void OnStateEnter(EnemyCtrl sender)
         {

@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 7626456484314712645}
   - component: {fileID: -6440722429044852861}
   - component: {fileID: 2453574001527672759}
+  - component: {fileID: 1899516771925541136}
   m_Layer: 8
   m_Name: Bow
   m_TagString: Enemy
@@ -218,6 +219,20 @@ MonoBehaviour:
   m_drop_item_prefabs:
   - {fileID: 7393320336947541842, guid: 96bc1d2cdcfe97f40bbc502366880666, type: 3}
   - {fileID: 4134816041749529828, guid: 12b970411f2e1cc4dadb33aeda2a83d1, type: 3}
+  m_arrow_spawn_pos: {fileID: 3212472958034088763}
+--- !u!114 &1899516771925541136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443422164868913944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec891300cd6c124aabd3fa38cf02de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_arrow_prefab: {fileID: 4022854349998953385, guid: 3a66c961ebe1ec144abe6dc224a3edba, type: 3}
 --- !u!1 &816630472017125987
 GameObject:
   m_ObjectHideFlags: 0

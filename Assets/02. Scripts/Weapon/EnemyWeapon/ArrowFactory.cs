@@ -7,6 +7,7 @@ namespace Junyoung
     public class ArrowFactory : MonoBehaviour
     {
         private ObjectPool<ArrowCtrl> m_arrow_pools;
+        [SerializeField]
         private GameObject m_arrow_prefab;
 
         private void Awake()
@@ -15,10 +16,13 @@ namespace Junyoung
 
         }
 
-        public void CreateArrow(Transform spawn_pos)
+        public ArrowCtrl SpawnArrow(Transform spawn_pos)
         {
             ArrowCtrl new_arrow = m_arrow_pools.Get();
             new_arrow.transform.position = spawn_pos.position;
+            new_arrow.transform.rotation = spawn_pos.rotation;
+
+            return new_arrow;
         }
         private ArrowCtrl CreateArrow()
         {
