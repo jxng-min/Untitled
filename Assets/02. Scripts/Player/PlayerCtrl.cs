@@ -213,13 +213,20 @@ public class PlayerCtrl : MonoBehaviour
     {
         float final_value = value;
 
-        if(value < 0f)
+        var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
+
+        if(final_value < 0f)
         {
-            final_value -= DataManager.Instance.Data.Stat.DEF;
+            final_value += DataManager.Instance.Data.Stat.DEF;
+
+            if(final_value >= 0f)
+            {
+                indicator.Init(transform.position + Vector3.up * 3f, final_value, Color.black, 0.5f, true);
+                return;
+            }
 
             if(IsBlock)
             {
-                // 방어 이펙트가 있었으면 함.
                 ChangeState(PlayerState.BLOCKDAMAGE);
                 final_value = value * 0.2f;
             }
@@ -233,7 +240,6 @@ public class PlayerCtrl : MonoBehaviour
 
         DataManager.Instance.Data.Stat.HP += final_value;
 
-        var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.red : Color.green);
 
         DataManager.Instance.SavePlayerData();

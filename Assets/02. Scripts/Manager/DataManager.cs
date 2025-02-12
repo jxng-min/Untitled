@@ -39,9 +39,11 @@ public class DataManager : Singleton<DataManager>
                 Data.Stat.MP = GetMaxStat().MP;
 
                 Data.Position = new Vector3(101f, 0f ,15f);
-                
+
                 SavePlayerData();
             }
+
+            UpdateStat();
         }
         else
         {
