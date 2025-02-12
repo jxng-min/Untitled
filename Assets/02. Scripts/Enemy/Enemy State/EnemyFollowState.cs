@@ -18,11 +18,11 @@ namespace Junyoung
                 m_player = m_enemy_ctrl.Player;
             }         
             m_enemy_ctrl.Animator.SetBool("isFollowing", true);
-            m_agent.stoppingDistance = 3f;
+            m_agent.stoppingDistance = m_enemy_ctrl.EnemyStat.AtkRange;
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            if (Vector3.Distance(m_player.transform.position,m_enemy_ctrl.transform.position) <= m_enemy_ctrl.FollowRadius)
+            if (Vector3.Distance(m_player.transform.position,m_enemy_ctrl.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
             {
                 m_agent.SetDestination(m_player.transform.position);
             }
@@ -40,13 +40,15 @@ namespace Junyoung
         public void OnStateExit(EnemyCtrl sender)
         {
             m_enemy_ctrl.Animator.SetBool("isFollowing", false);
+            m_agent.stoppingDistance = 1f;
+            m_agent.ResetPath();
         }
 
         void OnDrawGizmos()
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.FollowRadius);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.transform.position, m_enemy_ctrl.EnemyStat.FollowRange);
         }
     }
 }

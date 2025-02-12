@@ -11,7 +11,7 @@ namespace Junyoung
         private float m_atk_ani_length;
         private bool m_is_hitting;
 
-        public void OnStateEnter(EnemyCtrl sender)
+        public virtual void OnStateEnter(EnemyCtrl sender)
         {
             if(m_enemy_ctrl==null)
             {

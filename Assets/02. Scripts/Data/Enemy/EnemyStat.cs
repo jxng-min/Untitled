@@ -22,4 +22,12 @@ public class EnemyStat : ScriptableObject
     [SerializeField]
     private float m_atk_range;
     public float AtkRange { get { return m_atk_range; } set { m_atk_range = value;} }
+
+    [SerializeField]
+    private float m_detect_range;
+    public float DetectRange { get { return m_detect_range;} set { m_detect_range = value;} }
+
+    [SerializeField]
+    private float m_follow_range;
+    public float FollowRange { get { return m_follow_range;} set { m_follow_range = value;} }
 }
