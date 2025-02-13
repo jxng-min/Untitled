@@ -16,12 +16,12 @@ namespace Junyoung
 
         }
 
-        public ArrowCtrl SpawnArrow(Transform spawn_pos)
+        public ArrowCtrl SpawnArrow(Transform spawn_pos, EnemyCtrl enemy)
         {
             ArrowCtrl new_arrow = m_arrow_pools.Get();
             new_arrow.transform.position = spawn_pos.position;
             new_arrow.transform.rotation = spawn_pos.rotation;
-
+            new_arrow.transform.SetParent(enemy.transform);
             return new_arrow;
         }
         private ArrowCtrl CreateArrow()
@@ -38,6 +38,7 @@ namespace Junyoung
 
         public void OnReturnArrow(ArrowCtrl arrow)
         {
+            arrow.transform.SetParent(null);
             arrow.gameObject.SetActive(false);
         }
 

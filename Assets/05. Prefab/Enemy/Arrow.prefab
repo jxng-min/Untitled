@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -135,8 +135,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.046133447, y: 0.03995274, z: 0.7504024}
-  m_Center: {x: 0, y: 0.006658788, z: 0.06959218}
+  m_Size: {x: 0.03, y: 0.03, z: 0.7}
+  m_Center: {x: 0, y: 0, z: 0.07}
 --- !u!114 &-4413501066609324286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a08383eb44ad794fb7b0bd7fc3a33ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_box_size: {x: 0, y: 0, z: 0}
-  m_box_center: {x: 0, y: 0, z: 0}
+  m_box_size: {x: 0.03, y: 0.03, z: 0.7}
+  m_box_center: {x: 0, y: 0, z: 0.07}
   m_enemy_ctrl: {fileID: 0}
-  m_arrow_transfrom: {fileID: 0}

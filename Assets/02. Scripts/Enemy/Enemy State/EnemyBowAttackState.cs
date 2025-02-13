@@ -19,14 +19,14 @@ namespace Junyoung
                 m_enemy_bow_ctrl = gameObject.GetComponent<EnemyBowCtrl>();
             }
 
-            ArrowCtrl arrow = m_arrow_factory.SpawnArrow(m_enemy_bow_ctrl.m_arrow_spawn_pos);
+            ArrowCtrl arrow = m_arrow_factory.SpawnArrow(m_enemy_bow_ctrl.m_arrow_spawn_pos, sender);
             FireArrow(arrow);
         }
 
         public void FireArrow(ArrowCtrl arrow)
         {
             Vector3 dir = (m_player.transform.position - gameObject.transform.position).normalized;
-            arrow.GetComponent<Rigidbody>().AddForce(dir * 2f, ForceMode.Impulse);
+            arrow.GetComponent<Rigidbody>().AddForce(dir * 25f, ForceMode.Impulse);
         }
     }
 }

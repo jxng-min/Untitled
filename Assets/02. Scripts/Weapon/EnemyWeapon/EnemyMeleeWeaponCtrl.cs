@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace Junyoung
 {
 
-    public class EnemyWeaponCtrl : MonoBehaviour
+    public class EnemyMeleeWeaponCtrl : MonoBehaviour
     {
         [SerializeField]
         private Vector3 m_box_size;
@@ -12,15 +12,15 @@ namespace Junyoung
         private Vector3 m_box_center;
 
         [SerializeField]
-        private EnemyCtrl m_enemy_ctrl;
+        protected EnemyCtrl m_enemy_ctrl;
 
-        void Awake()
+        protected virtual void Awake()
         {
             m_enemy_ctrl = gameObject.transform.root.GetComponent<EnemyCtrl>();
         }
 
         // Update is called once per frame
-        void Update()
+        protected void Update()
         {
             Quaternion box_rotation = transform.rotation; // transform.rotationÀº Quaternion Çü½Ä
             Collider[] hit_colliders = Physics.OverlapBox(transform.TransformPoint(m_box_center), m_box_size, box_rotation);
@@ -34,7 +34,7 @@ namespace Junyoung
             }
         }
 
-        private void OnDrawGizmos()
+        protected void OnDrawGizmos()
         {
             if(m_enemy_ctrl&&m_enemy_ctrl.IsHit)
             {
