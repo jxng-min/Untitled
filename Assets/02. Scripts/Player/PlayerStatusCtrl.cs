@@ -25,6 +25,8 @@ public class PlayerStatusCtrl : MonoBehaviour
             DataManager.Instance.Data.Level++;
             DataManager.Instance.Data.EXP = 0f;
 
+            DataManager.Instance.UpdateStat();
+
             DataManager.Instance.Data.Stat.HP = DataManager.Instance.GetMaxStat().HP;
             DataManager.Instance.Data.Stat.MP = DataManager.Instance.GetMaxStat().MP;
         }

@@ -12,7 +12,7 @@ namespace Junyoung
             m_enemy_ctrl= sender;
             m_enemy_ctrl.Animator.SetBool("isPatrol", false);
 
-            m_idling_time = UnityEngine.Random.Range(2.0f, 7.0f); // invoke·Î ÇÏ¸é µµÁß¿¡ follow state·Î ÀüÈ¯ µÇ¾îµµ ±×´ë·Î µ¿ÀÛÇÔ
+            m_idling_time = UnityEngine.Random.Range(2.0f, 7.0f); // invokeï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ follow stateï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Ç¾îµµ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
@@ -21,7 +21,6 @@ namespace Junyoung
             m_idling_time -= Time.deltaTime;
             if (m_idling_time<=0)
             {
-                Debug.Log($"idle Å¸ÀÓ Á¾·á PATROL state·Î ÀüÈ¯");
                 m_enemy_ctrl.ChangeState(EnemyState.PATROL);             
             }
 

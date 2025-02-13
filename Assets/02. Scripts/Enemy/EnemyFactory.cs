@@ -24,14 +24,11 @@ namespace Junyoung
         
         private void Awake()
         {
-            Debug.Log($"m_enemy_stat_list.Count: {m_enemy_stat_list.Count}");
-            Debug.Log($"m_enemy_prefab.Count: {m_enemy_prefab.Count}");
             m_enemy_spawn_manager = GetComponent<EnemySpawnManager>();
 
             for (int i =0; i< m_enemy_prefab.Count; i++)
             {
                 EnemyType type = (EnemyType)i;
-                Debug.Log($"[디버그] ObjectPool 초기화, 타입: {type} (인덱스: {i})");
                 switch (type)
                 {
                     case EnemyType.Bow:
@@ -50,7 +47,6 @@ namespace Junyoung
                         );
                         break;
                 }
-                Debug.Log($"{type} 타입 ObjectPool 초기화");
             }
         }
 
@@ -83,7 +79,6 @@ namespace Junyoung
             new_enemy.ChangeState(EnemyState.IDLE); //Detect에서 SpawnData의 타입을 확인하기 위해 여기서 호출
 
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
-            Debug.Log($"소환 위치 : {spawn_pos} 타입 : {type} 현재 소환 수 : {m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]}");
         } 
 
         private T CreateEnemy<T>(EnemyType type) where T : EnemyCtrl
@@ -100,7 +95,6 @@ namespace Junyoung
         {
             enemy.gameObject.SetActive(false);
             m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
-            Debug.Log($"반환 위치 : {enemy.EnemySpawnData.SpawnTransform} 타입 : {enemy.EnemySpawnData.EnemyType} 현재 소환 수 : {m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]}");
         }
 
         private void OnDestoryEnemy(EnemyCtrl enemy)

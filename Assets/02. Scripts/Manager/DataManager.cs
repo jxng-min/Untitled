@@ -1,4 +1,3 @@
-using System.Data;
 using System.IO;
 using UnityEngine;
 
@@ -15,8 +14,9 @@ public class DataManager : Singleton<DataManager>
     private Stat DefaultStat { get; set; }
     private Stat GrowthStat { get; set; }
 
-    [SerializeField] InventoryMain m_main_inventory;
-    [SerializeField] EquipmentInventory m_equipment_inventory;
+    [SerializeField] private InventoryMain m_main_inventory;
+    [SerializeField] private EquipmentInventory m_equipment_inventory;
+    [SerializeField] private ShortcutManager m_quick_inventory;
 
     public PlayerStatusCtrl StatusUI { get; private set; }
 
@@ -39,9 +39,11 @@ public class DataManager : Singleton<DataManager>
                 Data.Stat.MP = GetMaxStat().MP;
 
                 Data.Position = new Vector3(101f, 0f ,15f);
-                
+
                 SavePlayerData();
             }
+
+            UpdateStat();
         }
         else
         {
@@ -51,6 +53,109 @@ public class DataManager : Singleton<DataManager>
         }
 
         StatusUI = GetComponent<PlayerStatusCtrl>();
+    }
+
+    private void Start()
+    {
+        LoadInventory();
+    }
+
+    public void SaveInventory()
+    {
+        for(int i = 0; i < m_main_inventory.Slots.Length; i++)
+        {
+            if(m_main_inventory.Slots[i].Item is null)
+            {
+                Data.m_main_map[i] = new Map { m_item_code = ItemCode.NONE, m_item_count = m_main_inventory.Slots[i].Count };
+            }
+            else
+            {
+                Data.m_main_map[i] = new Map { m_item_code = (ItemCode)m_main_inventory.Slots[i].Item.ID, m_item_count = m_main_inventory.Slots[i].Count };
+            }
+        }
+
+        for(int i = 0; i < m_equipment_inventory.Slots.Length; i++)
+        {
+            if(m_equipment_inventory.Slots[i].Item is null)
+            {
+                Data.m_equipment_map[i] = new Map { m_item_code = ItemCode.NONE, m_item_count = m_equipment_inventory.Slots[i].Count };
+            }
+            else
+            {
+                Data.m_equipment_map[i] = new Map { m_item_code = (ItemCode)m_equipment_inventory.Slots[i].Item.ID, m_item_count = m_equipment_inventory.Slots[i].Count };
+            }
+        }
+
+        for(int i = 0; i < m_quick_inventory.Slots.Length; i++)
+        {
+            if(m_quick_inventory.Slots[i].Item is null)
+            {
+                Data.m_quick_map[i] = new Map { m_item_code = ItemCode.NONE, m_item_count = m_quick_inventory.Slots[i].Count };
+            }
+            else
+            {
+                Data.m_quick_map[i] = new Map { m_item_code = (ItemCode)m_quick_inventory.Slots[i].Item.ID, m_item_count = m_quick_inventory.Slots[i].Count };
+            }
+        }
+    }
+
+    public void LoadInventory()
+    {
+        for(int i = 0; i < Data.m_main_map.Length; i++)
+        {
+            if(Data.m_main_map[i].m_item_code == ItemCode.NONE)
+            {
+                m_main_inventory.Slots[i].ClearSlot();
+            }
+            else
+            {
+                var item = GetItemByCode(Data.m_main_map[i].m_item_code);
+
+                if(item is not null)
+                {
+                    m_main_inventory.LoadItem(item, m_main_inventory.Slots[i], Data.m_main_map[i].m_item_count);
+                }
+            }
+        }
+
+        for(int i = 0; i < Data.m_equipment_map.Length; i++)
+        {
+            Debug.Log(i);
+            if(Data.m_equipment_map[i].m_item_code == ItemCode.NONE)
+            {
+                m_equipment_inventory.Slots[i].ClearSlot();
+            }
+            else
+            {
+                var item = GetItemByCode(Data.m_equipment_map[i].m_item_code);
+
+                if(item is not null)
+                {
+                    m_equipment_inventory.LoadItem(item, m_equipment_inventory.Slots[i], Data.m_equipment_map[i].m_item_count);
+                }
+            }
+        }
+
+        m_equipment_inventory.CalculateEffect();
+        UpdateStat();
+
+        for(int i = 0; i < Data.m_quick_map.Length; i++)
+        {
+            if(Data.m_quick_map[i].m_item_code == ItemCode.NONE)
+            {
+                m_quick_inventory.Slots[i].ClearSlot();
+            }
+            else
+            {
+                Debug.Log($"{Data.m_quick_map[i].m_item_code} 불러오는데 성공");
+                var item = GetItemByCode(Data.m_quick_map[i].m_item_code);
+
+                if(item is not null)
+                {
+                    m_quick_inventory.LoadItem(item, m_quick_inventory.Slots[i], Data.m_quick_map[i].m_item_count);
+                }
+            }
+        }
     }
 
     public void SavePlayerData()
@@ -88,5 +193,18 @@ public class DataManager : Singleton<DataManager>
         Data.Stat = GetMaxStat();
         Data.Stat.HP = temp_hp;
         Data.Stat.MP = temp_mp;
+    }
+
+    private Item GetItemByCode(ItemCode item_code)
+    {
+        foreach(var item in ItemDataManager.Instance.ItemObject)
+        {
+            if(item.ID == (int)item_code)
+            {
+                return item;
+            }
+        }
+
+        return null;
     }
 }

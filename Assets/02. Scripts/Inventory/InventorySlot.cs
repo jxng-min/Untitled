@@ -120,6 +120,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             }
 
             UseItem();
+            DataManager.Instance.SaveInventory();
         }
     }
 
@@ -176,6 +177,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
 
         ChangeSlot();
+        DataManager.Instance.SaveInventory();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -211,7 +213,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 UpdateSlotCount(changed_slot_count);
                 DragSlot.Instance.m_current_slot.UpdateSlotCount(-changed_slot_count);
 
-                DataManager.Instance.SavePlayerData();
                 return;
             }
 
@@ -224,14 +225,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                     AddItem(DragSlot.Instance.m_current_slot.Item, 1);
                     DragSlot.Instance.m_current_slot.ClearSlot();
 
-                    DataManager.Instance.SavePlayerData();
                     return;
                 }
 
                 AddItem(DragSlot.Instance.m_current_slot.Item, changed_slot_count);
                 DragSlot.Instance.m_current_slot.UpdateSlotCount(-changed_slot_count);
 
-                DataManager.Instance.SavePlayerData();
                 return;
             }
         }
@@ -249,8 +248,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         {
             DragSlot.Instance.m_current_slot.ClearSlot();
         }
-
-        DataManager.Instance.SavePlayerData();
     }
 
     public void UseItem()
@@ -280,11 +277,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if(m_item is not null && m_item.Consumable)
             {
                 UpdateSlotCount(-1);
-            }
-
-            if(m_item is null)
-            {
-                //m_tool_tip_script.CloseUI();
             }
         }
     }
