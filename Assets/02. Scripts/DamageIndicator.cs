@@ -21,21 +21,23 @@ public class DamageIndicator : MonoBehaviour
         m_child_transform.LookAt(Camera.main.transform);
     }
 
-    public void Init(Vector3 pos, float amount, Color color, float size = 1f)
+    public void Init(Vector3 pos, float amount, Color color, float size = 1f, bool miss_flag = false)
     {
-        if(Mathf.RoundToInt(amount) == 0)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-
         m_rigidbody.angularVelocity = Vector3.zero;
         m_rigidbody.linearVelocity = Vector3.zero;
         transform.localScale = Vector3.one * size;
 
         transform.position = pos;
 
-        m_damage_label.text = Mathf.Abs(Mathf.RoundToInt(amount)).ToString();
+        if(miss_flag)
+        {
+            m_damage_label.text = "DODGE";
+        }
+        else
+        {
+            m_damage_label.text = Mathf.Abs(Mathf.RoundToInt(amount)).ToString();
+        }
+
         m_damage_label.color = color;
 
         m_rigidbody.AddForce(new Vector3(Random.Range(-2f, 2f), 5f, Random.Range(-2f, 2f)), ForceMode.Impulse);

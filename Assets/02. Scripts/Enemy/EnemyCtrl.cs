@@ -176,10 +176,6 @@ namespace Junyoung
             {
                 speed = state_info.speed * state_info.speedMultiplier;
             }
-            else
-            {
-                Debug.Log($"���� ���°� '{clip_name}'�� ��ġ���� �ʽ��ϴ�.");
-            }
 
             //Debug.Log($"{clip_name}�� ���� : {length}");
             //Debug.Log($"{clip_name}�� �ӵ� : {speed}");

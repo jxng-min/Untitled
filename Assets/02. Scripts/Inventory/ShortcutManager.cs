@@ -1,4 +1,3 @@
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 public class ShortcutManager : MonoBehaviour
@@ -6,10 +5,15 @@ public class ShortcutManager : MonoBehaviour
     [SerializeField] private Transform m_slot_parent;
 
     private InventorySlot[] m_slots;
+    public InventorySlot[] Slots
+    {
+        get { return m_slots; }
+    }
 
     private void Awake()
     {
         m_slots = m_slot_parent.GetComponentsInChildren<InventorySlot>();
+        Debug.Log(Slots.Length);
     }
 
     private void Update()
@@ -91,5 +95,10 @@ public class ShortcutManager : MonoBehaviour
         {
             m_slots[15].UseItem();
         }
+    }
+
+    public void LoadItem(Item item, InventorySlot target_slot, int count = 1)
+    {
+        target_slot.AddItem(item, count);
     }
 }

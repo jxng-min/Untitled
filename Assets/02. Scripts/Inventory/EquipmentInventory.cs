@@ -45,6 +45,11 @@ public class EquipmentInventory : InventoryBase
         }
     }
 
+    public void LoadItem(Item item, InventorySlot target_slot, int count = 1)
+    {
+        target_slot.AddItem(item, count);
+    }
+
     public void CalculateEffect()
     {
         EquipmentEffect calculated_effect = new EquipmentEffect();

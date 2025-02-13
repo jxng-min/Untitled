@@ -53,6 +53,11 @@ public class InventoryMain : InventoryBase
         Cursor.visible = false;
     }
 
+    public void LoadItem(Item item, InventorySlot target_slot, int count = 1)
+    {
+        target_slot.AddItem(item, count);
+    }
+
     public void AcquireItem(Item item, InventorySlot target_slot, int count = 1)
     {
         if(item.Overlap)

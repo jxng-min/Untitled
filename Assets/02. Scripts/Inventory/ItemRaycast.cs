@@ -121,6 +121,8 @@ public class ItemRaycast : MonoBehaviour
             {
                 m_inventory.AcquireItem(m_current_item.Item);
                 Destroy(m_current_item.gameObject);
+
+                DataManager.Instance.SaveInventory();
             }
 
             ItemInfoDisappear();
