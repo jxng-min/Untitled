@@ -218,6 +218,7 @@ MonoBehaviour:
   m_drop_item_prefabs:
   - {fileID: 7393320336947541842, guid: 96bc1d2cdcfe97f40bbc502366880666, type: 3}
   - {fileID: 4134816041749529828, guid: 12b970411f2e1cc4dadb33aeda2a83d1, type: 3}
+  m_arrow_spawn_pos: {fileID: 3212472958034088763}
 --- !u!1 &816630472017125987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1329,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.53129625, y: 0.41580433, z: 0.41356894, w: 0.61138517}
   m_LocalPosition: {x: 0, y: 0.38, z: 0.07}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.17, y: 1.17, z: 1.17}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1383775273061478893}

@@ -4,12 +4,27 @@ using UnityEngine.Pool;
 
 namespace Junyoung
 {
-    public class ArrowCtrl : EnemyWeaponCtrl
+    public class ArrowCtrl : MonoBehaviour
     {
-        [SerializeField]
-        private Transform m_arrow_transfrom;
+
+        public EnemyBowCtrl EnemyBowCtrl { get; set; }
 
         public IObjectPool<ArrowCtrl> ManagedArrowPool { get; set; }
+
+        private void OnEnable()
+        {
+            Invoke("ReturnToPool", 3f);
+        }
+
+        private void OnTriggerEnter(Collider col)
+        {
+            if (col.CompareTag("Player") && EnemyBowCtrl.StateContext.NowState is EnemyAttackState)
+            {
+                EnemyBowCtrl.IsHit = true;
+                CancelInvoke("ReturnToPool");
+                ReturnToPool();
+            }
+        }
 
 
         public void SetArrowPool(IObjectPool<ArrowCtrl> pool)
@@ -21,16 +36,6 @@ namespace Junyoung
         {
             ManagedArrowPool.Release(this);
         }
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

@@ -6,6 +6,9 @@ namespace Junyoung
 
     public class EnemyBowCtrl : EnemyCtrl
     {
+
+        public Transform m_arrow_spawn_pos;
+
         public new IObjectPool<EnemyBowCtrl> ManagedPool { get; set; }
             
 
