@@ -12,16 +12,16 @@ namespace Junyoung
 
         private void Awake()
         {
-            m_arrow_pools = new ObjectPool<ArrowCtrl> (CreateArrow, OnGetArrow, OnReturnArrow, OnDestoryArrow, maxSize : 10);
-
+            m_arrow_pools = new ObjectPool<ArrowCtrl> (CreateArrow, OnGetArrow, OnReturnArrow, OnDestoryArrow, maxSize : 8);
         }
 
-        public ArrowCtrl SpawnArrow(Transform spawn_pos, EnemyCtrl enemy)
+        public ArrowCtrl SpawnArrow(Transform spawn_pos, EnemyBowCtrl enemy)
         {
             ArrowCtrl new_arrow = m_arrow_pools.Get();
             new_arrow.transform.position = spawn_pos.position;
             new_arrow.transform.rotation = spawn_pos.rotation;
-            new_arrow.transform.SetParent(enemy.transform);
+            new_arrow.EnemyBowCtrl = enemy;
+            new_arrow.transform.SetParent(transform);
             return new_arrow;
         }
         private ArrowCtrl CreateArrow()
@@ -38,7 +38,8 @@ namespace Junyoung
 
         public void OnReturnArrow(ArrowCtrl arrow)
         {
-            arrow.transform.SetParent(null);
+            arrow.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero; // 위치 이동속도(선형속도) 초기화
+            arrow.gameObject.GetComponent<Rigidbody>().angularVelocity= Vector3.zero; // 회전속도 (각속도) 초기화
             arrow.gameObject.SetActive(false);
         }
 

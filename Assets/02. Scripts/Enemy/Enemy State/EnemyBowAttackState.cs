@@ -15,11 +15,11 @@ namespace Junyoung
             
             if(!m_arrow_factory) 
             {
-                m_arrow_factory = gameObject.GetComponent<ArrowFactory>();
+                m_arrow_factory = GameObject.Find("ArrowFactory").GetComponent<ArrowFactory>();
                 m_enemy_bow_ctrl = gameObject.GetComponent<EnemyBowCtrl>();
             }
 
-            ArrowCtrl arrow = m_arrow_factory.SpawnArrow(m_enemy_bow_ctrl.m_arrow_spawn_pos, sender);
+            ArrowCtrl arrow = m_arrow_factory.SpawnArrow(m_enemy_bow_ctrl.m_arrow_spawn_pos, sender as EnemyBowCtrl);
             FireArrow(arrow);
         }
 

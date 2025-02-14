@@ -7,26 +7,21 @@ namespace Junyoung
     public class ArrowCtrl : MonoBehaviour
     {
 
-        EnemyBowCtrl m_enemy_bow_ctrl;
+        public EnemyBowCtrl EnemyBowCtrl { get; set; }
 
         public IObjectPool<ArrowCtrl> ManagedArrowPool { get; set; }
 
         private void OnEnable()
         {
-            //Invoke("ReturnToPool", 3f);
+            Invoke("ReturnToPool", 3f);
         }
 
         private void OnTriggerEnter(Collider col)
         {
-            if (!m_enemy_bow_ctrl)
+            if (col.CompareTag("Player") && EnemyBowCtrl.StateContext.NowState is EnemyAttackState)
             {
-                m_enemy_bow_ctrl = gameObject.transform.root.GetComponent<EnemyBowCtrl>();
-            }
-
-            if (col.CompareTag("Player") && m_enemy_bow_ctrl.StateContext.NowState is EnemyAttackState)
-            {
-                m_enemy_bow_ctrl.IsHit = true;
-                //CancelInvoke("ReturnToPool");
+                EnemyBowCtrl.IsHit = true;
+                CancelInvoke("ReturnToPool");
                 ReturnToPool();
             }
         }
