@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class ItemRaycast : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class ItemRaycast : MonoBehaviour
     [Header("아이템 인디케이터")]
     [SerializeField] private TMP_Text m_indicator_label;
 
+    [Header("추가/삭제할 머티리얼")]
+    [SerializeField] private Material m_material;
+    private bool m_material_exist = false;
+
     private void Update()
     {
         CheckItem();
@@ -40,7 +45,7 @@ public class ItemRaycast : MonoBehaviour
             {
                 InventorySlot[] all_items = m_inventory.GetAllItems();
 
-                int count = 0;
+                int count;
                 for(count = 0; count < all_items.Length; count++)
                 {
                     if(all_items[count].Item == null)
@@ -78,6 +83,11 @@ public class ItemRaycast : MonoBehaviour
                 {
                     return;
                 }
+                
+                if(m_current_item is not null)
+                {
+                    RemoveMaterial();
+                }
 
                 m_current_item = raycasted_item;
 
@@ -91,6 +101,8 @@ public class ItemRaycast : MonoBehaviour
 
                 m_is_pick_up_active = true;
 
+                AddMaterial();
+
                 return;
             }
             else
@@ -101,6 +113,10 @@ public class ItemRaycast : MonoBehaviour
         }
         else
         {
+            if(m_current_item is not null)
+            {
+                RemoveMaterial();
+            }
             ItemInfoDisappear();
         }
     }
@@ -126,6 +142,49 @@ public class ItemRaycast : MonoBehaviour
             }
 
             ItemInfoDisappear();
+        }
+    }
+
+    private void AddMaterial()
+    {
+        foreach(var renderer in m_current_item.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] materials = renderer.sharedMaterials;
+            m_material_exist = false;
+
+            foreach(var material in materials)
+            {
+                if(material == m_material)
+                {
+                    m_material_exist = true;
+                    break;
+                }
+            }
+
+            if(!m_material_exist)
+            {
+                ArrayUtility.Add(ref materials, m_material);
+                renderer.sharedMaterials = materials;
+            }
+        }
+    }
+
+    private void RemoveMaterial()
+    {
+        foreach(var renderer in m_current_item.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] materials = renderer.sharedMaterials;
+
+            for(int i = 0; i < materials.Length; i++)
+            {
+                if(materials[i] == m_material)
+                {
+                    ArrayUtility.RemoveAt(ref materials, i);
+                    renderer.sharedMaterials = materials;
+
+                    break;
+                }
+            }
         }
     }
 }
