@@ -71,7 +71,7 @@ namespace Junyoung
 
 
             new_enemy.OriginEnemyStat = m_enemy_stat_list[(int)type];
-            new_enemy.InitComponent();
+            //new_enemy.InitComponent();
             new_enemy.InitStat();
             new_enemy.Agent.Warp(spawn_pos.position);
             new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
