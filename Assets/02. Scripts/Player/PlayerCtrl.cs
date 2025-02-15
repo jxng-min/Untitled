@@ -116,9 +116,12 @@ public class PlayerCtrl : MonoBehaviour
     private void Update()
     {
         DataManager.Instance.Data.Position = transform.position;
-        
-        Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
+        if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active && !ConversationManager.Instance.IsTalking)
+        {
+            Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        }
+        
         CheckGround();
         CheckFalling();
         CheckBlocking();
@@ -127,7 +130,11 @@ public class PlayerCtrl : MonoBehaviour
         CheckSkill2();
         CheckSkill3();
 
-        StateContext.ExecuteUpdate();
+        if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active && !ConversationManager.Instance.IsTalking)
+        {
+            StateContext.ExecuteUpdate();
+        }
+        
     }
 
     public void UpdateAttackSpeed()
@@ -156,6 +163,11 @@ public class PlayerCtrl : MonoBehaviour
         {
             if(IsGround && Input.GetButtonDown("Jump"))
             {
+                if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
+                {
+                    return;
+                }
+                
                 Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
                 Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
                 ChangeState(PlayerState.JUMPIN);
@@ -166,12 +178,22 @@ public class PlayerCtrl : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
+            if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
+            {
+                return;
+            }
+
             ChangeState(PlayerState.ATTACK);
         }
     }
 
     public void Skill1()
     {
+        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
+        {
+            return;
+        }
+
         if(DataManager.Instance.Data.Stat.MP < 6f)
         {
             return;
@@ -185,6 +207,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill2()
     {
+        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
+        {
+            return;
+        }
+
         if(DataManager.Instance.Data.Stat.MP < 1f)
         {
             return;
@@ -198,6 +225,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Skill3()
     {
+        if(InventoryMain.Active && EquipmentInventory.Active && StatInventory.Active && ConversationManager.Instance.IsTalking)
+        {
+            return;
+        }
+
         if(DataManager.Instance.Data.Stat.MP < 3f)
         {
             return;
