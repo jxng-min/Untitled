@@ -17,12 +17,10 @@ namespace Junyoung
             }
             m_enemy_ctrl.Animator.SetBool("isBack", true);
             m_agent.speed *= 1.4f; // 복귀시 이동속도 증가
-            m_agent.SetDestination(m_enemy_ctrl.BackPosition);
+            m_agent.SetDestination(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position);
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            m_enemy_ctrl.DetectPlayer();
-
             if (m_agent.remainingDistance <= m_agent.stoppingDistance)
             {
                 m_enemy_ctrl.ChangeState(EnemyState.IDLE);

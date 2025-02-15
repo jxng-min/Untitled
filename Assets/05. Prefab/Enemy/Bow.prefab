@@ -1988,12 +1988,12 @@ GameObject:
   - component: {fileID: 8794307133937243505}
   - component: {fileID: 636968727878940501}
   m_Layer: 0
-  m_Name: Erika_Archer_Eyes_Mesh
+  m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8794307133937243505
 Transform:
   m_ObjectHideFlags: 0

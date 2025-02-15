@@ -14,7 +14,6 @@ namespace Junyoung
             {
                 m_enemy_ctrl = sender;
             }
-            m_enemy_ctrl.BackPosition = m_enemy_ctrl.transform.position;
             m_enemy_ctrl.Animator.SetTrigger("FoundPlayer");
 
             StartCoroutine(GetAniLength());

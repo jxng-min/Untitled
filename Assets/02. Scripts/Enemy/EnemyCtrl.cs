@@ -16,7 +16,7 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_follow_state;
         IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
         IEnemyState<EnemyCtrl> m_enemy_dead_state;
-        IEnemyState<EnemyCtrl> m_enemy_ready_state;
+        protected IEnemyState<EnemyCtrl> m_enemy_ready_state;
         protected IEnemyState<EnemyCtrl> m_enemy_attack_state;
 
         public EnemyStateContext StateContext { get; private set; }
@@ -45,6 +45,9 @@ namespace Junyoung
 
         //����
         public float PatrolRange { get; set; } = 10f;
+
+        public float FollowRange { get; set; } = 15f;
+
 
         //�߰�
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
@@ -93,7 +96,6 @@ namespace Junyoung
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
-            EnemyStat.FollowRange = OriginEnemyStat.FollowRange;
             EnemyStat.DetectRange= OriginEnemyStat.DetectRange;
 
             EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();

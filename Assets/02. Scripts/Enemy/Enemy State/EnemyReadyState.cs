@@ -8,7 +8,7 @@ namespace Junyoung
         private GameObject m_player;
         private float m_rotation_speed = 3.5f;
 
-        public void OnStateEnter(EnemyCtrl sender)
+        public virtual void OnStateEnter(EnemyCtrl sender)
         {
             if (m_enemy_ctrl == null)
             {
@@ -36,7 +36,7 @@ namespace Junyoung
                 m_enemy_ctrl.ChangeState(EnemyState.ATTACK);
             }
         }
-        public void OnStateExit(EnemyCtrl sender)
+        public virtual void OnStateExit(EnemyCtrl sender)
         {
 
         }
@@ -48,7 +48,7 @@ namespace Junyoung
             m_enemy_ctrl.gameObject.transform.rotation = Quaternion.Slerp(m_enemy_ctrl.gameObject.transform.rotation, player_rotation, m_rotation_speed * Time.deltaTime);
         }
 
-        void OnDrawGizmos()
+        public void OnDrawGizmos()
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.red;

@@ -15,7 +15,8 @@ namespace Junyoung
         public override void InitComponent()
         {
             base.InitComponent();
-            base.m_enemy_attack_state = gameObject.AddComponent<EnemyBowAttackState>();
+            m_enemy_attack_state = gameObject.AddComponent<EnemyBowAttackState>();
+            m_enemy_ready_state = gameObject.AddComponent<EnemyBowReadyState>();
         }
 
 
