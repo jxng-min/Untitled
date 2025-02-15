@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 using UnityEngine.Rendering;
+using System.Collections.Generic;
+
 
 namespace Junyoung
 {
@@ -58,17 +60,13 @@ namespace Junyoung
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
+        public DropItemManager m_drop_item_manager;
 
-        public GameObject[] m_drop_item_prefabs;
+        public List<ItemObject> m_drop_item_bag = new List<ItemObject>();
 
         public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
 
-        private void OnEnable()
-        {
-
-        }
-
-        public virtual void InitComponent()
+        public virtual void Awake()
         {
             m_enemy_idle_state = gameObject.AddComponent<EnemyIdleState>();
             m_enemy_attack_state = gameObject.AddComponent<EnemyAttackState>();
@@ -84,8 +82,29 @@ namespace Junyoung
 
             Player = GameObject.Find("Player");
 
+            m_drop_item_manager = GameObject.Find("DropItemManager").GetComponent<DropItemManager>();
+
             Animator = GetComponent<Animator>();
-            Agent = GetComponent<NavMeshAgent>();           
+            Agent = GetComponent<NavMeshAgent>();
+
+            SetDropItemBag();
+        }
+
+        public virtual void SetDropItemBag()
+        {
+            ItemCode[] codes = new ItemCode[]
+{
+             ItemCode.SMALL_HP_POTION,
+             ItemCode.BASIC_ARMORPLATE,
+             ItemCode.BASIC_SHOES
+            };
+
+            float[] chances = new float[]
+            {
+                40f,10f,5f
+            };
+
+            m_drop_item_manager.AddItemToBag(m_drop_item_bag, codes, chances);
         }
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ

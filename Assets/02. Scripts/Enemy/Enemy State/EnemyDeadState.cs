@@ -28,13 +28,17 @@ namespace Junyoung
 
         private void DropItem()
         {
-            int item_index = Random.Range(0, m_enemy_ctrl.m_drop_item_prefabs.Length);
-            var drop_item = Instantiate(m_enemy_ctrl.m_drop_item_prefabs[item_index]);
-            drop_item.transform.position = new Vector3(m_enemy_ctrl.gameObject.transform.position.x, m_enemy_ctrl.gameObject.transform.position.y + 3f, m_enemy_ctrl.gameObject.transform.position.z);
-            Rigidbody item_rigid = drop_item.GetComponent<Rigidbody>();
+            var item_prefab = m_enemy_ctrl.m_drop_item_manager.DropRandomItem(m_enemy_ctrl.m_drop_item_bag);
 
-            Vector3 dir = new Vector3(Random.Range(-3f, 3f), 7f, Random.Range(-3f, 3f));
-            item_rigid.AddForce(dir, ForceMode.Impulse);
+            if (item_prefab)
+            {
+                var drop_item = Instantiate(item_prefab);
+                drop_item.transform.position = new Vector3(m_enemy_ctrl.gameObject.transform.position.x, m_enemy_ctrl.gameObject.transform.position.y + 3f, m_enemy_ctrl.gameObject.transform.position.z);
+                Rigidbody item_rigid = drop_item.GetComponent<Rigidbody>();
+
+                Vector3 dir = new Vector3(Random.Range(-3f, 3f), 7f, Random.Range(-3f, 3f));
+                item_rigid.AddForce(dir, ForceMode.Impulse);
+            }
 
         }
 
