@@ -6,17 +6,21 @@ namespace Junyoung
     {
         private EnemyCtrl m_enemy_ctrl;
         public void OnStateEnter(EnemyCtrl sender)
-        {
+        {          
             if (m_enemy_ctrl == null)
             {
                 m_enemy_ctrl = sender;
-            }             
+            }
+            if (m_enemy_ctrl.IsDead) return;
+            m_enemy_ctrl.IsDead = true;
+
             m_enemy_ctrl.Animator.SetTrigger("Dead");
 
             DropItem();
 
             DataManager.Instance.Data.EXP++;
 
+            
             Invoke("Destroy", 4f);
         }
         public void OnStateUpdate(EnemyCtrl sender)
@@ -44,7 +48,10 @@ namespace Junyoung
 
         private void Destroy()
         {
+            if (!m_enemy_ctrl.gameObject.activeInHierarchy) return;
+            m_enemy_ctrl.IsDead = false;
             m_enemy_ctrl.ReturnToPool();
+            
         }
     }
 }

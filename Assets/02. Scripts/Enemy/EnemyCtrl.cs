@@ -55,8 +55,9 @@ namespace Junyoung
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
 
         //����
-        public bool CanAtk { get; set; } //���� ���� ����
-        public bool IsHit { get; set; }  // ������ ���� �ߴ��� ����
+        public bool CanAtk { get; set; } = true;//���� ���� ����
+        public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����       
+        public bool IsDead { get; set; }  = false;
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
@@ -65,6 +66,17 @@ namespace Junyoung
         public List<ItemObject> m_drop_item_bag = new List<ItemObject>();
 
         public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
+
+        [SerializeField]
+        public string m_state_name;
+
+        public void OnEnable()
+        {
+            CanAtk = true;
+            IsHit = false;
+            IsDead = false;
+            ChangeState(EnemyState.IDLE);
+        }
 
         public virtual void Awake()
         {
@@ -109,18 +121,18 @@ namespace Junyoung
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
         {
-            EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+            if (!EnemyStat || !EnemySpawnData)
+            {
+                EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+                EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
+            }
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
             EnemyStat.DetectRange= OriginEnemyStat.DetectRange;
-
-            EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
-
-            CanAtk = true;
-            IsHit = false;
+         
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
@@ -138,7 +150,8 @@ namespace Junyoung
 
         void FixedUpdate()
         {
-            if(TotalAtkRate >= AttackDelay)
+            m_state_name = StateContext.NowState.ToString();
+            if (TotalAtkRate >= AttackDelay)
             {
                 AttackDelay += Time.deltaTime;
                 if (CanAtk) CanAtk = false;

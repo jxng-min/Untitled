@@ -5,7 +5,7 @@ namespace Junyoung
     public class EnemyIdleState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
         private EnemyCtrl m_enemy_ctrl;
-        private float m_idling_time;
+        public float m_idling_time;
 
         public void OnStateEnter(EnemyCtrl sender)
         {
