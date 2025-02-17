@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEditor;
-using UnityEngine.Experimental.AI;
 
 public class NPCRaycast : MonoBehaviour
 {
@@ -57,6 +56,8 @@ public class NPCRaycast : MonoBehaviour
 
                 m_current_npc = raycasted_npc;
 
+                ConversationManager.Instance.BubbleDialoging(m_hit.transform, m_current_npc, m_hit.normal);
+
                 m_indicator.SetActive(true);
                 m_indicator_label.text = NPCDataManager.Instance.GetName(m_current_npc.Info.ID);
 
@@ -110,8 +111,6 @@ public class NPCRaycast : MonoBehaviour
                         break;
                 }
             }
-
-            // 말풍선 처리
         }
     }
 
