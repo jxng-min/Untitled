@@ -19,6 +19,7 @@ namespace Junyoung
 
         private ObjectPool<EnemyCtrl> m_axe_pools;
         private  ObjectPool<EnemyBowCtrl> m_bow_pools;
+        private ObjectPool<EnemyBossCtrl> m_boss_pools;
 
         private EnemySpawnManager m_enemy_spawn_manager;
         
@@ -34,6 +35,13 @@ namespace Junyoung
                     case EnemyType.Bow:
                         m_bow_pools = new ObjectPool<EnemyBowCtrl>(
                             () => CreateEnemy<EnemyBowCtrl>(type),
+                            OnGetEnemy, OnReturnEnemy, OnDestoryEnemy,
+                            maxSize: m_enemy_spawn_manager.m_max_enemy_size[i]
+                        );
+                        break;
+                    case EnemyType.Boss:
+                        m_boss_pools = new ObjectPool<EnemyBossCtrl>(
+                            () => CreateEnemy<EnemyBossCtrl>(type),
                             OnGetEnemy, OnReturnEnemy, OnDestoryEnemy,
                             maxSize: m_enemy_spawn_manager.m_max_enemy_size[i]
                         );
@@ -60,6 +68,13 @@ namespace Junyoung
                         new_enemy = m_bow_pools.Get();
                         (new_enemy as EnemyBowCtrl).SetEnemyPool(m_bow_pools); 
                        
+                    }
+                    break;
+                case EnemyType.Boss:
+                    {
+                        new_enemy = m_boss_pools.Get();
+                        (new_enemy as EnemyBossCtrl).SetEnemyPool(m_boss_pools);
+
                     }
                     break;
                 case EnemyType.Axe:

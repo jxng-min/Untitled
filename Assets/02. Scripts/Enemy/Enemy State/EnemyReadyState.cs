@@ -4,9 +4,9 @@ namespace Junyoung
 {
     public class EnemyReadyState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
-        private EnemyCtrl m_enemy_ctrl;
-        private GameObject m_player;
-        private float m_rotation_speed = 3.5f;
+        protected EnemyCtrl m_enemy_ctrl;
+        protected GameObject m_player;
+        
 
         public virtual void OnStateEnter(EnemyCtrl sender)
         {
@@ -18,13 +18,9 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            LookPlayer();
+            m_enemy_ctrl.DetectPlayer();
 
-            if (m_player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
-            {
-                m_enemy_ctrl.Animator.SetTrigger("CombatEnd");
-                m_enemy_ctrl.ChangeState(EnemyState.IDLE);             
-            }
+            PlayerDeadCheck();
 
             if (Vector3.Distance(m_player.transform.position, m_enemy_ctrl.transform.position) >= m_enemy_ctrl.EnemyStat.AtkRange)
             {
@@ -41,11 +37,13 @@ namespace Junyoung
 
         }
 
-        private void LookPlayer()
+        protected virtual void PlayerDeadCheck()
         {
-            Vector3 dir = m_player.transform.position - m_enemy_ctrl.gameObject.transform.position;
-            Quaternion player_rotation = Quaternion.LookRotation(dir);
-            m_enemy_ctrl.gameObject.transform.rotation = Quaternion.Slerp(m_enemy_ctrl.gameObject.transform.rotation, player_rotation, m_rotation_speed * Time.deltaTime);
+            if (m_player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
+            {
+                m_enemy_ctrl.Animator.SetTrigger("CombatEnd");
+                m_enemy_ctrl.ChangeState(EnemyState.IDLE);
+            }
         }
 
         public void OnDrawGizmos()

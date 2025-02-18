@@ -11,7 +11,7 @@ namespace Junyoung
     public class EnemyCtrl : MonoBehaviour
     {
         //Enemt State
-        IEnemyState<EnemyCtrl> m_enemy_idle_state;
+        protected IEnemyState<EnemyCtrl> m_enemy_idle_state;
         IEnemyState<EnemyCtrl> m_enemy_patrol_state;
         IEnemyState<EnemyCtrl> m_enemy_back_state;
         IEnemyState<EnemyCtrl> m_enemy_found_player_state;
@@ -48,15 +48,13 @@ namespace Junyoung
         //����
         public float PatrolRange { get; set; } = 10f;
 
-        public float FollowRange { get; set; } = 15f;
-
-
         //�߰�
         public Vector3 BackPosition { get; set; } //�����صξ��ٰ� �߰� ����� �����ϴ� ��ġ
 
         //����
-        public bool CanAtk { get; set; } //���� ���� ����
-        public bool IsHit { get; set; }  // ������ ���� �ߴ��� ����
+        public bool CanAtk { get; set; } = true;//���� ���� ����
+        public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����       
+        public bool IsDead { get; set; }  = false;
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
@@ -65,6 +63,19 @@ namespace Junyoung
         public List<ItemObject> m_drop_item_bag = new List<ItemObject>();
 
         public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
+
+        private float m_rotation_speed = 3.5f;
+
+        [SerializeField]
+        public string m_state_name;
+
+        public void OnEnable()
+        {
+            CanAtk = true;
+            IsHit = false;
+            IsDead = false;
+            ChangeState(EnemyState.IDLE);
+        }
 
         public virtual void Awake()
         {
@@ -109,18 +120,19 @@ namespace Junyoung
 
         public void InitStat() // ����,�⺻�� �ʱ�ȭ
         {
-            EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+            if (!EnemyStat || !EnemySpawnData)
+            {
+                EnemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+                EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
+            }
             EnemyStat.HP = OriginEnemyStat.HP;
             EnemyStat.AtkDamege = OriginEnemyStat.AtkDamege;
             EnemyStat.AtkRate = OriginEnemyStat.AtkRate;
             EnemyStat.MoveSpeed = OriginEnemyStat.MoveSpeed;
             EnemyStat.AtkRange = OriginEnemyStat.AtkRange;
             EnemyStat.DetectRange= OriginEnemyStat.DetectRange;
-
-            EnemySpawnData = ScriptableObject.CreateInstance<EnemySpawnData>();
-
-            CanAtk = true;
-            IsHit = false;
+            EnemyStat.FollowRange= OriginEnemyStat.FollowRange;
+         
             Agent.speed = EnemyStat.MoveSpeed;
         }
 
@@ -138,7 +150,8 @@ namespace Junyoung
 
         void FixedUpdate()
         {
-            if(TotalAtkRate >= AttackDelay)
+            m_state_name = StateContext.NowState.ToString();
+            if (TotalAtkRate >= AttackDelay)
             {
                 AttackDelay += Time.deltaTime;
                 if (CanAtk) CanAtk = false;
@@ -211,7 +224,13 @@ namespace Junyoung
             ChangeState(EnemyState.GETDAMAGE);
         }
 
-        public void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
+        public void LookPlayer()
+        {
+            Vector3 dir = Player.transform.position - gameObject.transform.position;
+            Quaternion player_rotation = Quaternion.LookRotation(dir);
+            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, player_rotation, m_rotation_speed * Time.deltaTime);
+        }
+        public virtual void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
         {
             if (Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
             {

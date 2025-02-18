@@ -4,17 +4,17 @@ namespace Junyoung
 {
     public class EnemyIdleState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
-        private EnemyCtrl m_enemy_ctrl;
-        private float m_idling_time;
+        protected EnemyCtrl m_enemy_ctrl;
+        public float m_idling_time;
 
-        public void OnStateEnter(EnemyCtrl sender)
+        public virtual void OnStateEnter(EnemyCtrl sender)
         {
             m_enemy_ctrl= sender;
             m_enemy_ctrl.Animator.SetBool("isPatrol", false);
 
             m_idling_time = UnityEngine.Random.Range(2.0f, 7.0f); // invoke�� �ϸ� ���߿� follow state�� ��ȯ �Ǿ �״�� ������
         }
-        public void OnStateUpdate(EnemyCtrl sender)
+        public virtual void OnStateUpdate(EnemyCtrl sender)
         {
             m_enemy_ctrl.DetectPlayer();
 
