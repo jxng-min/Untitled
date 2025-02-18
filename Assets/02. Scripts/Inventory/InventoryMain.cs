@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class InventoryMain : InventoryBase
 {
     public static bool Active { get; set; } = false;
+
+    [SerializeField] private TMP_Text m_money_label;
 
     private new void Awake()
     {
@@ -75,7 +78,8 @@ public class InventoryMain : InventoryBase
             target_slot.AddItem(item, count);
         }
 
-        DataManager.Instance.SavePlayerData();
+        DataManager.Instance.SaveInventory();
+        DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
     }
 
     public void AcquireItem(Item item, int count = 1)
@@ -89,7 +93,9 @@ public class InventoryMain : InventoryBase
                     if(m_slots[i].Item.ID == item.ID)
                     {
                         m_slots[i].UpdateSlotCount(count);
-                        DataManager.Instance.SavePlayerData();
+
+                        DataManager.Instance.SaveInventory();
+                        DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
 
                         return;
                     }
@@ -102,7 +108,9 @@ public class InventoryMain : InventoryBase
             if(m_slots[i].Item == null && m_slots[i].IsMask(item))
             {
                 m_slots[i].AddItem(item, count);
-                DataManager.Instance.SavePlayerData();
+
+                DataManager.Instance.SaveInventory();
+                DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
                 
                 return;
             }
@@ -130,5 +138,10 @@ public class InventoryMain : InventoryBase
         }
 
         return null;
+    }
+
+    public void RefreshLabels()
+    {
+        m_money_label.text = "보유금: " + DataManager.Instance.Data.Money.ToString();
     }
 }

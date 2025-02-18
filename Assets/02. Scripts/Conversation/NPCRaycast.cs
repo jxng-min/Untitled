@@ -56,8 +56,6 @@ public class NPCRaycast : MonoBehaviour
 
                 m_current_npc = raycasted_npc;
 
-                ConversationManager.Instance.BubbleDialoging(m_hit.transform, m_current_npc, m_hit.normal);
-
                 m_indicator.SetActive(true);
                 m_indicator_label.text = NPCDataManager.Instance.GetName(m_current_npc.Info.ID);
 
@@ -101,7 +99,15 @@ public class NPCRaycast : MonoBehaviour
                 switch(m_current_npc.Info.Type)
                 {
                     case NPCType.MERCHANT:
-                        ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
+                        if(!ItemShopManager.IsActive)
+                        {
+                            ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
+
+                            if(!ConversationManager.Instance.IsTalking)
+                            {
+                                m_current_npc.GetComponent<Merchant>().Trade();
+                            }
+                        }
                         break;
                     
                     case NPCType.REINFORCER:
@@ -110,6 +116,11 @@ public class NPCRaycast : MonoBehaviour
                     case NPCType.CRAFTSMAN:
                         break;
                 }
+            }
+
+            if(ConversationManager.Instance.IsTalking)
+            {
+                ConversationManager.Instance.BubbleDialoging(m_hit.transform, m_current_npc, m_hit.normal);
             }
         }
     }
