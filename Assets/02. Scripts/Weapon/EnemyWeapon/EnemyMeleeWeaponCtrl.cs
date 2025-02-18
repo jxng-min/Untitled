@@ -31,6 +31,10 @@ namespace Junyoung
                 {
                     m_enemy_ctrl.IsHit= true;
                 }
+                else if(!col)
+                {
+                    m_enemy_ctrl.IsHit= false;
+                }
             }
         }
 

@@ -24,10 +24,10 @@ namespace Junyoung
 
             m_enemy_ctrl.Animator.SetTrigger("Attack");
             m_is_hitting = false;
-            StartCoroutine(GetAniLength());
+            StartCoroutine(GetAniLength("Attack"));
             m_enemy_ctrl.AttackDelay = 0;
         }
-        public void OnStateUpdate(EnemyCtrl sender)
+        public virtual void OnStateUpdate(EnemyCtrl sender)
         {
             if (m_atk_ani_length>=0)
             {
@@ -48,11 +48,11 @@ namespace Junyoung
         {
             m_enemy_ctrl.IsHit = false;
         }
-        protected IEnumerator GetAniLength() // Attack Ʈ���Ű� ȣ�� ������ �����̰� �־ StateInfo�� �ִϸ��̼� ��ȯ ���� ȣ��Ǵ� ���� ������ ���
+        protected IEnumerator GetAniLength(string ani_name) // Attack Ʈ���Ű� ȣ�� ������ �����̰� �־ StateInfo�� �ִϸ��̼� ��ȯ ���� ȣ��Ǵ� ���� ������ ���
         {
             m_atk_ani_length = 1f; // ��� �ð����� OnStateUpdate�� ���ؼ� READY state�� ��ȯ���� �ʱ� ����
             yield return new WaitForSeconds(0.1f); // �ణ�� ��� �ð��� �־� �ִϸ��̼� ���� ��ȯ�� ��ٸ�          
-            m_atk_ani_length = m_enemy_ctrl.GetAniLength("Attack");
+            m_atk_ani_length = m_enemy_ctrl.GetAniLength(ani_name);
 
             if (m_enemy_ctrl.TotalAtkRate == 0)
                 m_enemy_ctrl.TotalAtkRate = m_atk_ani_length + m_enemy_ctrl.EnemyStat.AtkRate - 0.1f;

@@ -8,21 +8,15 @@ namespace Junyoung
         public float m_detect_range = 15f;
         public float m_hp_bar_range;
 
-        void Start()
-        {
+        public new IObjectPool<EnemyBossCtrl> ManagedPool { get; set; }
 
-        }
-
-        void Update()
-        {
-
-        }
 
         public override void Awake()
         {
             base.Awake();
-            m_enemy_attack_state = gameObject.AddComponent<EnemyBowAttackState>();
-            m_enemy_ready_state = gameObject.AddComponent<EnemyBowReadyState>();
+            m_enemy_attack_state = gameObject.AddComponent<EnemyBossAttackState>();
+            m_enemy_ready_state = gameObject.AddComponent<EnemyBossReadyState>();
+            m_enemy_idle_state = gameObject.AddComponent<EnemyBossIdleState>();
         }
         public override void SetDropItemBag()
         {
@@ -41,10 +35,20 @@ namespace Junyoung
 
             m_drop_item_manager.AddItemToBag(m_drop_item_bag, codes, chances);
         }
-
+        public void SetEnemyPool(IObjectPool<EnemyBossCtrl> pool)
+        {
+            Debug.Log("Boss풀 초기화");
+            this.ManagedPool = pool;
+        }
+        public override void ReturnToPool()
+        {
+            Debug.Log($"{this.name} 반환 (Boss)");
+            ManagedPool.Release(this as EnemyBossCtrl);
+        }
         public override void DetectPlayer()
         {
-            if (Vector3.Distance(EnemySpawnData.SpawnTransform.position, transform.position) <= m_detect_range)
+            if ((Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= m_detect_range)
+                && !(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState))
             {
                 ChangeState(EnemyState.FOUNDPLAYER);
             }
