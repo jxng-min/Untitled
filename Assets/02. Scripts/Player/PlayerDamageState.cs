@@ -9,10 +9,7 @@ public class PlayerDamageState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            //m_player_ctrl.Animator.SetTrigger("Damaged");
-            //Invoke("Wait", 0.75f);
-
-            // TODO: 이펙트
+            
         }
     }
 

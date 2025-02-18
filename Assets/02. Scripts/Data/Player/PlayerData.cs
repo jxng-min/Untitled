@@ -45,6 +45,13 @@ public class PlayerData
         set { m_player_stat = value; }
     }
 
+    [SerializeField] private int m_money;
+    public int Money
+    {
+        get { return m_money; }
+        set { m_money = value; }
+    }
+
 
     public Map[] m_main_map;
     public Map[] m_equipment_map;
@@ -58,6 +65,8 @@ public class PlayerData
         Position = new Vector3(101f, 0f, 15f);
 
         Stat = new Stat(50f, 30f, 20f, 0.9f, 1f);
+
+        Money = 0;
 
         m_main_map = new Map[35];
         m_equipment_map = new Map[5];
