@@ -224,7 +224,7 @@ namespace Junyoung
             ChangeState(EnemyState.GETDAMAGE);
         }
 
-        public void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
+        public virtual void DetectPlayer() // RayCast�� ����� �÷��̾� Ž�� 
         {
             if (Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState)
             {

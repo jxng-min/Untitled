@@ -48,7 +48,7 @@ namespace Junyoung
         {
             m_enemy_ctrl.IsHit = false;
         }
-        private IEnumerator GetAniLength() // Attack Ʈ���Ű� ȣ�� ������ �����̰� �־ StateInfo�� �ִϸ��̼� ��ȯ ���� ȣ��Ǵ� ���� ������ ���
+        protected IEnumerator GetAniLength() // Attack Ʈ���Ű� ȣ�� ������ �����̰� �־ StateInfo�� �ִϸ��̼� ��ȯ ���� ȣ��Ǵ� ���� ������ ���
         {
             m_atk_ani_length = 1f; // ��� �ð����� OnStateUpdate�� ���ؼ� READY state�� ��ȯ���� �ʱ� ����
             yield return new WaitForSeconds(0.1f); // �ణ�� ��� �ð��� �־� �ִϸ��̼� ���� ��ȯ�� ��ٸ�          
