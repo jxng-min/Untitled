@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Particle
   - Item
+  - NPC
   layers:
   - Default
   - TransparentFX

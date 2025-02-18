@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -63,10 +62,12 @@ public class ItemDescription : MonoBehaviour
 
         var rect_transform = m_tool_tip_object.transform as RectTransform;
 
+        Camera ui_camera = m_canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : m_canvas.worldCamera;
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             m_rect_transform, 
             mouse_position, 
-            m_canvas.worldCamera, 
+            ui_camera, 
             out local_position
         );
 
