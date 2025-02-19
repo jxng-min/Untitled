@@ -76,6 +76,14 @@ public class ItemActionManager : MonoBehaviour
                     case (int)ItemCode.SMALL_MP_POTION:
                         m_player_ctrl.UpdateMP(10f);
                         break;
+                    
+                    case (int)ItemCode.MEAT:
+                        m_player_ctrl.UpdateHP(5f);
+                        break;
+                    
+                    case (int)ItemCode.APPLE:
+                        m_player_ctrl.UpdateMP(5f);
+                        break;
                 }
                 break;
         }

@@ -87,6 +87,11 @@ public class NPCRaycast : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
+            if(m_current_npc is null)
+            {
+                return;
+            }
+
             if(m_current_npc.Info.Type == NPCType.NONE)
             {
                 if(m_current_npc.Info.Interaction)
@@ -114,13 +119,17 @@ public class NPCRaycast : MonoBehaviour
                         break;
 
                     case NPCType.CRAFTSMAN:
+                        ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
                         break;
                 }
             }
 
             if(ConversationManager.Instance.IsTalking)
             {
-                ConversationManager.Instance.BubbleDialoging(m_hit.transform, m_current_npc, m_hit.normal);
+                if(ConversationManager.Instance.TalkIndex == 1)
+                {
+                    ConversationManager.Instance.BubbleDialoging(m_hit.transform, m_current_npc, m_hit.normal);
+                }
             }
         }
     }
