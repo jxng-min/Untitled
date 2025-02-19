@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Collections;
+
 
 namespace Junyoung
 {
@@ -8,12 +10,17 @@ namespace Junyoung
         public float m_detect_range = 15f;
         public float m_hp_bar_range;
 
+        public GameObject[] m_effect_prefabs;
+
         public new IObjectPool<EnemyBossCtrl> ManagedPool { get; set; }
 
 
         public override void Awake()
         {
             base.Awake();
+            Destroy(gameObject.GetComponent<EnemyAttackState>());
+            Destroy(gameObject.GetComponent<EnemyReadyState>());
+            Destroy(gameObject.GetComponent<EnemyIdleState>());
             m_enemy_attack_state = gameObject.AddComponent<EnemyBossAttackState>();
             m_enemy_ready_state = gameObject.AddComponent<EnemyBossReadyState>();
             m_enemy_idle_state = gameObject.AddComponent<EnemyBossIdleState>();
@@ -52,6 +59,26 @@ namespace Junyoung
             {
                 ChangeState(EnemyState.FOUNDPLAYER);
             }
+        }
+
+        public void Effect(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    {
+                        var effect = Instantiate(m_effect_prefabs[index]);
+                        effect.transform.position= new Vector3(transform.position.x,0,transform.position.z);
+                        StartCoroutine(DestroyEffect(effect, 2));
+                        break;
+                    }
+            }
+        }
+
+        private IEnumerator DestroyEffect(GameObject effect,float time)
+        {
+            yield return new WaitForSeconds(time);
+            Destroy(effect);
         }
     }
 }

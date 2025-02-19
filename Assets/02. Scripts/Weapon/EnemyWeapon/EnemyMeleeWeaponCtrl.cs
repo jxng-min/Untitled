@@ -25,16 +25,21 @@ namespace Junyoung
             Quaternion box_rotation = transform.rotation; // transform.rotationÀº Quaternion Çü½Ä
             Collider[] hit_colliders = Physics.OverlapBox(transform.TransformPoint(m_box_center), m_box_size, box_rotation);
 
+            bool player_hit = false;
+
             foreach (Collider col in hit_colliders)
             {
                 if (col.CompareTag("Player") && m_enemy_ctrl.StateContext.NowState is EnemyAttackState)
                 {
-                    m_enemy_ctrl.IsHit= true;
+                    player_hit= true;
+                    break;
                 }
-                else if(!col)
-                {
-                    m_enemy_ctrl.IsHit= false;
-                }
+
+            }
+            m_enemy_ctrl.IsHit = player_hit;
+            if(!m_enemy_ctrl.IsHit)
+            {
+                m_enemy_ctrl.IsHitting = false;
             }
         }
 

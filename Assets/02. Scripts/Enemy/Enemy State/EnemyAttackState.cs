@@ -9,7 +9,6 @@ namespace Junyoung
         protected PlayerCtrl m_player_ctrl;
         protected GameObject m_player;
         protected float m_atk_ani_length;
-        protected bool m_is_hitting;
 
         public virtual void OnStateEnter(EnemyCtrl sender)
         {
@@ -23,7 +22,7 @@ namespace Junyoung
             }
 
             m_enemy_ctrl.Animator.SetTrigger("Attack");
-            m_is_hitting = false;
+            m_enemy_ctrl.IsHitting= false;
             StartCoroutine(GetAniLength("Attack"));
             m_enemy_ctrl.AttackDelay = 0;
         }
@@ -38,13 +37,13 @@ namespace Junyoung
                 m_enemy_ctrl.ChangeState(EnemyState.READY);
             }
 
-            if (m_enemy_ctrl.IsHit && m_player_ctrl != null && !m_is_hitting)
+            if (m_enemy_ctrl.IsHit && m_player_ctrl != null && !m_enemy_ctrl.IsHitting)
             {
                 m_player_ctrl.UpdateHP(-m_enemy_ctrl.EnemyStat.AtkDamege);
-                m_is_hitting = true;
+                m_enemy_ctrl.IsHitting = true;
             }
         }
-        public void OnStateExit(EnemyCtrl sender)
+        public virtual void OnStateExit(EnemyCtrl sender)
         {
             m_enemy_ctrl.IsHit = false;
         }
