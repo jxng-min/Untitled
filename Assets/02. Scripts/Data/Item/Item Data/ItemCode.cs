@@ -12,4 +12,11 @@ public enum ItemCode
     BASIC_WEAPON = 102,
     BASIC_SHIELD = 103,
     BASIC_SHOES = 104,
+
+    // 재료 아이템 1000~
+    MAGIC_SCROLL = 1000,
+    IRON = 1001,
+    GEM = 1002,
+    MEAT = 1003,
+    APPLE = 1004,
 }

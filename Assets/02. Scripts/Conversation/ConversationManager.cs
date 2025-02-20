@@ -40,6 +40,10 @@ public class ConversationManager : Singleton<ConversationManager>
     private Dictionary<int, string> m_bubble_data;
 
     private int m_current_talk_index;
+    public int TalkIndex
+    {
+        get { return m_current_talk_index; }
+    }
 
     private bool m_is_talking = false;
     public bool IsTalking

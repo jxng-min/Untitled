@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c44507c750f2b314a64ebaab9981925, type: 3}
+  m_Name: Recipe 0 HP Potion
+  m_EditorClassIdentifier: 
+  m_require_items:
+  - m_item: {fileID: 11400000, guid: c93c71b2e00eb40dfb6d3b1745158171, type: 2}
+    m_count: 2
+  m_result_item:
+    m_item: {fileID: 11400000, guid: 03c93d031991e3062bf5c5294bde7d14, type: 2}
+    m_count: 1
+  m_require_level: 0
+  m_crafting_time: 1
+  m_button_sprite: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}
