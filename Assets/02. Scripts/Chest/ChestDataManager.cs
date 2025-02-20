@@ -30,6 +30,7 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
     private InventorySlot[] m_chest_slots;
 
+    private Chest m_current_chest;
     private Animator m_chest_animator;
 
     private new void Awake()
@@ -58,35 +59,35 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
     public void TryOpenChestUI(int chest_id)
     {
-        Chest current_chest = null;
+        m_current_chest = null;
 
         foreach(var chest in m_chest_list)
         {
             if(chest_id == chest.ID)
             {
-                current_chest = chest;
+                m_current_chest = chest;
 
                 break;
             }
         }
 
-        m_chest_animator = current_chest.GetComponent<Animator>();
+        m_chest_animator = m_current_chest.GetComponent<Animator>();
         m_chest_animator.SetBool("IsOpen", true);
 
         m_chest_ui_object.SetActive(true);
         m_is_ui_active = true;
 
-        m_chest_name_label.text = current_chest is not null ? current_chest.Name : "";
+        m_chest_name_label.text = m_current_chest is not null ? m_current_chest.Name : "";
 
         for(int i = 0; i < m_chest_slots.Length; i++)
         {
-            if(current_chest.SlotInfos[i].ID == (int)ItemCode.NONE)
+            if(m_current_chest.SlotInfos[i].ID == (int)ItemCode.NONE)
             {
                 continue;
             }
-            var item = ItemDataManager.Instance.GetItemByID(current_chest.SlotInfos[i].ID);
+            var item = ItemDataManager.Instance.GetItemByID(m_current_chest.SlotInfos[i].ID);
 
-            m_main_inventory.LoadItem(item, m_chest_slots[i], current_chest.SlotInfos[i].Count);
+            m_main_inventory.LoadItem(item, m_chest_slots[i], m_current_chest.SlotInfos[i].Count);
         }
 
         Cursor.lockState = CursorLockMode.None;
@@ -149,12 +150,29 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
     public void BTN_CloseUI()
     {
+        if(m_chest_ui_object.activeInHierarchy && m_is_ui_active && m_current_chest is not null)
+        {
+            for(int i = 0; i < m_chest_slots.Length; i++)
+            {
+                if(m_chest_slots[i].Item == null)
+                {
+                    m_current_chest.SlotInfos[i] = new ChestSlotInfo((int)ItemCode.NONE, 0);
+                }
+                else
+                {
+                    m_current_chest.SlotInfos[i] = new ChestSlotInfo(m_chest_slots[i].Item.ID, m_chest_slots[i].Count);
+                }
+            }
+        }   
+
         SaveData();
 
         foreach(var slot in m_chest_slots)
         {
             slot.ClearSlot();
         }
+
+        m_current_chest = null;
 
         m_chest_animator.SetBool("IsOpen", false);
 
