@@ -104,7 +104,7 @@ public class CraftingSlot : MonoBehaviour
 
         m_main_inventory.AcquireItem(CurrentRecipe.ResultItem.Item, CurrentRecipe.ResultItem.Count);
 
-        //CraftManager.Instance.RefreshAllSlots();
+        CraftingManager.Instance.RefreshAllSlots();
     }
 
     private IEnumerator CoroutineCraftItem()

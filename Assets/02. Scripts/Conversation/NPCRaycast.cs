@@ -120,6 +120,11 @@ public class NPCRaycast : MonoBehaviour
 
                     case NPCType.CRAFTSMAN:
                         ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
+
+                            if(!ConversationManager.Instance.IsTalking)
+                            {
+                                m_current_npc.GetComponent<CraftingStation>().TryOpenDialog();
+                            }
                         break;
                 }
             }

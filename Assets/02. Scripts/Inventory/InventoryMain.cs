@@ -145,19 +145,28 @@ public class InventoryMain : InventoryBase
         m_money_label.text = "보유금: " + DataManager.Instance.Data.Money.ToString();
     }
 
-    public void HasItemInInventory(int item_id, out InventorySlot item_slot, int count)
+    public bool HasItemInInventory(int item_id, out InventorySlot item_slot, int count)
     {
         item_slot = null;
 
         for(int i = 0; i < m_slots.Length; i++)
         {
+            if(m_slots[i].Item is null)
+            {
+                continue;
+            }
+            
             if(m_slots[i].Item.ID == item_id)
             {
                 if(m_slots[i].Count >= count)
                 {
                     item_slot = m_slots[i];
+
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 }
