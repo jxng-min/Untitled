@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b7823c7a88a39a44dbfe1f3320296f79
+timeCreated: 1465056587
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 64374
+  packageName: Old Chest
+  packageVersion: 1.0
+  assetPath: Assets/Old_chest/Animation/Close.controller
+  uploadId: 121159

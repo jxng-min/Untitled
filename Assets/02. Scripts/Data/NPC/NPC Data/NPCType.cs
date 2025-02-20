@@ -4,4 +4,5 @@ public enum NPCType
     MERCHANT,
     REINFORCER,
     CRAFTSMAN,
+    CHEST,
 }

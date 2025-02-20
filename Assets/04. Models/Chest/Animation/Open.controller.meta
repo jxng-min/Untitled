@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6c7c52101fda1cf4d8eb5a7ee7789202
+timeCreated: 1465056535
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 64374
+  packageName: Old Chest
+  packageVersion: 1.0
+  assetPath: Assets/Old_chest/Animation/Open.controller
+  uploadId: 121159

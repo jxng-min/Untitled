@@ -67,6 +67,7 @@ public class ItemActionManager : MonoBehaviour
                 return false;
 
             case ItemType.Consumable:
+                Debug.Log("사용함");
                 switch(item.ID)
                 {
                     case (int)ItemCode.SMALL_HP_POTION:
@@ -76,7 +77,12 @@ public class ItemActionManager : MonoBehaviour
                     case (int)ItemCode.SMALL_MP_POTION:
                         m_player_ctrl.UpdateMP(10f);
                         break;
-                    
+                }
+                break;
+            
+            case ItemType.Consumable | ItemType.Ingredient:
+                switch(item.ID)
+                {
                     case (int)ItemCode.MEAT:
                         m_player_ctrl.UpdateHP(5f);
                         break;
