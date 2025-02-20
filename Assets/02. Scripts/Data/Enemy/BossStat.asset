@@ -15,6 +15,7 @@ MonoBehaviour:
   m_hp: 70
   m_move_speed: 4
   m_atk_damage: 5
-  m_atk_rate: 1.7
-  m_atk_range: 15
+  m_atk_rate: 3
+  m_atk_range: 7
   m_detect_range: 15
+  m_follow_range: 50

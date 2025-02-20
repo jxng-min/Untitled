@@ -53,7 +53,8 @@ namespace Junyoung
 
         //����
         public bool CanAtk { get; set; } = true;//���� ���� ����
-        public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����       
+        public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����
+        public bool IsHitting { get; set; } = false;                                             
         public bool IsDead { get; set; }  = false;
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��

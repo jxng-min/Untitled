@@ -18,3 +18,4 @@ MonoBehaviour:
   m_atk_rate: 1.7
   m_atk_range: 15
   m_detect_range: 15
+  m_follow_range: 20

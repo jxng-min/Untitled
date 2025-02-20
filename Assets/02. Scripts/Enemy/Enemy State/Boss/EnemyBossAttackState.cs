@@ -11,6 +11,7 @@ namespace Junyoung
 
         private bool m_can_use_skill = true;
 
+        private GameObject m_skill1_area;
 
         public override void OnStateEnter(EnemyCtrl sender)
         {
@@ -24,9 +25,17 @@ namespace Junyoung
                 m_combo_queue = new Queue<int>();
                 m_skill_queue= new Queue<int>();
 
+                EnemyMeleeWeaponCtrl[] weapons = GetComponentsInChildren<EnemyMeleeWeaponCtrl>(true);
+                foreach(var weapon in weapons)
+                {
+                    if(weapon.gameObject.name == "Skill1_Area")
+                    {
+                        m_skill1_area = weapon.gameObject;
+                    }
+                }
             }
 
-            m_is_hitting = false;
+            m_enemy_ctrl.IsHitting = false;
             m_enemy_ctrl.AttackDelay = 0;
 
             if(m_can_use_skill ) 
@@ -43,6 +52,16 @@ namespace Junyoung
         {
             base.OnStateUpdate(sender);
             m_enemy_ctrl.LookPlayer();
+        }
+
+        public override void OnStateExit(EnemyCtrl sender)
+        {
+            base.OnStateExit(sender);
+            if (m_skill1_area.activeInHierarchy)
+            {
+                m_skill1_area.SetActive(false);
+            }
+            m_enemy_ctrl.EnemyStat.AtkDamege = m_enemy_ctrl.OriginEnemyStat.AtkDamege;
         }
 
         public void InitComboQueue()
@@ -120,6 +139,9 @@ namespace Junyoung
                     {
                         m_enemy_ctrl.Animator.SetTrigger("Skill1");
                         StartCoroutine(GetAniLength("Skill1"));
+                        m_enemy_ctrl.EnemyStat.AtkDamege /= 3f;
+                        m_skill1_area.SetActive(true);
+                        StartCoroutine(Skill1Effect());
                         break;
                     }
                 case 1:
@@ -135,6 +157,43 @@ namespace Junyoung
                     }
             }
         }
+
+        private IEnumerator Skill1Effect()
+        {
+            HashSet<float> triggeredPoints = new HashSet<float>(); // 중복 실행 방지
+
+            while (true)
+            {
+                AnimatorStateInfo info = m_enemy_ctrl.Animator.GetCurrentAnimatorStateInfo(0);
+                float n_time = info.normalizedTime;
+
+                if (n_time >= 1f)
+                {
+                    yield break; 
+                }
+
+                if (n_time >= 0.3f && !triggeredPoints.Contains(0.3f))
+                {
+                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    triggeredPoints.Add(0.3f);
+                }
+
+                if (n_time >= 0.45f && !triggeredPoints.Contains(0.45f))
+                {
+                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    triggeredPoints.Add(0.45f);
+                }
+
+                if (n_time >= 0.6f && !triggeredPoints.Contains(0.6f))
+                {
+                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    triggeredPoints.Add(0.6f);
+                }
+
+                yield return null; // 다음 프레임까지 대기
+            }
+        }
+
 
         private void Shuffle(List<int> list) //Fisher Yates Shuffle 알고리즘
         {
