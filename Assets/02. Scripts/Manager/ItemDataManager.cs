@@ -73,4 +73,17 @@ public class ItemDataManager : Singleton<ItemDataManager>
     {
         return m_item_name_dics.ContainsKey(item_id) ? m_item_description_dics[item_id] : null;
     }
+
+    public Item GetItemByID(int item_id)
+    {
+        foreach(var item in m_item_object_data)
+        {
+            if(item.ID == item_id)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
 }

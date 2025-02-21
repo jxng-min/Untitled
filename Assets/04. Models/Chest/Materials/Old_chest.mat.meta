@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d1cd8911d1b7f3143bd093aa8539fc51
+timeCreated: 1465058322
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 64374
+  packageName: Old Chest
+  packageVersion: 1.0
+  assetPath: Assets/Old_chest/Materials/Old_chest.mat
+  uploadId: 121159

@@ -126,6 +126,13 @@ public class NPCRaycast : MonoBehaviour
                                 m_current_npc.GetComponent<CraftingStation>().TryOpenDialog();
                             }
                         break;
+                    
+                    case NPCType.CHEST:
+                        if(!ChestDataManager.IsActive)
+                        {
+                            m_current_npc.GetComponent<Chest>().TryOpenChestUI();
+                        }
+                        break;
                 }
             }
 
