@@ -89,7 +89,7 @@ namespace Junyoung
         public void InitSkillQueue()
         {
             m_skill_queue.Clear();
-            List<int> list = new List<int>() { 0 };
+            List<int> list = new List<int>() { 0,1};
             Shuffle(list);
             foreach (int i in list)
             {
@@ -242,8 +242,9 @@ namespace Junyoung
         private IEnumerator SkillCoolDown()
         {
             m_can_use_skill = false;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(30f);
             m_can_use_skill = true;
         }
+
     }
 }

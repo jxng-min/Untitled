@@ -3826,6 +3826,7 @@ MonoBehaviour:
   m_hp_bar_range: 0
   m_effect_prefabs:
   - {fileID: 1344314377593938, guid: ec2bd4e17167cb3419a243a194409c7b, type: 3}
+  - {fileID: 1000011128802252, guid: f82e45297e16de34d9079b7ebe481b41, type: 3}
 --- !u!65 &6861577141732491112
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace Junyoung
     {
         public float m_detect_range = 15f;
         public float m_hp_bar_range;
+        public bool IsPhaseTwo  = false;
 
         public GameObject[] m_effect_prefabs;
 
@@ -21,9 +22,11 @@ namespace Junyoung
             Destroy(gameObject.GetComponent<EnemyAttackState>());
             Destroy(gameObject.GetComponent<EnemyReadyState>());
             Destroy(gameObject.GetComponent<EnemyIdleState>());
+            Destroy(gameObject.GetComponent<EnemyFollowState>());
             m_enemy_attack_state = gameObject.AddComponent<EnemyBossAttackState>();
             m_enemy_ready_state = gameObject.AddComponent<EnemyBossReadyState>();
             m_enemy_idle_state = gameObject.AddComponent<EnemyBossIdleState>();
+            m_enemy_follow_state = gameObject.AddComponent<EnemyBossFollowState>();
         }
         public override void SetDropItemBag()
         {
@@ -69,6 +72,13 @@ namespace Junyoung
                     {
                         var effect = Instantiate(m_effect_prefabs[index]);
                         effect.transform.position= new Vector3(transform.position.x,0,transform.position.z);
+                        StartCoroutine(DestroyEffect(effect, 2));
+                        break;
+                    }
+                case 1:
+                    {
+                        var effect = Instantiate(m_effect_prefabs[index]);
+                        effect.transform.position = transform.position;
                         StartCoroutine(DestroyEffect(effect, 2));
                         break;
                     }
