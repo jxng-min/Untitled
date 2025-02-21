@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -12,6 +13,10 @@ namespace Junyoung
         private bool m_can_use_skill = true;
 
         private GameObject m_skill1_area;
+
+        private bool m_using_skill = false;
+
+        private DecalProjector m_projector;
 
         public override void OnStateEnter(EnemyCtrl sender)
         {
@@ -33,6 +38,8 @@ namespace Junyoung
                         m_skill1_area = weapon.gameObject;
                     }
                 }
+
+                m_projector = GetComponentInChildren<DecalProjector>(true);
             }
 
             m_enemy_ctrl.IsHitting = false;
@@ -51,12 +58,16 @@ namespace Junyoung
         public override void OnStateUpdate(EnemyCtrl sender)
         {
             base.OnStateUpdate(sender);
-            m_enemy_ctrl.LookPlayer();
+            if (!m_using_skill)
+            {
+                m_enemy_ctrl.LookPlayer();
+            }
         }
 
         public override void OnStateExit(EnemyCtrl sender)
         {
             base.OnStateExit(sender);
+            m_using_skill = false;
             if (m_skill1_area.activeInHierarchy)
             {
                 m_skill1_area.SetActive(false);
@@ -78,7 +89,7 @@ namespace Junyoung
         public void InitSkillQueue()
         {
             m_skill_queue.Clear();
-            List<int> list = new List<int>() { 0, 1};
+            List<int> list = new List<int>() { 0 };
             Shuffle(list);
             foreach (int i in list)
             {
@@ -125,6 +136,7 @@ namespace Junyoung
 
         public void UseSkill()
         {
+            m_using_skill = true;
             StartCoroutine(SkillCoolDown());
             if (m_skill_queue.Count == 0)
             {
@@ -137,11 +149,8 @@ namespace Junyoung
             {
                 case 0:
                     {
-                        m_enemy_ctrl.Animator.SetTrigger("Skill1");
-                        StartCoroutine(GetAniLength("Skill1"));
-                        m_enemy_ctrl.EnemyStat.AtkDamege /= 3f;
-                        m_skill1_area.SetActive(true);
-                        StartCoroutine(Skill1Effect());
+                        StartCoroutine(Skill1RedZone());
+                        StartCoroutine(Skill1());
                         break;
                     }
                 case 1:
@@ -158,8 +167,12 @@ namespace Junyoung
             }
         }
 
-        private IEnumerator Skill1Effect()
+        private IEnumerator Skill1()
         {
+            m_enemy_ctrl.Animator.SetTrigger("Skill1");
+            StartCoroutine(GetAniLength("Skill1"));
+            m_enemy_ctrl.EnemyStat.AtkDamege /= 3f;
+
             HashSet<float> triggeredPoints = new HashSet<float>(); // 중복 실행 방지
 
             while (true)
@@ -170,6 +183,11 @@ namespace Junyoung
                 if (n_time >= 1f)
                 {
                     yield break; 
+                }
+                if (n_time >= 0.25f && !triggeredPoints.Contains(0.25f))
+                {
+                    m_skill1_area.SetActive(true);
+                    triggeredPoints.Add(0.25f);
                 }
 
                 if (n_time >= 0.3f && !triggeredPoints.Contains(0.3f))
@@ -194,6 +212,23 @@ namespace Junyoung
             }
         }
 
+        private IEnumerator Skill1RedZone()
+        {
+            m_projector.gameObject.SetActive(true);
+            float projector_z = 0f;
+            float pivot_z = 0f;
+            while (m_projector.size.z <= 14f)
+            {
+                projector_z += 10f * Time.deltaTime;
+                pivot_z += 6f * Time.deltaTime;
+                m_projector.size = new Vector3(10, 0.3f, projector_z);
+                m_projector.pivot= new Vector3(0, 0, pivot_z);
+                yield return null;
+            }
+            m_projector.gameObject.SetActive(false);
+            m_projector.size = new Vector3(13.4f, 0.5f, 7);
+            m_projector.pivot = new Vector3(0, 0, 5);
+        }
 
         private void Shuffle(List<int> list) //Fisher Yates Shuffle 알고리즘
         {
@@ -207,7 +242,7 @@ namespace Junyoung
         private IEnumerator SkillCoolDown()
         {
             m_can_use_skill = false;
-            yield return new WaitForSeconds(30f);
+            yield return new WaitForSeconds(1f);
             m_can_use_skill = true;
         }
     }
