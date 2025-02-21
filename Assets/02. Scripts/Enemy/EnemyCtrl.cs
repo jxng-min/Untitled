@@ -15,7 +15,7 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_patrol_state;
         IEnemyState<EnemyCtrl> m_enemy_back_state;
         IEnemyState<EnemyCtrl> m_enemy_found_player_state;
-        IEnemyState<EnemyCtrl> m_enemy_follow_state;
+        protected IEnemyState<EnemyCtrl> m_enemy_follow_state;
         IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
         IEnemyState<EnemyCtrl> m_enemy_dead_state;
         protected IEnemyState<EnemyCtrl> m_enemy_ready_state;

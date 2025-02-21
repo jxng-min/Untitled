@@ -5,9 +5,9 @@ namespace Junyoung
 {
     public class EnemyFollowState : MonoBehaviour, IEnemyState<EnemyCtrl>
     {
-        private EnemyCtrl m_enemy_ctrl;
-        private GameObject m_player;
-        private NavMeshAgent m_agent;
+        protected EnemyCtrl m_enemy_ctrl;
+        protected GameObject m_player;
+        protected NavMeshAgent m_agent;
 
         public void OnStateEnter(EnemyCtrl sender)
         {
@@ -20,7 +20,18 @@ namespace Junyoung
             m_enemy_ctrl.Animator.SetBool("isFollowing", true);
             m_agent.stoppingDistance = m_enemy_ctrl.EnemyStat.AtkRange;
         }
-        public void OnStateUpdate(EnemyCtrl sender)
+        public virtual void OnStateUpdate(EnemyCtrl sender)
+        {
+            DistanceCheck();
+            if (m_agent.pathPending) return;
+
+            if (m_agent.remainingDistance <= m_agent.stoppingDistance)
+            {
+                m_enemy_ctrl.ChangeState(EnemyState.READY);
+            }
+        }
+
+        public virtual void DistanceCheck()
         {
             if (Vector3.Distance(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
             {
@@ -30,13 +41,8 @@ namespace Junyoung
             {
                 m_enemy_ctrl.ChangeState(EnemyState.BACK);
             }
-            if (m_agent.pathPending) return;
-
-            if (m_agent.remainingDistance <= m_agent.stoppingDistance)
-            {
-                m_enemy_ctrl.ChangeState(EnemyState.READY);
-            }
         }
+
         public void OnStateExit(EnemyCtrl sender)
         {
             m_enemy_ctrl.Animator.SetBool("isFollowing", false);
@@ -44,7 +50,7 @@ namespace Junyoung
             m_agent.ResetPath();
         }
 
-        void OnDrawGizmos()
+        public void OnDrawGizmos()
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.blue;

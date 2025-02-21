@@ -18,7 +18,7 @@ namespace Junyoung
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            m_enemy_ctrl.DetectPlayer();
+            m_enemy_ctrl.LookPlayer();
 
             PlayerDeadCheck();
 
