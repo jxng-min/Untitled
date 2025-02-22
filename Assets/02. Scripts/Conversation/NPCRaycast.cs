@@ -96,23 +96,47 @@ public class NPCRaycast : MonoBehaviour
             {
                 if(m_current_npc.Info.Interaction)
                 {
-                    if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id))
+                    switch(m_current_npc.name)
                     {
-                        switch(quest_id)
-                        {
-                            case 0:
-                                CheckQuest(quest_id, 2, 3, 5, 1, 6, 1);
-                                break;
+                        case "Camp Leader_NPC":
+                            if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id1))
+                            {
+                                switch(quest_id1)
+                                {
+                                    case 0:
+                                        CheckQuest(quest_id1, 2, 3, 5, 1, 6, 1);
+                                        break;
 
-                            case 1:
-                                CheckQuest(quest_id, 7, 2, 9, 1, 6, 1);
-                                break;
-                        }
-                        
-                    }
-                    else
-                    {
-                        ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 2);
+                                    case 1:
+                                        CheckQuest(quest_id1, 7, 2, 9, 1, 6, 1);
+                                        break;
+                                }
+                                
+                            }
+                            else
+                            {
+                                ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 2);
+                            }
+                            break;
+
+                        case "Weary Wanderer_NPC":
+                            if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id2))
+                            {
+                                Debug.Log("진입1");
+                                switch(quest_id2)
+                                {
+                                    case 2:
+                                    Debug.Log("진입1");
+                                        CheckQuest(quest_id2, 1, 2, 3, 1, 4, 2);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log("진입3");
+                                ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 1);
+                            }
+                            break;
                     }
                 }
             }

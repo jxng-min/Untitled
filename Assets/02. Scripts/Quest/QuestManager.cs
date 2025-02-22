@@ -104,6 +104,7 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
+        UpdateItemQuestCount();
     }
 
     public void CompleteQuest(int quest_id, bool is_give_reward = true)
@@ -118,6 +119,8 @@ public class QuestManager : Singleton<QuestManager>
             {
                 m_main_inventory.AcquireItem(quest_data.Items[i], quest_data.ItemCounts[i]);
             }
+
+            UpdateItemQuestCount();
         }
 
         QuestUIManager.Instance.CompleteQuest(quest_data);

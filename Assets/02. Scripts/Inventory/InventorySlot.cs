@@ -121,6 +121,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
             UseItem();
             DataManager.Instance.SaveInventory();
+            QuestManager.Instance.UpdateItemQuestCount();
         }
     }
 
@@ -178,6 +179,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
         ChangeSlot();
         DataManager.Instance.SaveInventory();
+        QuestManager.Instance.UpdateItemQuestCount();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -278,6 +280,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             {
                 UpdateSlotCount(-1);
             }
+
+            QuestManager.Instance.UpdateItemQuestCount();
         }
     }
 }

@@ -13,7 +13,6 @@ public class ShortcutManager : MonoBehaviour
     private void Awake()
     {
         m_slots = m_slot_parent.GetComponentsInChildren<InventorySlot>();
-        Debug.Log(Slots.Length);
     }
 
     private void Update()
