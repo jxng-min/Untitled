@@ -15599,7 +15599,6 @@ MonoBehaviour:
   m_camera_size: {x: 50, y: 0, z: 50}
   m_region_center: {x: 100, y: 0, z: 100}
   m_region_size: {x: 200, y: 0, z: 200}
-  m_position_label: {fileID: 1512783610}
 --- !u!114 &801213825
 MonoBehaviour:
   m_ObjectHideFlags: 0

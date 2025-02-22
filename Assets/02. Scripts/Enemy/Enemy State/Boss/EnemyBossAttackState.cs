@@ -16,7 +16,17 @@ namespace Junyoung
 
         private bool m_using_skill = false;
 
-        private DecalProjector m_projector;
+        private DecalProjector m_skill1_projector;
+        private DecalProjector m_skill2_projector;
+        private DecalProjector m_skill2_inner_projector;
+
+        private int m_skill2_effect_count = 40;
+        private float m_skill2_start_radius = 4f;
+        private float m_skill2_radius = 15f;
+        private float m_expand_speed = 5f;
+        private float m_skill2_now_radius = 0;
+
+        private List<GameObject> m_skill2_effects = new List<GameObject>();
 
         public override void OnStateEnter(EnemyCtrl sender)
         {
@@ -39,7 +49,22 @@ namespace Junyoung
                     }
                 }
 
-                m_projector = GetComponentInChildren<DecalProjector>(true);
+                DecalProjector[] decals = GetComponentsInChildren<DecalProjector>(true);
+                foreach(var decal in decals)
+                {
+                    if(decal.gameObject.name == "Skill1RedZone")
+                    {
+                        m_skill1_projector = decal;
+                    }
+                    else if(decal.gameObject.name == "Skill2RedZone")
+                    {
+                        m_skill2_projector = decal;
+                    }
+                    else if(decal.gameObject.name == "Skill2RedZoneInner")
+                    {
+                        m_skill2_inner_projector = decal;
+                    }
+                }
             }
 
             m_enemy_ctrl.IsHitting = false;
@@ -89,7 +114,7 @@ namespace Junyoung
         public void InitSkillQueue()
         {
             m_skill_queue.Clear();
-            List<int> list = new List<int>() { 0,1};
+            List<int> list = new List<int>() {0, 1};
             Shuffle(list);
             foreach (int i in list)
             {
@@ -155,8 +180,8 @@ namespace Junyoung
                     }
                 case 1:
                     {
-                        m_enemy_ctrl.Animator.SetTrigger("Skill2");
-                        StartCoroutine(GetAniLength("Skill2"));
+                        StartCoroutine (Skill2RedZone());
+                        StartCoroutine(Skill2());
                         break;
                     }
                 default:
@@ -192,42 +217,103 @@ namespace Junyoung
 
                 if (n_time >= 0.3f && !triggeredPoints.Contains(0.3f))
                 {
-                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    var effect = (m_enemy_ctrl as EnemyBossCtrl).Effect(0, new Vector3(transform.position.x, 0, transform.position.z));
+                    StartCoroutine((m_enemy_ctrl as EnemyBossCtrl).DestroyEffect(effect, 2f));
                     triggeredPoints.Add(0.3f);
                 }
 
                 if (n_time >= 0.45f && !triggeredPoints.Contains(0.45f))
                 {
-                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    var effect = (m_enemy_ctrl as EnemyBossCtrl).Effect(0, new Vector3(transform.position.x, 0, transform.position.z));
+                    StartCoroutine((m_enemy_ctrl as EnemyBossCtrl).DestroyEffect(effect, 2f));
                     triggeredPoints.Add(0.45f);
                 }
 
                 if (n_time >= 0.6f && !triggeredPoints.Contains(0.6f))
                 {
-                    (m_enemy_ctrl as EnemyBossCtrl).Effect(0);
+                    var effect = (m_enemy_ctrl as EnemyBossCtrl).Effect(0, new Vector3(transform.position.x, 0, transform.position.z));
+                    StartCoroutine((m_enemy_ctrl as EnemyBossCtrl).DestroyEffect(effect, 1.5f));
                     triggeredPoints.Add(0.6f);
                 }
 
-                yield return null; // 다음 프레임까지 대기
+                yield return null; 
             }
         }
 
         private IEnumerator Skill1RedZone()
         {
-            m_projector.gameObject.SetActive(true);
-            float projector_z = 0f;
-            float pivot_z = 0f;
-            while (m_projector.size.z <= 14f)
+            m_skill1_projector.gameObject.SetActive(true);
+            float projector_y = 0f;
+            float pivot_y = 0f;
+            while (m_skill1_projector.size.y <= 14f)
             {
-                projector_z += 10f * Time.deltaTime;
-                pivot_z += 6f * Time.deltaTime;
-                m_projector.size = new Vector3(10, 0.3f, projector_z);
-                m_projector.pivot= new Vector3(0, 0, pivot_z);
+                projector_y += 10f * Time.deltaTime;
+                pivot_y += 6f * Time.deltaTime;
+                m_skill1_projector.size = new Vector3(13.5f, projector_y, 0.5f);
+                m_skill1_projector.pivot = new Vector3(0, pivot_y,0 );
                 yield return null;
             }
-            m_projector.gameObject.SetActive(false);
-            m_projector.size = new Vector3(13.4f, 0.5f, 7);
-            m_projector.pivot = new Vector3(0, 0, 5);
+            m_skill1_projector.gameObject.SetActive(false);
+            m_skill1_projector.size = new Vector3(13.5f, 7, 0.5f);
+            m_skill1_projector.pivot = new Vector3(0, 5, 0);
+        }
+
+        private IEnumerator Skill2()
+        {
+            m_enemy_ctrl.Animator.SetTrigger("Skill2");
+            StartCoroutine(GetAniLength("Skill2"));
+            yield return new WaitForSeconds(0.1f); // 애니메이션 길이 계산시간 동안 대기
+            yield return new WaitForSeconds(m_atk_ani_length - 0.3f);
+            for (int i=0; i<m_skill2_effect_count; i++)
+            {
+                float angle = i * Mathf.PI *2 / m_skill2_effect_count;
+                Vector3 pos = transform.position + new Vector3 (Mathf.Cos(angle) * m_skill2_start_radius, 0 ,Mathf.Sin(angle) * m_skill2_start_radius);
+                var effect = (m_enemy_ctrl as EnemyBossCtrl).Effect(2, pos);
+                m_skill2_effects.Add(effect);
+            }
+            StartCoroutine(ExpandSkill2Effect());
+        }
+
+        private IEnumerator ExpandSkill2Effect()
+        {
+            m_skill2_now_radius = m_skill2_start_radius;
+            while (m_skill2_now_radius < m_skill2_radius)
+            {
+                m_skill2_now_radius += m_expand_speed * Time.deltaTime;
+
+                for (int i = 0; i < m_skill2_effect_count; i++)
+                {
+                    float angle = i * Mathf.PI * 2 / m_skill2_effect_count;
+                    Vector3 new_pos = transform.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * m_skill2_now_radius;
+                    m_skill2_effects[i].transform.position = new_pos;
+                }
+                yield return null;
+            }
+            if (m_skill2_now_radius > m_skill2_radius)
+            {
+                for (int i = 0; i < m_skill2_effects.Count; i++)
+                {
+                    StartCoroutine((m_enemy_ctrl as EnemyBossCtrl).DestroyEffect(m_skill2_effects[i], 5f));
+                }
+            }
+            m_skill2_effects.Clear();
+        }
+
+        private IEnumerator Skill2RedZone()
+        {
+            m_skill2_projector.gameObject.SetActive(true);
+            float projector_x = 0f;
+            float projector_y = 0f;
+            
+            while (m_skill2_inner_projector.size.x < 35f)
+            {
+                projector_x += 17f * Time.deltaTime;
+                projector_y += 17f * Time.deltaTime;
+                m_skill2_inner_projector.size = new Vector3(projector_x, projector_y, 0.5f );
+                yield return null;
+            }
+            m_skill2_projector.gameObject.SetActive(false);
+            m_skill2_inner_projector.size = new Vector3(10f, 10, 0.5f );
         }
 
         private void Shuffle(List<int> list) //Fisher Yates Shuffle 알고리즘
@@ -242,7 +328,7 @@ namespace Junyoung
         private IEnumerator SkillCoolDown()
         {
             m_can_use_skill = false;
-            yield return new WaitForSeconds(30f);
+            yield return new WaitForSeconds(5f);
             m_can_use_skill = true;
         }
 
