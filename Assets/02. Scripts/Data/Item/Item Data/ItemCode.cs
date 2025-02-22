@@ -1,3 +1,4 @@
+[System.Serializable]
 public enum ItemCode
 {
     NONE = -1,

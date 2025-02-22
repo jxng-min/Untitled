@@ -18,12 +18,14 @@ public class QuestData : ScriptableObject
     public KillQuest[] KillQuests
     {
         get { return m_kill_quests; }
+        set { m_kill_quests = value; }
     }
 
     [SerializeField] public ItemQuest[] m_item_quests;
     public ItemQuest[] ItemQuests
     {
         get { return m_item_quests; }
+        set { m_item_quests = value; }
     }
 
 

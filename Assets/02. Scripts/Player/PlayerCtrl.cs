@@ -118,7 +118,7 @@ public class PlayerCtrl : MonoBehaviour
         DataManager.Instance.Data.Position = transform.position;
 
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         }
@@ -132,7 +132,7 @@ public class PlayerCtrl : MonoBehaviour
         CheckSkill3();
 
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
         {
             StateContext.ExecuteUpdate();
         }

@@ -31,6 +31,8 @@ public class QuestManager : Singleton<QuestManager>
     }
 
     private string m_all_quest_data_path;
+    private string m_current_quest_data_path;
+
     private QuestContentDataList m_quest_content_list;
     public QuestContentDataList QuestContentReader
     {
@@ -44,9 +46,19 @@ public class QuestManager : Singleton<QuestManager>
         base.Awake();
 
         m_all_quest_data_path = Path.Combine(Application.persistentDataPath, "AllQuestData.json");
-        LoadData();
+        m_current_quest_data_path = Path.Combine(Application.persistentDataPath, "CurrentQuestData.json");
 
+        LoadData();
         LoadAllQuests();
+        Debug.Log($"Quests 개수: {Quests.Count}");
+    }
+
+    private void Start()
+    {
+        if(File.Exists(m_current_quest_data_path))
+        {
+            LoadCurrentQuests();
+        }
     }
 
     private void LoadData()
@@ -60,6 +72,61 @@ public class QuestManager : Singleton<QuestManager>
         {
             Debug.Log($"{m_all_quest_data_path}가 존재하지 않습니다.");
         }
+    }
+
+    private void LoadCurrentQuests()
+    {
+        var json_data = File.ReadAllText(m_current_quest_data_path);
+        var quest_data_list = JsonUtility.FromJson<QuestSaveDataList>(json_data);
+
+        foreach(var quest_data in quest_data_list.SaveDataList)
+        {
+            var loaded_quest = Quests[quest_data.ID];
+
+            loaded_quest.KillQuests = quest_data.KillQuests;
+            loaded_quest.ItemQuests = quest_data.ItemQuests;
+
+            List<QuestBase> all_quests = new List<QuestBase>();
+            foreach(var kill_quest in loaded_quest.KillQuests)
+            {
+                all_quests.Add(kill_quest);
+            }
+
+            foreach(var item_quest in loaded_quest.ItemQuests)
+            {
+                all_quests.Add(item_quest);
+            }
+
+            loaded_quest.All = all_quests.ToArray();
+
+            loaded_quest.QuestState = quest_data.QuestState;
+
+            ReceiveQuest(loaded_quest.ID);
+        }
+    }
+
+    public void SaveCurrentQuests()
+    {
+        QuestSaveDataList quest_data_list = new QuestSaveDataList();
+
+        List<QuestSaveData> save_data_list = new List<QuestSaveData>();
+        foreach(var quest in Quests.Values)
+        {
+            QuestSaveData save_data = new QuestSaveData
+            {
+                ID = quest.ID,
+                KillQuests = quest.KillQuests,
+                ItemQuests = quest.ItemQuests,
+                QuestState = quest.QuestState
+            };
+
+            save_data_list.Add(save_data);
+        }
+
+        quest_data_list.SaveDataList = save_data_list.ToArray();
+
+        string json_data = JsonUtility.ToJson(quest_data_list, true);
+        File.WriteAllText(m_current_quest_data_path, json_data);
     }
 
     private void LoadAllQuests()
@@ -105,6 +172,7 @@ public class QuestManager : Singleton<QuestManager>
 
         QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
         UpdateItemQuestCount();
+        SaveCurrentQuests();
     }
 
     public void CompleteQuest(int quest_id, bool is_give_reward = true)
@@ -128,6 +196,8 @@ public class QuestManager : Singleton<QuestManager>
         m_received_quests.Remove(quest_data);
 
         quest_data.QuestState = QuestState.CLEARED_PAST;
+
+        SaveCurrentQuests();
     }
 
     public QuestState CheckQuestState(int quest_id)
@@ -170,6 +240,7 @@ public class QuestManager : Singleton<QuestManager>
                         = m_received_quests[i].KillQuests[j].CurrentCount >= m_received_quests[i].KillQuests[j].TotalCount;
                     
                     QuestUIManager.Instance.UpdateCurrentQuestState(m_received_quests[i].ID);
+                    SaveCurrentQuests();
 
                     return;
                 }
@@ -189,6 +260,7 @@ public class QuestManager : Singleton<QuestManager>
                     = item_quest.CurrentCount >= item_quest.TotalCount;
 
                 QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
+                SaveCurrentQuests();
             }
         }
     }
