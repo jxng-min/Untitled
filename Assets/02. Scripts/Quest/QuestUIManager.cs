@@ -44,12 +44,10 @@ public class QuestUIManager : Singleton<QuestUIManager>
         base.Awake();
 
         m_is_ui_active = false;
-    }
 
-    private void Start()
-    {
         foreach(QuestContentData content_data in QuestManager.Instance.QuestContentReader.DataList)
         {
+            Debug.Log(content_data.m_quest_id);
             m_quest_contents.Add(content_data.m_quest_id, content_data);
         }        
     }

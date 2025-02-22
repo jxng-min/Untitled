@@ -40,7 +40,6 @@ public class QuestManager : Singleton<QuestManager>
         private set { m_quest_content_list = value; }
     }
     
-
     private new void Awake()
     {
         base.Awake();
@@ -50,7 +49,6 @@ public class QuestManager : Singleton<QuestManager>
 
         LoadData();
         LoadAllQuests();
-        Debug.Log($"Quests 개수: {Quests.Count}");
     }
 
     private void Start()

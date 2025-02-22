@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73e864887ec06beeb34c71a4fb77ff4, type: 3}
   m_Name: 2_Give me eat something
   m_EditorClassIdentifier: 
-  QuestState: 0
+  QuestState: 3
   m_quest_id: 2
   m_kill_quests: []
   m_item_quests:
   - m_particular_id: 0
-    m_is_particular_clear: 0
+    m_is_particular_clear: 1
     m_target_item_code: 1003
     m_total_count: 10
   - m_particular_id: 1
     m_is_particular_clear: 0
     m_target_item_code: 1004
-    m_total_count: 10
+    m_total_count: 9
   m_prerequisite_quest_ids: 
   m_prerequisite_player_level: 2
   m_reward_exp: 10
