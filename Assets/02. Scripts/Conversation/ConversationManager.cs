@@ -45,6 +45,13 @@ public class ConversationManager : Singleton<ConversationManager>
         get { return m_current_talk_index; }
     }
 
+    private int m_cumulative_index;
+    public int CumulativeIndex
+    {
+        get { return m_cumulative_index; }
+        set { m_cumulative_index = value; }
+    }
+
     private bool m_is_talking = false;
     public bool IsTalking
     {
@@ -59,9 +66,6 @@ public class ConversationManager : Singleton<ConversationManager>
 
     [Header("대화창 NPC 대화")]
     [SerializeField] private TypeEffect m_dialogue_text_label;
-
-
-    private Coroutine m_bubble_coroutine;
 
     private void Start()
     {
@@ -152,6 +156,33 @@ public class ConversationManager : Singleton<ConversationManager>
         m_dialogue_text_label.SetDialogue(dialogue);
         
         m_current_talk_index++;
+    }
+
+    public void Dialoging(int npc_id, int start_talk_index, int talk_count)
+    {
+        m_current_talk_index = start_talk_index + CumulativeIndex;
+
+        var diaglogue = GetDialogue(npc_id, m_current_talk_index);
+
+        if(CumulativeIndex >= talk_count)
+        {
+            m_is_talking = false;
+            ToggleDialogue(m_is_talking);
+
+            m_current_talk_index = 0;
+            CumulativeIndex = 0;
+
+            return;
+        }
+
+        m_is_talking = true;
+        ToggleDialogue(m_is_talking);
+
+        m_dialogue_name_label.text = NPCDataManager.Instance.GetName(npc_id);
+        m_dialogue_text_label.SetDialogue(diaglogue);
+
+        m_current_talk_index++;
+        CumulativeIndex++;
     }
 
     private void ToggleDialogue(bool flag)

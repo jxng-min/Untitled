@@ -96,7 +96,24 @@ public class NPCRaycast : MonoBehaviour
             {
                 if(m_current_npc.Info.Interaction)
                 {
-                    ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
+                    if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id))
+                    {
+                        switch(quest_id)
+                        {
+                            case 0:
+                                CheckQuest(quest_id, 2, 3, 5, 1, 6, 1);
+                                break;
+
+                            case 1:
+                                CheckQuest(quest_id, 7, 2, 9, 1, 6, 1);
+                                break;
+                        }
+                        
+                    }
+                    else
+                    {
+                        ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 2);
+                    }
                 }
             }
             else
@@ -152,6 +169,38 @@ public class NPCRaycast : MonoBehaviour
         m_indicator.SetActive(false);
 
         m_current_npc = null;
+    }
+
+    private void CheckQuest(int quest_id, int never_index, int never_count, int going_index, int going_count, int clear_index, int clear_count)
+    {
+        if(quest_id == -1)
+        {
+            return;
+        }
+
+        if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.NEVER_RECEIVED)
+        {
+            ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, never_index, never_count);
+
+            if(!ConversationManager.Instance.IsTalking)
+            {
+                QuestManager.Instance.ReceiveQuest(quest_id);
+            }
+        }
+        else if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.ON_GOING)
+        {
+            ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, going_index, going_count);
+        }
+
+        else if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.CLEAR)
+        {
+            ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, clear_index, clear_count);
+
+            if(!ConversationManager.Instance.IsTalking)
+            {
+                QuestManager.Instance.CompleteQuest(quest_id);
+            }
+        }
     }
 
     private void AddMaterial()
