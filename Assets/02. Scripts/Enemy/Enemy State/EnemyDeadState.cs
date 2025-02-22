@@ -18,6 +18,7 @@ namespace Junyoung
 
             DropItem();
 
+            QuestManager.Instance.UpdateKillQuestCount(m_enemy_ctrl.EnemySpawnData.EnemyType);
             DataManager.Instance.Data.EXP++;
 
             

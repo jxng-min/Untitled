@@ -169,4 +169,23 @@ public class InventoryMain : InventoryBase
 
         return false;
     }
+
+    public int GetItemCount(ItemCode item_code)
+    {
+        int total_count = 0;
+        for(int i = 0; i < m_slots.Length; i++)
+        {
+            if(m_slots[i].Item is null)
+            {
+                continue;
+            }
+            
+            if(m_slots[i].Item.ID == (int)item_code)
+            {
+                total_count += m_slots[i].Count;
+            }
+        }
+
+        return total_count;
+    }
 }

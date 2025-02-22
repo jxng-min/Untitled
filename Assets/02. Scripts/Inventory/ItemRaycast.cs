@@ -139,6 +139,7 @@ public class ItemRaycast : MonoBehaviour
                 Destroy(m_current_item.gameObject);
 
                 DataManager.Instance.SaveInventory();
+                QuestManager.Instance.UpdateItemQuestCount();
             }
 
             ItemInfoDisappear();

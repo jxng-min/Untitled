@@ -120,7 +120,6 @@ public class DataManager : Singleton<DataManager>
 
         for(int i = 0; i < Data.m_equipment_map.Length; i++)
         {
-            Debug.Log(i);
             if(Data.m_equipment_map[i].m_item_code == ItemCode.NONE)
             {
                 m_equipment_inventory.Slots[i].ClearSlot();
@@ -147,7 +146,6 @@ public class DataManager : Singleton<DataManager>
             }
             else
             {
-                Debug.Log($"{Data.m_quick_map[i].m_item_code} 불러오는데 성공");
                 var item = GetItemByCode(Data.m_quick_map[i].m_item_code);
 
                 if(item is not null)
