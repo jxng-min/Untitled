@@ -64,28 +64,14 @@ namespace Junyoung
             }
         }
 
-        public void Effect(int index)
+        public GameObject Effect(int index, Vector3 pos)
         {
-            switch (index)
-            {
-                case 0:
-                    {
-                        var effect = Instantiate(m_effect_prefabs[index]);
-                        effect.transform.position= new Vector3(transform.position.x,0,transform.position.z);
-                        StartCoroutine(DestroyEffect(effect, 2));
-                        break;
-                    }
-                case 1:
-                    {
-                        var effect = Instantiate(m_effect_prefabs[index]);
-                        effect.transform.position = transform.position;
-                        StartCoroutine(DestroyEffect(effect, 2));
-                        break;
-                    }
-            }
+            var effect = Instantiate(m_effect_prefabs[index], pos, Quaternion.identity);
+
+            return effect;
         }
 
-        private IEnumerator DestroyEffect(GameObject effect,float time)
+        public IEnumerator DestroyEffect(GameObject effect,float time)
         {
             yield return new WaitForSeconds(time);
             Destroy(effect);

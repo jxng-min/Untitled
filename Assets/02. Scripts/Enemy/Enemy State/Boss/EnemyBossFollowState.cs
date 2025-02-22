@@ -31,7 +31,9 @@ namespace Junyoung
                 }
                 else
                 {
-                    (m_enemy_ctrl as EnemyBossCtrl).Effect(1);
+                    var effect = (m_enemy_ctrl as EnemyBossCtrl).Effect(1,transform.position);
+                    StartCoroutine((m_enemy_ctrl as EnemyBossCtrl).DestroyEffect(effect, 2f));
+
                     StartCoroutine(WrapCoolDown());
                     m_is_wrap = false;
                     m_enemy_ctrl.Agent.speed = m_enemy_ctrl.OriginEnemyStat.MoveSpeed;
