@@ -11,7 +11,9 @@ public class FireCtrl : MonoBehaviour
             {
                 m_player = other.transform.parent.GetComponent<PlayerCtrl>();
             }
-            else
+
+
+            if (!(m_player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState))
             {
                 m_player.UpdateHP(-1.5f);
             }

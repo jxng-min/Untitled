@@ -9634,8 +9634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a92cd6ccc722745bf5dfab0986d9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_box_size: {x: 7, y: 0.29, z: 0.48}
-  m_box_center: {x: 0, y: -0.12, z: 0}
+  m_box_size: {x: 7, y: 0.79, z: 0.54}
+  m_box_center: {x: 0, y: 0, z: 0}
   m_enemy_ctrl: {fileID: 0}
 --- !u!1001 &4253966056016859598
 PrefabInstance:

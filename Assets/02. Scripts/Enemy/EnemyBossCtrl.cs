@@ -66,7 +66,7 @@ namespace Junyoung
 
         public GameObject Effect(int index, Vector3 pos)
         {
-            var effect = Instantiate(m_effect_prefabs[index], pos, Quaternion.identity);
+            var effect = Instantiate(m_effect_prefabs[index], pos, m_effect_prefabs[index].transform.rotation);
 
             return effect;
         }
