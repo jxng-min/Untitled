@@ -54,7 +54,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.9142278
+        functionName: Skill4_End
+        data: 
+        objectReferenceParameter: {fileID: 919132149155446097, guid: 3ab7af48e1bd5e1379a8bdb3d259e5b9, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -13,7 +13,6 @@ public class PlayerSkill3State : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("Skill3");
-            m_player_ctrl.Skill3Ready = false;
             m_player_ctrl.UpdateMP(-3f);
 
             StartCoroutine(Skill3EffectBegin());

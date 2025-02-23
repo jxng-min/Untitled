@@ -61,6 +61,18 @@ public class ItemActionManager : MonoBehaviour
                         
                         break;
                     }
+
+                    case (int)ItemCode.MOON_SLASH:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < 6f)
+                        {
+                            return false;
+                        }
+
+                        m_player_ctrl.ChangeState(PlayerState.SKILL4);
+
+                        break;
+                    }
                     
                 }
                 break;

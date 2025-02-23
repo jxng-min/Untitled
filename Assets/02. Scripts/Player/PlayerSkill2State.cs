@@ -14,7 +14,6 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("Skill2");
-            m_player_ctrl.Skill2Ready = false;
             m_player_ctrl.UpdateMP(-1f);
             m_origin_attack = DataManager.Instance.Data.Stat.ATK;
 
