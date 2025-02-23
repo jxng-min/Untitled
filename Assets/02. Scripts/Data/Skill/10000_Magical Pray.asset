@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478a6e803906cf0768a487bb5823bcc6, type: 3}
+  m_Name: 10000_Magical Pray
+  m_EditorClassIdentifier: 
+  m_item_id: 10000
+  m_can_overlap: 0
+  m_is_interactivity: 1
+  m_is_consumable: 0
+  m_item_cooltime: 10
+  m_item_type: 1
+  m_item_sprite: {fileID: 21300000, guid: cf6478ef684ce7f4c830edba147c7607, type: 3}
+  m_skill_name: "\uB9C8\uBC95\uC758 \uAE30\uB3C4"
+  m_unlock_level: 3

@@ -6,6 +6,7 @@ public class AnimationEventSender : MonoBehaviour
     private PlayerSkill1State m_player_skill1;
     private PlayerSkill2State m_player_skill2;
     private PlayerSkill3State m_player_skill3;
+    private PlayerSkill4State m_player_skill4;
 
     private void Start()
     {
@@ -13,6 +14,7 @@ public class AnimationEventSender : MonoBehaviour
         m_player_skill1 = GetComponentInParent<PlayerSkill1State>();
         m_player_skill2 = GetComponentInParent<PlayerSkill2State>();
         m_player_skill3 = GetComponentInParent<PlayerSkill3State>();
+        m_player_skill4 = GetComponentInParent<PlayerSkill4State>();
     }
 
     public void Combo_Enable()
@@ -43,5 +45,10 @@ public class AnimationEventSender : MonoBehaviour
     public void Skill3_End()
     {
         m_player_skill3?.Skill3_End();
+    }
+
+    public void Skill4_End()
+    {
+        m_player_skill4?.Skill4_End();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
@@ -18,11 +17,14 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_skill1_state;
     private IState<PlayerCtrl> m_skill2_state;
     private IState<PlayerCtrl> m_skill3_state;
+    private IState<PlayerCtrl> m_skill4_state;
     #endregion
 
     [SerializeField] private GameObject m_skill1_prefab;
     [SerializeField] private GameObject m_skill2_prefab;
     [SerializeField] private GameObject m_skill3_prefab;
+    [SerializeField] private GameObject m_skill4_prefab;
+    [SerializeField] private GameObject m_skill5_prefab;
 
     #region Properties
     public Transform Model { get; private set; }
@@ -45,21 +47,12 @@ public class PlayerCtrl : MonoBehaviour
     public GameObject Skill1Effect { get { return m_skill1_prefab; } }
     public GameObject Skill2Effect { get { return m_skill2_prefab; } }
     public GameObject Skill3Effect { get { return m_skill3_prefab; } }
+    public GameObject Skill4Effect { get { return m_skill4_prefab; } }
+    public GameObject Skill5Effect { get { return m_skill5_prefab; } }
 
     [Header("Block Component")]
     public bool IsBlock { get; set; }
     public float BlockTime { get; set; }
-
-    [Header("Skill Component")]
-    public bool Skill1Ready { get; set; }
-    public float Skill1Time { get; set; }
-    public float Skill1CoolTime { get; set; } = 10f;
-    public bool Skill2Ready { get; set; }
-    public float Skill2Time { get; set; }
-    public float Skill2CoolTime { get; set; } = 20f;
-    public bool Skill3Ready { get; set; }
-    public float Skill3Time { get; set; }
-    public float Skill3CoolTime { get; set; } = 7f;
 
     [Header("State Component")]
     public PlayerStateContext StateContext { get; set; }
@@ -98,6 +91,7 @@ public class PlayerCtrl : MonoBehaviour
         m_skill1_state = gameObject.AddComponent<PlayerSkill1State>();
         m_skill2_state = gameObject.AddComponent<PlayerSkill2State>();
         m_skill3_state = gameObject.AddComponent<PlayerSkill3State>();
+        m_skill4_state = gameObject.AddComponent<PlayerSkill4State>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -107,10 +101,6 @@ public class PlayerCtrl : MonoBehaviour
         transform.position = DataManager.Instance.Data.Position;
 
         UpdateAttackSpeed();
-
-        Skill1Ready = true;
-        Skill2Ready = true;
-        Skill3Ready = true;
     }
 
     private void Update()
@@ -118,7 +108,8 @@ public class PlayerCtrl : MonoBehaviour
         DataManager.Instance.Data.Position = transform.position;
 
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
+                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         }
@@ -127,12 +118,9 @@ public class PlayerCtrl : MonoBehaviour
         CheckFalling();
         CheckBlocking();
 
-        CheckSkill1();
-        CheckSkill2();
-        CheckSkill3();
-
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
+                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
         {
             StateContext.ExecuteUpdate();
         }
@@ -186,60 +174,6 @@ public class PlayerCtrl : MonoBehaviour
             }
 
             ChangeState(PlayerState.ATTACK);
-        }
-    }
-
-    public void Skill1()
-    {
-        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 6f)
-        {
-            return;
-        }
-
-        if(Skill1Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha1) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL1);
-        }
-    }
-
-    public void Skill2()
-    {
-        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 1f)
-        {
-            return;
-        }
-
-        if(Skill2Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha2) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL2);
-        }
-    }
-
-    public void Skill3()
-    {
-        if(InventoryMain.Active && EquipmentInventory.Active && StatInventory.Active && ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 3f)
-        {
-            return;
-        }
-        
-        if(Skill3Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha3) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL3);
         }
     }
 
@@ -350,6 +284,10 @@ public class PlayerCtrl : MonoBehaviour
             case PlayerState.SKILL3:
                 StateContext.Transition(m_skill3_state);
                 break;
+            
+            case PlayerState.SKILL4:
+                StateContext.Transition(m_skill4_state);
+                break;
         }
     }
 
@@ -408,57 +346,6 @@ public class PlayerCtrl : MonoBehaviour
         else
         {
             BlockTime = 0f;
-        }
-    }
-
-    private void CheckSkill1()
-    {
-        if(!Skill1Ready)
-        {
-            Skill1Time += Time.deltaTime;
-
-            if(Skill1Time >= Skill1CoolTime)
-            {
-                Skill1Ready = true;
-            }
-        }
-        else
-        {
-            Skill1Time = 0f;
-        }
-    }
-
-    private void CheckSkill2()
-    {
-        if(!Skill2Ready)
-        {
-            Skill2Time += Time.deltaTime;
-
-            if(Skill2Time >= Skill2CoolTime)
-            {
-                Skill2Ready = true;
-            }
-        }
-        else
-        {
-            Skill2Time = 0f;
-        }
-    }
-
-    private void CheckSkill3()
-    {
-        if(!Skill3Ready)
-        {
-            Skill3Time += Time.deltaTime;
-
-            if(Skill3Time >= Skill3CoolTime)
-            {
-                Skill3Ready = true;
-            }
-        }
-        else
-        {
-            Skill3Time = 0f;
         }
     }
 }

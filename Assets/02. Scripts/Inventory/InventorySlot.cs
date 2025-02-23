@@ -248,7 +248,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
         else
         {
-            DragSlot.Instance.m_current_slot.ClearSlot();
+            var parent = DragSlot.Instance.m_current_slot.transform.parent;
+            if(parent is null || parent.name != "Skill")
+            {
+                DragSlot.Instance.m_current_slot.ClearSlot();
+            }
         }
     }
 

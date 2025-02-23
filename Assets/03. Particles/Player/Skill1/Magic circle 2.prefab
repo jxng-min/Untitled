@@ -9696,7 +9696,7 @@ GameObject:
   - component: {fileID: 3220440682565326708}
   - component: {fileID: 3220440682565326709}
   - component: {fileID: 3220440682565326710}
-  - component: {fileID: 8692428884351161673}
+  - component: {fileID: 4366799924726476021}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -14705,7 +14705,7 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &8692428884351161673
+--- !u!114 &4366799924726476021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14739,11 +14739,11 @@ GameObject:
   - component: {fileID: 3423388300971593625}
   - component: {fileID: 1601506141239540749}
   - component: {fileID: 5574110145886096913}
-  - component: {fileID: 1354451397270340459}
-  - component: {fileID: 4332517958217979991}
+  - component: {fileID: 5335214119462158430}
+  - component: {fileID: 3051029489295848418}
   m_Layer: 0
   m_Name: Magic circle 2
-  m_TagString: Particle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19625,7 +19625,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!135 &1354451397270340459
+--- !u!135 &5335214119462158430
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19646,7 +19646,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4332517958217979991
+--- !u!114 &3051029489295848418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

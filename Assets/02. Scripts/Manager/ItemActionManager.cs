@@ -23,7 +23,58 @@ public class ItemActionManager : MonoBehaviour
         switch(item.Type)
         {
             case ItemType.SKILL:
-                // TODO: 스킬 처리 추가
+                switch(item.ID)
+                {
+                    case (int)ItemCode.MAGICAL_PRAY:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < 6f)
+                        {
+                            // TODO: 마나가 부족한 효과음 출력
+                            return false;
+                        }
+                        
+                        m_player_ctrl.ChangeState(PlayerState.SKILL1);
+                        
+                        break;
+                    }
+
+                    case (int)ItemCode.DESIRE_OF_WAR:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < 1f)
+                        {
+                            return false;
+                        }
+                        
+                        m_player_ctrl.ChangeState(PlayerState.SKILL2);
+                        
+                        break;
+                    }
+                    
+                    case (int)ItemCode.PLANE_SMASH:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < 3f)
+                        {
+                            return false;
+                        }
+                        
+                        m_player_ctrl.ChangeState(PlayerState.SKILL3);
+                        
+                        break;
+                    }
+
+                    case (int)ItemCode.MOON_SLASH:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < 6f)
+                        {
+                            return false;
+                        }
+
+                        m_player_ctrl.ChangeState(PlayerState.SKILL4);
+
+                        break;
+                    }
+                    
+                }
                 break;
             
             case ItemType.Equipment_HELMET:
@@ -95,14 +146,6 @@ public class ItemActionManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void InteractionItem(Item item, GameObject interact_target)
-    {
-        if(interact_target.CompareTag("NPC"))
-        {
-            // ...
-        }
     }
 
     public void SlotOnDropEvent(InventorySlot from_slot, InventorySlot to_slot)

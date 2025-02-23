@@ -29,7 +29,8 @@ public class CameraCtrl : MonoBehaviour
     private void Rotation()
     {
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-            && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
+            && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
+            && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
         {
             Delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             

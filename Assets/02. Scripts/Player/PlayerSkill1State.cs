@@ -5,6 +5,7 @@ public class PlayerSkill1State : MonoBehaviour, IState<PlayerCtrl>
 {
     private PlayerCtrl m_player_ctrl;
     private GameObject m_effect;
+    
     public void ExecuteEnter(PlayerCtrl sender)
     {
         m_player_ctrl = sender;
@@ -12,7 +13,6 @@ public class PlayerSkill1State : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("Skill1");
-            m_player_ctrl.Skill1Ready = false;
             m_player_ctrl.UpdateMP(-6f);
             StartCoroutine(Skill1EffectBegin());
         }
