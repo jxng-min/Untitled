@@ -21,3 +21,4 @@ MonoBehaviour:
   m_item_sprite: {fileID: 21300000, guid: 9895f5f95566ceb47bb239149d90cb44, type: 3}
   m_skill_name: "\uC9C0\uBA74 \uD30C\uAD34"
   m_unlock_level: 1
+  m_need_mp: 3

@@ -169,9 +169,9 @@ public class QuestUIManager : Singleton<QuestUIManager>
 
             StringBuilder string_builder = new StringBuilder();
 
-            string_builder.Append($"<b>{content_data.m_title}\n\n</b>");
-            string_builder.Append($"<size=25>의뢰인: {content_data.m_receive_from}\n</size>");
-            string_builder.Append($"\n<size=20>{content_data.m_full_content}</size>");
+            string_builder.Append($"<size=20>{content_data.m_title}\n\n</size>");
+            string_builder.Append($"<size=15>의뢰인: {content_data.m_receive_from}\n</size>");
+            string_builder.Append($"\n<size=15>{content_data.m_full_content}</size>");
 
             m_full_selected_content_label.text = string_builder.ToString();
         }

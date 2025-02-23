@@ -122,18 +122,15 @@ public class NPCRaycast : MonoBehaviour
                         case "Weary Wanderer_NPC":
                             if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id2))
                             {
-                                Debug.Log("진입1");
                                 switch(quest_id2)
                                 {
                                     case 2:
-                                    Debug.Log("진입1");
                                         CheckQuest(quest_id2, 1, 2, 3, 1, 4, 2);
                                         break;
                                 }
                             }
                             else
                             {
-                                Debug.Log("진입3");
                                 ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 1);
                             }
                             break;
@@ -160,12 +157,15 @@ public class NPCRaycast : MonoBehaviour
                         break;
 
                     case NPCType.CRAFTSMAN:
-                        ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
+                        if(!CraftingManager.IsActive)
+                        {
+                            ConversationManager.Instance.Dialoging(m_current_npc.Info.ID);
 
                             if(!ConversationManager.Instance.IsTalking)
                             {
                                 m_current_npc.GetComponent<CraftingStation>().TryOpenDialog();
                             }
+                        }
                         break;
                     
                     case NPCType.CHEST:

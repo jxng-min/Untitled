@@ -142,7 +142,7 @@ public class InventoryMain : InventoryBase
 
     public void RefreshLabels()
     {
-        m_money_label.text = "보유금: " + DataManager.Instance.Data.Money.ToString();
+        m_money_label.text = DataManager.Instance.Data.Money.ToString();
     }
 
     public bool HasItemInInventory(int item_id, out InventorySlot item_slot, int count)
