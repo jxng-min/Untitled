@@ -17,4 +17,11 @@ public class Item_Skill : Item
     {
         get { return m_unlock_level; }
     }
+
+    [Header("스킬 사용에 필요한 마나량")]
+    [SerializeField] private float m_need_mp;
+    public float MP
+    {
+        get { return m_need_mp; }
+    }
 }

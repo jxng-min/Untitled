@@ -27,7 +27,7 @@ public class ItemActionManager : MonoBehaviour
                 {
                     case (int)ItemCode.MAGICAL_PRAY:
                     {
-                        if(DataManager.Instance.Data.Stat.MP < 6f)
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
                         {
                             // TODO: 마나가 부족한 효과음 출력
                             return false;
@@ -40,7 +40,7 @@ public class ItemActionManager : MonoBehaviour
 
                     case (int)ItemCode.DESIRE_OF_WAR:
                     {
-                        if(DataManager.Instance.Data.Stat.MP < 1f)
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
                         {
                             return false;
                         }
@@ -52,7 +52,7 @@ public class ItemActionManager : MonoBehaviour
                     
                     case (int)ItemCode.PLANE_SMASH:
                     {
-                        if(DataManager.Instance.Data.Stat.MP < 3f)
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
                         {
                             return false;
                         }
@@ -64,12 +64,36 @@ public class ItemActionManager : MonoBehaviour
 
                     case (int)ItemCode.MOON_SLASH:
                     {
-                        if(DataManager.Instance.Data.Stat.MP < 6f)
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
                         {
                             return false;
                         }
 
                         m_player_ctrl.ChangeState(PlayerState.SKILL4);
+
+                        break;
+                    }
+
+                    case (int)ItemCode.SPIRIT:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
+                        {
+                            return false;
+                        }
+
+                        m_player_ctrl.ChangeState(PlayerState.SKILL5);
+
+                        break;
+                    }
+
+                    case (int)ItemCode.METEO:
+                    {
+                        if(DataManager.Instance.Data.Stat.MP < (item as Item_Skill).MP)
+                        {
+                            return false;
+                        }
+
+                        m_player_ctrl.ChangeState(PlayerState.SKILL6);
 
                         break;
                     }

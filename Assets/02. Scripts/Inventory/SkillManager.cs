@@ -56,7 +56,12 @@ public class SkillManager : Singleton<SkillManager>
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
-        }   
+        }
+
+        for(int i = 0; i < m_skill_slots.Length; i++)
+        {
+            
+        }
     }
 
     private void Init()

@@ -17,7 +17,7 @@ public class ItemShopSlot : MonoBehaviour
     {
         if(m_sell_info.Level > m_called_shop_level)
         {
-            m_item_cost_label.text = "지금은 구매할 수 없습니다.";
+            m_item_cost_label.text = "<color=red>지금은 구매할 수 없습니다.</color>";
             m_buy_button.interactable = false;
 
             return;
