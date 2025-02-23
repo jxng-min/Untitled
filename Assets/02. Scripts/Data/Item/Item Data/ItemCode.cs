@@ -20,4 +20,10 @@ public enum ItemCode
     GEM = 1002,
     MEAT = 1003,
     APPLE = 1004,
+
+    // 스킬 10000~
+    MAGICAL_PRAY = 10000,
+    DESIRE_OF_WAR = 10001,
+    PLANE_SMASH = 10002,
+
 }

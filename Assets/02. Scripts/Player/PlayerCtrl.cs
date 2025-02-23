@@ -118,7 +118,8 @@ public class PlayerCtrl : MonoBehaviour
         DataManager.Instance.Data.Position = transform.position;
 
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
+                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         }
@@ -127,12 +128,9 @@ public class PlayerCtrl : MonoBehaviour
         CheckFalling();
         CheckBlocking();
 
-        CheckSkill1();
-        CheckSkill2();
-        CheckSkill3();
-
         if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive && !ChestDataManager.IsActive && !QuestUIManager.IsActive)
+                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
+                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
         {
             StateContext.ExecuteUpdate();
         }
@@ -186,60 +184,6 @@ public class PlayerCtrl : MonoBehaviour
             }
 
             ChangeState(PlayerState.ATTACK);
-        }
-    }
-
-    public void Skill1()
-    {
-        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 6f)
-        {
-            return;
-        }
-
-        if(Skill1Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha1) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL1);
-        }
-    }
-
-    public void Skill2()
-    {
-        if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 1f)
-        {
-            return;
-        }
-
-        if(Skill2Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha2) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL2);
-        }
-    }
-
-    public void Skill3()
-    {
-        if(InventoryMain.Active && EquipmentInventory.Active && StatInventory.Active && ConversationManager.Instance.IsTalking)
-        {
-            return;
-        }
-
-        if(DataManager.Instance.Data.Stat.MP < 3f)
-        {
-            return;
-        }
-        
-        if(Skill3Ready && !IsAttack && Input.GetKeyDown(KeyCode.Alpha3) && IsGround)
-        {
-            ChangeState(PlayerState.SKILL3);
         }
     }
 
@@ -408,57 +352,6 @@ public class PlayerCtrl : MonoBehaviour
         else
         {
             BlockTime = 0f;
-        }
-    }
-
-    private void CheckSkill1()
-    {
-        if(!Skill1Ready)
-        {
-            Skill1Time += Time.deltaTime;
-
-            if(Skill1Time >= Skill1CoolTime)
-            {
-                Skill1Ready = true;
-            }
-        }
-        else
-        {
-            Skill1Time = 0f;
-        }
-    }
-
-    private void CheckSkill2()
-    {
-        if(!Skill2Ready)
-        {
-            Skill2Time += Time.deltaTime;
-
-            if(Skill2Time >= Skill2CoolTime)
-            {
-                Skill2Ready = true;
-            }
-        }
-        else
-        {
-            Skill2Time = 0f;
-        }
-    }
-
-    private void CheckSkill3()
-    {
-        if(!Skill3Ready)
-        {
-            Skill3Time += Time.deltaTime;
-
-            if(Skill3Time >= Skill3CoolTime)
-            {
-                Skill3Ready = true;
-            }
-        }
-        else
-        {
-            Skill3Time = 0f;
         }
     }
 }

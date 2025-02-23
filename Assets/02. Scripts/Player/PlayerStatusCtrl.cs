@@ -29,6 +29,8 @@ public class PlayerStatusCtrl : MonoBehaviour
 
             DataManager.Instance.Data.Stat.HP = DataManager.Instance.GetMaxStat().HP;
             DataManager.Instance.Data.Stat.MP = DataManager.Instance.GetMaxStat().MP;
+
+            SkillManager.Instance.UpdateAllSlots();
         }
 
         m_level_label.text = DataManager.Instance.Data.Level.ToString();

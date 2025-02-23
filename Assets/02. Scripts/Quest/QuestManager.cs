@@ -50,7 +50,6 @@ public class QuestManager : Singleton<QuestManager>
 
         LoadData();
         LoadAllQuests();
-        Debug.Log($"Quests 개수: {Quests.Count}");
     }
 
     private void Start()

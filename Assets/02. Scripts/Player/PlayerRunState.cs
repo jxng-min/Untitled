@@ -30,10 +30,6 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
 
             m_player_ctrl.Attack();
 
-            m_player_ctrl.Skill1();
-            m_player_ctrl.Skill2();
-            m_player_ctrl.Skill3();
-
             if(m_player_ctrl.FallTime > 0.3f)
             {
                 m_player_ctrl.ChangeState(PlayerState.JUMPING);
