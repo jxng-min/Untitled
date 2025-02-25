@@ -28,8 +28,10 @@ public class ItemDataManager : Singleton<ItemDataManager>
         get { return m_item_object_data; }
     }
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
+        
         m_item_data_path = Path.Combine(Application.persistentDataPath, "ItemData.json");
 
         m_item_name_dics = new Dictionary<int, string>();
