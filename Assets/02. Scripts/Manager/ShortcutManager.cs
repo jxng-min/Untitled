@@ -2,6 +2,17 @@ using UnityEngine;
 
 public class ShortcutManager : MonoBehaviour
 {
+    private static bool m_is_ui_active = true;
+    public static bool IsActive
+    {
+        get { return m_is_ui_active; }
+        set { m_is_ui_active = value; }
+    }
+
+    [Header("단축키 UI 오브젝트")]
+    [SerializeField] private GameObject m_shortcut_ui_object;
+
+    [Header("슬롯의 부모 프랜스폼")]
     [SerializeField] private Transform m_slot_parent;
 
     private InventorySlot[] m_slots;
@@ -17,6 +28,21 @@ public class ShortcutManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            if(!IsActive)
+            {
+                IsActive = true;
+                m_shortcut_ui_object.SetActive(true);
+            }
+            else
+            {
+                IsActive = false;
+                m_shortcut_ui_object.SetActive(false);
+            }
+        }
+
+
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             m_slots[0].UseItem();
@@ -58,41 +84,6 @@ public class ShortcutManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha9))
         {
             m_slots[8].UseItem();
-        }
-        
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            m_slots[9].UseItem();
-        }
-        
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            m_slots[10].UseItem();
-        }
-
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            m_slots[11].UseItem();
-        }
-
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            m_slots[12].UseItem();
-        }
-
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            m_slots[13].UseItem();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Semicolon))
-        {   
-            m_slots[14].UseItem();
-        }
-
-        if(Input.GetKeyDown(KeyCode.DoubleQuote))
-        {
-            m_slots[15].UseItem();
         }
     }
 

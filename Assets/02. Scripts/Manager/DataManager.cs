@@ -150,6 +150,7 @@ public class DataManager : Singleton<DataManager>
 
                 if(item is not null)
                 {
+                    Debug.Log(item.ID);
                     m_quick_inventory.LoadItem(item, m_quick_inventory.Slots[i], Data.m_quick_map[i].m_item_count);
                 }
             }
@@ -160,6 +161,7 @@ public class DataManager : Singleton<DataManager>
     {
         var json_data = JsonUtility.ToJson(Data);
         File.WriteAllText(m_player_data_path, json_data);
+        Debug.Log("저장");
     }
 
     public void LoadPlayerData()
