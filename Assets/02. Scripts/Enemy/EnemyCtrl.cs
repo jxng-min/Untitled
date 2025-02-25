@@ -149,7 +149,7 @@ namespace Junyoung
             ManagedPool.Release(this);
         }
 
-        void FixedUpdate()
+        public virtual void FixedUpdate()
         {
             m_state_name = StateContext.NowState.ToString();
             if (TotalAtkRate >= AttackDelay)
