@@ -70,6 +70,6 @@ public class PlayerData
 
         m_main_map = new Map[35];
         m_equipment_map = new Map[5];
-        m_quick_map = new Map[16];
+        m_quick_map = new Map[9];
     }
 }

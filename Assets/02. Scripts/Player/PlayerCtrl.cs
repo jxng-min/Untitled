@@ -18,6 +18,8 @@ public class PlayerCtrl : MonoBehaviour
     private IState<PlayerCtrl> m_skill2_state;
     private IState<PlayerCtrl> m_skill3_state;
     private IState<PlayerCtrl> m_skill4_state;
+    private IState<PlayerCtrl> m_skill5_state;
+    private IState<PlayerCtrl> m_skill6_state;
     #endregion
 
     [SerializeField] private GameObject m_skill1_prefab;
@@ -92,6 +94,8 @@ public class PlayerCtrl : MonoBehaviour
         m_skill2_state = gameObject.AddComponent<PlayerSkill2State>();
         m_skill3_state = gameObject.AddComponent<PlayerSkill3State>();
         m_skill4_state = gameObject.AddComponent<PlayerSkill4State>();
+        m_skill5_state = gameObject.AddComponent<PlayerSkill5State>();
+        m_skill6_state = gameObject.AddComponent<PlayerSkill6State>();
 
         ChangeState(PlayerState.IDLE);
     }
@@ -287,6 +291,14 @@ public class PlayerCtrl : MonoBehaviour
             
             case PlayerState.SKILL4:
                 StateContext.Transition(m_skill4_state);
+                break;
+
+            case PlayerState.SKILL5:
+                StateContext.Transition(m_skill5_state);
+                break;
+            
+            case PlayerState.SKILL6:
+                StateContext.Transition(m_skill6_state);
                 break;
         }
     }
