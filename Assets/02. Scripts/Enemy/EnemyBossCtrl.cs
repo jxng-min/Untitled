@@ -13,9 +13,9 @@ namespace Junyoung
         private GameObject m_canvas;
         [SerializeField] private GameObject m_hp_panel;
         [SerializeField] private Image m_hp_image;
+        public bool IsPhaseTwo { get; set; }
 
-
-        public bool IsPhaseTwo  = false;
+        private bool m_is_regenerationing = false;
 
         public GameObject[] m_effect_prefabs;
 
@@ -56,7 +56,40 @@ namespace Junyoung
                 m_hp_image.fillAmount = EnemyStat.HP / OriginEnemyStat.HP;
                 ActiveHpBar();
             }
-            
+            if(EnemyStat.HP <= OriginEnemyStat.HP/2)
+            {
+                IsPhaseTwo = true;
+            }
+            else
+            {
+                IsPhaseTwo = false;
+            }
+
+            if(IsPhaseTwo)
+            {
+                if (!m_is_regenerationing)
+                {
+                    StartCoroutine(Regeneration());
+                }
+            }
+            else
+            {
+                m_is_regenerationing = false;
+            }
+        }
+
+        private IEnumerator Regeneration()
+        {
+            m_is_regenerationing= true;
+            while(!(StateContext.NowState is EnemyDeadState))
+            {
+                if (!m_is_regenerationing)
+                {
+                    break;
+                }
+                yield return new WaitForSeconds(1f);
+                UpdateHP(1f);
+            }
         }
 
         public override void SetDropItemBag()

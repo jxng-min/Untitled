@@ -328,7 +328,7 @@ namespace Junyoung
         private IEnumerator SkillCoolDown()
         {
             m_can_use_skill = false;
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(30f);
             m_can_use_skill = true;
         }
 
