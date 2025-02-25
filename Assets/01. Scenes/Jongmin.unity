@@ -32246,7 +32246,7 @@ MonoBehaviour:
   m_skill2_prefab: {fileID: 3874635022589376825, guid: ffdfb7851a968494f8fe76ee88f3791a, type: 3}
   m_skill3_prefab: {fileID: 1921079115439858272, guid: cf22afb314419024a912600068b12f79, type: 3}
   m_skill4_prefab: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
-  m_skill5_prefab: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+  m_skill5_prefab: {fileID: 296138670272305972, guid: 15338b40d7eb01edeb1bac908b951002, type: 3}
   m_equipment_inventory: {fileID: 826860988}
 --- !u!54 &985679754
 Rigidbody:

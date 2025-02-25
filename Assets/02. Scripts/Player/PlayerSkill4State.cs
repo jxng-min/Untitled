@@ -11,7 +11,6 @@ public class PlayerSkill4State : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
-            Debug.Log("진입");
             m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("Skill4");
             m_player_ctrl.UpdateMP(-6f);
