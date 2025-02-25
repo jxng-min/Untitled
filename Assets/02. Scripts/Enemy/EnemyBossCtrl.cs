@@ -1,20 +1,32 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Pool;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace Junyoung
 {
     public class EnemyBossCtrl : EnemyCtrl
     {
-        public float m_detect_range = 15f;
-        public float m_hp_bar_range;
-        public bool IsPhaseTwo  = false;
+        private float m_detect_range = 15f;
+        [Header("보스 체력바")]
+        private GameObject m_canvas;
+        [SerializeField] private GameObject m_hp_panel;
+        [SerializeField] private Image m_hp_image;
+        public bool IsPhaseTwo { get; set; }
+
+        private bool m_is_phase_two_running = false;
+
+        public bool IsRegenerationing { get; set; } = false;
+        public bool IsNotCombating = false;
+
 
         public GameObject[] m_effect_prefabs;
 
-        public new IObjectPool<EnemyBossCtrl> ManagedPool { get; set; }
+        public List<GameObject> m_phase_two_effects;
 
+        public new IObjectPool<EnemyBossCtrl> ManagedPool { get; set; }
 
         public override void Awake()
         {
@@ -23,11 +35,117 @@ namespace Junyoung
             Destroy(gameObject.GetComponent<EnemyReadyState>());
             Destroy(gameObject.GetComponent<EnemyIdleState>());
             Destroy(gameObject.GetComponent<EnemyFollowState>());
+            Destroy(gameObject.GetComponent<EnemyBackState>());
             m_enemy_attack_state = gameObject.AddComponent<EnemyBossAttackState>();
             m_enemy_ready_state = gameObject.AddComponent<EnemyBossReadyState>();
             m_enemy_idle_state = gameObject.AddComponent<EnemyBossIdleState>();
             m_enemy_follow_state = gameObject.AddComponent<EnemyBossFollowState>();
+            m_enemy_back_state = gameObject.AddComponent<EnemyBossBackState>();
+
+            m_canvas = GameObject.Find("Canvas");
+            RectTransform[] UIs =  m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
+            foreach(RectTransform UI in UIs)
+            {
+                if(UI.gameObject.name == "Boss HP Panel")
+                {
+                    m_hp_panel = UI.gameObject;
+                }
+                else if(UI.gameObject.name == "HP Bar")
+                {
+                    m_hp_image = UI.gameObject.GetComponent<Image>();
+                }
+            }
+            ParticleSystem[] particles = transform.GetComponentsInChildren<ParticleSystem>(true);
+            foreach(ParticleSystem particle in particles)
+            {
+                m_phase_two_effects.Add(particle.gameObject);
+            }
+
         }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (m_hp_panel)
+            { 
+                m_hp_image.fillAmount = EnemyStat.HP / OriginEnemyStat.HP;
+                ActiveHpBar();
+            }
+            if(EnemyStat.HP <= OriginEnemyStat.HP/2)
+            {
+                IsPhaseTwo = true;
+            }
+            else
+            {
+                IsPhaseTwo = false;
+            }
+
+            if (IsPhaseTwo)
+            {
+                if (!m_is_phase_two_running)
+                {
+                    m_is_phase_two_running = true;
+                    StartCoroutine(Regeneration(1));
+                    if (!m_phase_two_effects[0].activeSelf)
+                    {
+                        foreach (GameObject effect in m_phase_two_effects)
+                        {
+                            effect.SetActive(true);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (m_is_phase_two_running)
+                {
+                    m_is_phase_two_running = false;
+                    foreach (GameObject effect in m_phase_two_effects)
+                    {
+                        effect.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        public IEnumerator Regeneration(float heal)
+        {
+            IsRegenerationing = true;
+            while (!(StateContext.NowState is EnemyDeadState))
+            {
+                yield return new WaitForSeconds(1f);
+
+                if (IsNotCombating)
+                {
+                    if (EnemyStat.HP + heal > OriginEnemyStat.HP)
+                    {
+                        EnemyStat.HP = OriginEnemyStat.HP;
+                        break;
+                    }
+                    else
+                    {
+                        UpdateHP(heal);
+                    }
+                }
+                else if (m_is_phase_two_running)
+                {
+                    if (EnemyStat.HP + heal > OriginEnemyStat.HP/2)
+                    {
+                        EnemyStat.HP = OriginEnemyStat.HP/2;
+                        break;
+                    }
+                    else
+                    {
+                        UpdateHP(heal);
+                    }
+                }
+
+
+            }
+            IsRegenerationing = false;
+        }
+
         public override void SetDropItemBag()
         {
             ItemCode[] codes = new ItemCode[]
@@ -55,6 +173,19 @@ namespace Junyoung
             Debug.Log($"{this.name} 반환 (Boss)");
             ManagedPool.Release(this as EnemyBossCtrl);
         }
+
+        public void ActiveHpBar()
+        {
+            if (Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= EnemyStat.FollowRange)
+            {
+                m_hp_panel.SetActive(true);
+            }
+            else
+            {
+                m_hp_panel.SetActive(false);
+            }
+        }
+
         public override void DetectPlayer()
         {
             if ((Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= m_detect_range)

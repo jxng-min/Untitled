@@ -33,7 +33,7 @@ namespace Junyoung
 
         public virtual void DistanceCheck()
         {
-            if (Vector3.Distance(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
+            if (Vector3.Distance(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position, m_enemy_ctrl.Player.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
             {
                 m_agent.SetDestination(m_player.transform.position);
             }

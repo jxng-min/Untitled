@@ -26,7 +26,7 @@ namespace Junyoung
 
 
         }
-        public void OnStateExit(EnemyCtrl sender)
+        public virtual void OnStateExit(EnemyCtrl sender)
         {
 
         }

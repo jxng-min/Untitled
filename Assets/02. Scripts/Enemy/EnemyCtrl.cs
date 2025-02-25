@@ -13,7 +13,7 @@ namespace Junyoung
         //Enemt State
         protected IEnemyState<EnemyCtrl> m_enemy_idle_state;
         IEnemyState<EnemyCtrl> m_enemy_patrol_state;
-        IEnemyState<EnemyCtrl> m_enemy_back_state;
+        protected IEnemyState<EnemyCtrl> m_enemy_back_state;
         IEnemyState<EnemyCtrl> m_enemy_found_player_state;
         protected IEnemyState<EnemyCtrl> m_enemy_follow_state;
         IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
@@ -149,7 +149,7 @@ namespace Junyoung
             ManagedPool.Release(this);
         }
 
-        void FixedUpdate()
+        public virtual void FixedUpdate()
         {
             m_state_name = StateContext.NowState.ToString();
             if (TotalAtkRate >= AttackDelay)
