@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Pool;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace Junyoung
@@ -15,9 +16,15 @@ namespace Junyoung
         [SerializeField] private Image m_hp_image;
         public bool IsPhaseTwo { get; set; }
 
-        private bool m_is_regenerationing = false;
+        private bool m_is_phase_two_running = false;
+
+        public bool IsRegenerationing { get; set; } = false;
+        public bool IsNotCombating = false;
+
 
         public GameObject[] m_effect_prefabs;
+
+        public List<GameObject> m_phase_two_effects;
 
         public new IObjectPool<EnemyBossCtrl> ManagedPool { get; set; }
 
@@ -28,10 +35,12 @@ namespace Junyoung
             Destroy(gameObject.GetComponent<EnemyReadyState>());
             Destroy(gameObject.GetComponent<EnemyIdleState>());
             Destroy(gameObject.GetComponent<EnemyFollowState>());
+            Destroy(gameObject.GetComponent<EnemyBackState>());
             m_enemy_attack_state = gameObject.AddComponent<EnemyBossAttackState>();
             m_enemy_ready_state = gameObject.AddComponent<EnemyBossReadyState>();
             m_enemy_idle_state = gameObject.AddComponent<EnemyBossIdleState>();
             m_enemy_follow_state = gameObject.AddComponent<EnemyBossFollowState>();
+            m_enemy_back_state = gameObject.AddComponent<EnemyBossBackState>();
 
             m_canvas = GameObject.Find("Canvas");
             RectTransform[] UIs =  m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
@@ -46,6 +55,12 @@ namespace Junyoung
                     m_hp_image = UI.gameObject.GetComponent<Image>();
                 }
             }
+            ParticleSystem[] particles = transform.GetComponentsInChildren<ParticleSystem>(true);
+            foreach(ParticleSystem particle in particles)
+            {
+                m_phase_two_effects.Add(particle.gameObject);
+            }
+
         }
 
         public override void FixedUpdate()
@@ -65,31 +80,70 @@ namespace Junyoung
                 IsPhaseTwo = false;
             }
 
-            if(IsPhaseTwo)
+            if (IsPhaseTwo)
             {
-                if (!m_is_regenerationing)
+                if (!m_is_phase_two_running)
                 {
-                    StartCoroutine(Regeneration());
+                    m_is_phase_two_running = true;
+                    StartCoroutine(Regeneration(1));
+                    if (!m_phase_two_effects[0].activeSelf)
+                    {
+                        foreach (GameObject effect in m_phase_two_effects)
+                        {
+                            effect.SetActive(true);
+                        }
+                    }
                 }
+
             }
             else
             {
-                m_is_regenerationing = false;
+                if (m_is_phase_two_running)
+                {
+                    m_is_phase_two_running = false;
+                    foreach (GameObject effect in m_phase_two_effects)
+                    {
+                        effect.SetActive(false);
+                    }
+                }
             }
         }
 
-        private IEnumerator Regeneration()
+        public IEnumerator Regeneration(float heal)
         {
-            m_is_regenerationing= true;
-            while(!(StateContext.NowState is EnemyDeadState))
+            IsRegenerationing = true;
+            while (!(StateContext.NowState is EnemyDeadState))
             {
-                if (!m_is_regenerationing)
-                {
-                    break;
-                }
                 yield return new WaitForSeconds(1f);
-                UpdateHP(1f);
+
+                if (IsNotCombating)
+                {
+                    if (EnemyStat.HP + heal > OriginEnemyStat.HP)
+                    {
+                        EnemyStat.HP = OriginEnemyStat.HP;
+                        break;
+                    }
+                    else
+                    {
+                        UpdateHP(heal);
+                    }
+                }
+                else if (m_is_phase_two_running)
+                {
+                    if (EnemyStat.HP + heal > OriginEnemyStat.HP/2)
+                    {
+                        EnemyStat.HP = OriginEnemyStat.HP/2;
+                        break;
+                    }
+                    else
+                    {
+                        UpdateHP(heal);
+                    }
+                }
+
+
             }
+            IsRegenerationing = false;
         }
 
         public override void SetDropItemBag()
