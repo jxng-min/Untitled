@@ -18,9 +18,7 @@ namespace Junyoung
 
         private bool m_is_phase_two_running = false;
 
-        public bool IsRegenerationing { get; set; } = false;
-        public bool IsNotCombating = false;
-
+        public bool IsNotCombating { get; set; } = false;
 
         public GameObject[] m_effect_prefabs;
 
@@ -111,7 +109,6 @@ namespace Junyoung
 
         public IEnumerator Regeneration(float heal)
         {
-            IsRegenerationing = true;
             while (!(StateContext.NowState is EnemyDeadState))
             {
                 yield return new WaitForSeconds(1f);
@@ -140,10 +137,7 @@ namespace Junyoung
                         UpdateHP(heal);
                     }
                 }
-
-
             }
-            IsRegenerationing = false;
         }
 
         public override void SetDropItemBag()

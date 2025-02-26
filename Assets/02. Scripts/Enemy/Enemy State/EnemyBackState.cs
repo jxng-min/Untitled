@@ -15,14 +15,13 @@ namespace Junyoung
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
             }
-            Debug.Log("베이스 백 스테이트");
+            m_agent.SetDestination(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position);
             m_enemy_ctrl.Animator.SetBool("isBack", true);
             m_agent.speed *= 1.4f; // 복귀시 이동속도 증가
-            m_agent.SetDestination(m_enemy_ctrl.EnemySpawnData.SpawnTransform.position);
         }
         public void OnStateUpdate(EnemyCtrl sender)
         {
-            if (m_agent.remainingDistance <= m_agent.stoppingDistance)
+            if (!m_agent.pathPending && m_agent.remainingDistance <= m_agent.stoppingDistance)
             {
                 m_enemy_ctrl.ChangeState(EnemyState.IDLE);
             }
