@@ -28,17 +28,20 @@ public class ShortcutManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if(!SettingManager.IsActive)
         {
-            if(!IsActive)
+            if(Input.GetKeyDown(KeyCode.L))
             {
-                IsActive = true;
-                m_shortcut_ui_object.SetActive(true);
-            }
-            else
-            {
-                IsActive = false;
-                m_shortcut_ui_object.SetActive(false);
+                if(!IsActive)
+                {
+                    IsActive = true;
+                    m_shortcut_ui_object.SetActive(true);
+                }
+                else
+                {
+                    IsActive = false;
+                    m_shortcut_ui_object.SetActive(false);
+                }
             }
         }
 

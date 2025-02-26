@@ -60,8 +60,6 @@ public class ItemShopSlot : MonoBehaviour
 
         ItemShopManager.Instance.RefreshSlots();
 
-        ItemShopManager.Instance.SaveData();
-
         // TODO: 구매 사운드 출력
     }
 }

@@ -45,6 +45,7 @@ public class ItemShop : MonoBehaviour
 
         shop_info.ID = ID;
         shop_info.Level = Level;
+
         shop_info.ItemInfos = SellingItem.Select(
                                                     sell_item_info => new SellItemInfo
                                                     {
