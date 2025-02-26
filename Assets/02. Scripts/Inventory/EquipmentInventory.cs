@@ -24,23 +24,26 @@ public class EquipmentInventory : InventoryBase
             Cursor.visible = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.U))
+        if(!SettingManager.IsActive)
         {
-            if(m_inventory_base.activeInHierarchy)
+            if(Input.GetKeyDown(KeyCode.U))
             {
-                m_inventory_base.SetActive(false);
-                Active = false;
+                if(m_inventory_base.activeInHierarchy)
+                {
+                    m_inventory_base.SetActive(false);
+                    Active = false;
 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                m_inventory_base.SetActive(true);
-                Active = true;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    m_inventory_base.SetActive(true);
+                    Active = true;
 
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
             }
         }
     }

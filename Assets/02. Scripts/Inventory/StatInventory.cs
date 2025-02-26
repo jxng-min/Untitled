@@ -21,33 +21,36 @@ public class StatInventory : InventoryBase
 
     private void Update()
     {
-        if(Active)
+        if(!SettingManager.Instance)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            
-            m_attack_label.text = DataManager.Instance.Data.Stat.ATK.ToString();
-            m_attack_rate_label.text = DataManager.Instance.Data.Stat.Rate.ToString();
-            m_defense_label.text = DataManager.Instance.Data.Stat.DEF.ToString();
-        }
-
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            if(m_inventory_base.activeInHierarchy)
+            if(Active)
             {
-                m_inventory_base.SetActive(false);
-                Active = false;
-
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                m_inventory_base.SetActive(true);
-                Active = true;
-
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                
+                m_attack_label.text = DataManager.Instance.Data.Stat.ATK.ToString();
+                m_attack_rate_label.text = DataManager.Instance.Data.Stat.Rate.ToString();
+                m_defense_label.text = DataManager.Instance.Data.Stat.DEF.ToString();
+            }
+
+            if(Input.GetKeyDown(KeyCode.O))
+            {
+                if(m_inventory_base.activeInHierarchy)
+                {
+                    m_inventory_base.SetActive(false);
+                    Active = false;
+
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    m_inventory_base.SetActive(true);
+                    Active = true;
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
             }
         }        
     }

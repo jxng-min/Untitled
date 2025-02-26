@@ -244,7 +244,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
         if(temp_item is not null)
         {
+            var parent = DragSlot.Instance.m_current_slot.transform.parent;
+            if(parent is null || parent.name != "Skill")
+            {
             DragSlot.Instance.m_current_slot.AddItem(temp_item, temp_item_count);
+            }
+            else
+            {
+                DragSlot.Instance.m_current_slot.AddItem(DragSlot.Instance.m_current_slot.Item, DragSlot.Instance.m_current_slot.m_item_count);
+            }
         }
         else
         {

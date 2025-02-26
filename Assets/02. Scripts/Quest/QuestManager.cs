@@ -171,7 +171,6 @@ public class QuestManager : Singleton<QuestManager>
 
         QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
         UpdateItemQuestCount();
-        SaveCurrentQuests();
     }
 
     public void CompleteQuest(int quest_id, bool is_give_reward = true)
@@ -195,8 +194,6 @@ public class QuestManager : Singleton<QuestManager>
         m_received_quests.Remove(quest_data);
 
         quest_data.QuestState = QuestState.CLEARED_PAST;
-
-        SaveCurrentQuests();
     }
 
     public QuestState CheckQuestState(int quest_id)
@@ -239,7 +236,6 @@ public class QuestManager : Singleton<QuestManager>
                         = m_received_quests[i].KillQuests[j].CurrentCount >= m_received_quests[i].KillQuests[j].TotalCount;
                     
                     QuestUIManager.Instance.UpdateCurrentQuestState(m_received_quests[i].ID);
-                    SaveCurrentQuests();
 
                     return;
                 }
@@ -259,7 +255,6 @@ public class QuestManager : Singleton<QuestManager>
                     = item_quest.CurrentCount >= item_quest.TotalCount;
 
                 QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
-                SaveCurrentQuests();
             }
         }
     }

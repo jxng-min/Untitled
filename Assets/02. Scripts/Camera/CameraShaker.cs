@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class CameraShaker : MonoBehaviour
 {
+    private bool m_is_enable = false;
+    public bool IsEnable
+    {
+        get { return m_is_enable; }
+        set { m_is_enable = value; }
+    }
+
     private Vector3 m_origin_local_position;
 
     private void Awake()
@@ -12,7 +19,10 @@ public class CameraShaker : MonoBehaviour
 
     public void Shaking(float range, float time)
     {
-        StartCoroutine(ShakingCoroutine(range, time));
+        if(IsEnable)
+        {
+            StartCoroutine(ShakingCoroutine(range, time));
+        }
     }
 
     private IEnumerator ShakingCoroutine(float range, float time)
