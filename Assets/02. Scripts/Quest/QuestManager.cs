@@ -45,9 +45,9 @@ public class QuestManager : Singleton<QuestManager>
     {
         base.Awake();
 
-        m_all_quest_data_path = Path.Combine(Application.persistentDataPath, "AllQuestData.json");
-        m_current_quest_data_path = Path.Combine(Application.persistentDataPath, "CurrentQuestData.json");
-
+        m_all_quest_data_path = Path.GetFullPath(Path.Combine(Application.persistentDataPath, "AllQuestData.json"));
+        m_current_quest_data_path = Path.GetFullPath(Path.Combine(Application.persistentDataPath, "CurrentQuestData.json"));
+        Debug.Log(m_current_quest_data_path);
         LoadData();
         LoadAllQuests();
     }

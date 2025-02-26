@@ -40,7 +40,7 @@ namespace Junyoung
             m_enemy_follow_state = gameObject.AddComponent<EnemyBossFollowState>();
             m_enemy_back_state = gameObject.AddComponent<EnemyBossBackState>();
 
-            m_canvas = GameObject.Find("Canvas");
+            m_canvas = GameObject.Find("Overlay Canvas");
             RectTransform[] UIs = m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
             foreach (RectTransform UI in UIs)
             {

@@ -16,7 +16,7 @@ public class AreaNameManager : MonoBehaviour
     private Collider m_default_area;
     void Start()
     {
-        GameObject canvas = GameObject.Find("Canvas");
+        GameObject canvas = GameObject.Find("Overlay Canvas");
 
         TextMeshProUGUI[] texts = canvas.transform.GetComponentsInChildren<TextMeshProUGUI>(true);
         foreach (TextMeshProUGUI text in texts)
