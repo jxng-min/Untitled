@@ -128,12 +128,10 @@ namespace Junyoung
                 {
                     if (EnemyStat.HP + heal > OriginEnemyStat.HP/2)
                     {
-                        EnemyStat.HP = OriginEnemyStat.HP/2;
-                        break;
+                        EnemyStat.HP = OriginEnemyStat.HP/2;                       
                     }
                     else
                     {
-                        Debug.Log("È¸º¹");
                         UpdateHP(heal);
                     }
                 }
