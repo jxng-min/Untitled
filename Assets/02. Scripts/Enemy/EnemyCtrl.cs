@@ -72,6 +72,7 @@ namespace Junyoung
 
         public void OnEnable()
         {
+            InitStat();
             CanAtk = true;
             IsHit = false;
             IsDead = false;

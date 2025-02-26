@@ -41,20 +41,20 @@ namespace Junyoung
             m_enemy_back_state = gameObject.AddComponent<EnemyBossBackState>();
 
             m_canvas = GameObject.Find("Canvas");
-            RectTransform[] UIs =  m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
-            foreach(RectTransform UI in UIs)
+            RectTransform[] UIs = m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
+            foreach (RectTransform UI in UIs)
             {
-                if(UI.gameObject.name == "Boss HP Panel")
+                if (UI.gameObject.name == "Boss HP Panel")
                 {
                     m_hp_panel = UI.gameObject;
                 }
-                else if(UI.gameObject.name == "HP Bar")
+                else if (UI.gameObject.name == "HP Bar")
                 {
                     m_hp_image = UI.gameObject.GetComponent<Image>();
                 }
             }
             ParticleSystem[] particles = transform.GetComponentsInChildren<ParticleSystem>(true);
-            foreach(ParticleSystem particle in particles)
+            foreach (ParticleSystem particle in particles)
             {
                 m_phase_two_effects.Add(particle.gameObject);
             }
@@ -65,11 +65,11 @@ namespace Junyoung
         {
             base.FixedUpdate();
             if (m_hp_panel)
-            { 
+            {
                 m_hp_image.fillAmount = EnemyStat.HP / OriginEnemyStat.HP;
                 ActiveHpBar();
             }
-            if(EnemyStat.HP <= OriginEnemyStat.HP/2)
+            if (EnemyStat.HP <= OriginEnemyStat.HP / 2)
             {
                 IsPhaseTwo = true;
             }
@@ -111,8 +111,6 @@ namespace Junyoung
         {
             while (!(StateContext.NowState is EnemyDeadState))
             {
-                yield return new WaitForSeconds(1f);
-
                 if (IsNotCombating)
                 {
                     if (EnemyStat.HP + heal > OriginEnemyStat.HP)
@@ -134,9 +132,12 @@ namespace Junyoung
                     }
                     else
                     {
+                        Debug.Log("È¸º¹");
                         UpdateHP(heal);
                     }
                 }
+                yield return new WaitForSeconds(1f);
+
             }
         }
 

@@ -84,14 +84,10 @@ namespace Junyoung
                     break;
             }
 
-
             new_enemy.OriginEnemyStat = m_enemy_stat_list[(int)type];
-            //new_enemy.InitComponent();
-            new_enemy.InitStat();
             new_enemy.Agent.Warp(spawn_pos.position);
             new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
             new_enemy.EnemySpawnData.EnemyType = type ;
-            new_enemy.ChangeState(EnemyState.IDLE); //Detect에서 SpawnData의 타입을 확인하기 위해 여기서 호출
 
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
         } 
