@@ -58,23 +58,26 @@ public class QuestUIManager : Singleton<QuestUIManager>
 
     private void TryOpenQuestUI()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if(!SettingManager.IsActive)
         {
-            if(m_full_size_quest_ui_object.activeInHierarchy)
+            if(Input.GetKeyDown(KeyCode.P))
             {
-                m_full_size_quest_ui_object.SetActive(false);
-                m_is_ui_active = false;
+                if(m_full_size_quest_ui_object.activeInHierarchy)
+                {
+                    m_full_size_quest_ui_object.SetActive(false);
+                    m_is_ui_active = false;
 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                m_full_size_quest_ui_object.SetActive(true);
-                m_is_ui_active = true;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    m_full_size_quest_ui_object.SetActive(true);
+                    m_is_ui_active = true;
 
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
             }
         }
     }

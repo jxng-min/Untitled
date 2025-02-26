@@ -25,15 +25,18 @@ public class InventoryMain : InventoryBase
 
     private void TryOpenInventory()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if(!SettingManager.Instance)
         {
-            if(!Active)
+            if(Input.GetKeyDown(KeyCode.I))
             {
-                OpenInventory();
-            }
-            else
-            {
-                CloseInventory();
+                if(!Active)
+                {
+                    OpenInventory();
+                }
+                else
+                {
+                    CloseInventory();
+                }
             }
         }
     }
@@ -77,9 +80,6 @@ public class InventoryMain : InventoryBase
         {
             target_slot.AddItem(item, count);
         }
-
-        DataManager.Instance.SaveInventory();
-        DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
     }
 
     public void AcquireItem(Item item, int count = 1)
@@ -94,9 +94,6 @@ public class InventoryMain : InventoryBase
                     {
                         m_slots[i].UpdateSlotCount(count);
 
-                        DataManager.Instance.SaveInventory();
-                        DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
-
                         return;
                     }
                 }
@@ -108,9 +105,6 @@ public class InventoryMain : InventoryBase
             if(m_slots[i].Item == null && m_slots[i].IsMask(item))
             {
                 m_slots[i].AddItem(item, count);
-
-                DataManager.Instance.SaveInventory();
-                DataManager.Instance.SavePlayerData(); // TODO: 나중에는 지워야 함.
                 
                 return;
             }

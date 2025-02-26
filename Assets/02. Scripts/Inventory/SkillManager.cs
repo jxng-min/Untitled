@@ -38,29 +38,27 @@ public class SkillManager : Singleton<SkillManager>
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
+        if(!SettingManager.IsActive)
         {
-            if(m_is_ui_active)
+            if(Input.GetKeyDown(KeyCode.K))
             {
-                m_skill_ui_object.SetActive(false);
-                m_is_ui_active = false;
+                if(m_is_ui_active)
+                {
+                    m_skill_ui_object.SetActive(false);
+                    m_is_ui_active = false;
 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    m_skill_ui_object.SetActive(true);
+                    m_is_ui_active = true;
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
             }
-            else
-            {
-                m_skill_ui_object.SetActive(true);
-                m_is_ui_active = true;
-
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-        }
-
-        for(int i = 0; i < m_skill_slots.Length; i++)
-        {
-            
         }
     }
 
