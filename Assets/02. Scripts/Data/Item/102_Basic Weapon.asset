@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58affb5947ac34fa0bd3f48ae5cf298b, type: 3}
-  m_Name: 104_Basic Shoes
+  m_Name: 102_Basic Weapon
   m_EditorClassIdentifier: 
-  m_item_id: 104
+  m_item_id: 102
   m_can_overlap: 0
-  m_is_interactivity: 1
+  m_is_interactivity: 0
   m_is_consumable: 0
   m_item_cooltime: -1
-  m_item_type: 32
-  m_item_sprite: {fileID: 21300000, guid: f8bac558190ebf54a99e3764c03249dc, type: 3}
+  m_item_type: 8
+  m_item_sprite: {fileID: 21300000, guid: 4bb85e9d81dd972438a5d43bf3dd0a87, type: 3}
   m_effect:
-    m_atk: 0
-    m_atk_rate: 0
-    m_defense: 0.3
+    m_atk: 1
+    m_atk_rate: 0.2
+    m_defense: 0
