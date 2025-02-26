@@ -109,6 +109,7 @@ namespace Junyoung
 
         public IEnumerator Regeneration(float heal)
         {
+            Debug.Log("회복시작");
             while (!(StateContext.NowState is EnemyDeadState))
             {
                 if (IsNotCombating)
@@ -137,7 +138,6 @@ namespace Junyoung
                     }
                 }
                 yield return new WaitForSeconds(1f);
-
             }
         }
 

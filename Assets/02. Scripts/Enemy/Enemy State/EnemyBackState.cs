@@ -22,7 +22,7 @@ namespace Junyoung
         public void OnStateUpdate(EnemyCtrl sender)
         {
             if (!m_agent.pathPending && m_agent.remainingDistance <= m_agent.stoppingDistance)
-            {
+            {      
                 m_enemy_ctrl.ChangeState(EnemyState.IDLE);
             }
         }

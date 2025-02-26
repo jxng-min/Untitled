@@ -222,8 +222,15 @@ namespace Junyoung
         }
         public void UpdateHP(float value)//�ǰݽ� ȣ��
         {
-            (m_enemy_get_damage_state as EnemyGetDamageState).Damage = value;
-            ChangeState(EnemyState.GETDAMAGE);
+            //(m_enemy_get_damage_state as EnemyGetDamageState).Damage = value;
+            EnemyStat.HP += value;
+            var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
+            indicator.Init(transform.position + Vector3.up * 3f, value, value < 0f ? Color.red : Color.green);
+            if (EnemyStat.HP <= 0)
+            {
+                ChangeState(EnemyState.DEAD);
+            }
+            //ChangeState(EnemyState.GETDAMAGE);
         }
 
         public void LookPlayer()
