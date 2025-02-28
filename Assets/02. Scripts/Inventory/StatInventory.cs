@@ -21,7 +21,7 @@ public class StatInventory : InventoryBase
 
     private void Update()
     {
-        if(!SettingManager.Instance)
+        if(!SettingManager.IsActive)
         {
             if(Active)
             {

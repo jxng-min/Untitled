@@ -9,6 +9,7 @@ public class PlayerJumpInState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
+            SoundManager.Instance.PlayEffect("Player Jump");
             m_player_ctrl.Animator.SetTrigger("JumpIn");
         }  
     }

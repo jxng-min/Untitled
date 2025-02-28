@@ -178,6 +178,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
 
         ChangeSlot();
+        FindAnyObjectByType<ItemActionManager>().SlotOnDropEvent(DragSlot.Instance.GetComponent<InventorySlot>(), this);
         DataManager.Instance.SaveInventory();
         QuestManager.Instance.UpdateItemQuestCount();
     }

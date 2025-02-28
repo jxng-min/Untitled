@@ -25,7 +25,7 @@ public class InventoryMain : InventoryBase
 
     private void TryOpenInventory()
     {
-        if(!SettingManager.Instance)
+        if(!SettingManager.IsActive)
         {
             if(Input.GetKeyDown(KeyCode.I))
             {

@@ -134,7 +134,7 @@ public class ItemActionManager : MonoBehaviour
                     }
                 }
 
-                // TODO: 장비 착용 효과음 재생
+                SoundManager.Instance.PlayEffect("Armor Change");
                 m_equipment_inventory.CalculateEffect();
                 DataManager.Instance.UpdateStat();
                 m_player_ctrl.UpdateAttackSpeed();
@@ -142,14 +142,15 @@ public class ItemActionManager : MonoBehaviour
                 return false;
 
             case ItemType.Consumable:
-                Debug.Log("사용함");
                 switch(item.ID)
                 {
                     case (int)ItemCode.SMALL_HP_POTION:
+                        SoundManager.Instance.PlayEffect("Potion Drink");
                         m_player_ctrl.UpdateHP(20f);
                         break;
                     
                     case (int)ItemCode.SMALL_MP_POTION:
+                        SoundManager.Instance.PlayEffect("Potion Drink");                    
                         m_player_ctrl.UpdateMP(10f);
                         break;
                 }
@@ -159,10 +160,12 @@ public class ItemActionManager : MonoBehaviour
                 switch(item.ID)
                 {
                     case (int)ItemCode.MEAT:
+                        SoundManager.Instance.PlayEffect("Meat Eat");
                         m_player_ctrl.UpdateHP(5f);
                         break;
                     
                     case (int)ItemCode.APPLE:
+                        SoundManager.Instance.PlayEffect("Apple Eat");
                         m_player_ctrl.UpdateMP(5f);
                         break;
                 }
@@ -176,7 +179,7 @@ public class ItemActionManager : MonoBehaviour
     {
         if(Item.CheckEquipmentType(from_slot.SlotMask) || Item.CheckEquipmentType(to_slot.SlotMask))
         {
-            // TODO: 장비 착용 효과음 재생
+            SoundManager.Instance.PlayEffect("Armor Change");
             m_equipment_inventory.CalculateEffect();
             DataManager.Instance.UpdateStat();
             m_player_ctrl.UpdateAttackSpeed();

@@ -12,12 +12,16 @@ public class PlayerWalkState : MonoBehaviour, IState<PlayerCtrl>
             m_player_ctrl.FallTime = 0f;
 
             m_player_ctrl.Animator.SetBool("IsMove", true);
+
+            WalkSound();
         }
     }
 
     public void Execute(PlayerCtrl sender)
     {
         Dead();
+
+        
         
         if(Input.GetKey(KeyCode.Q))
         {
@@ -63,8 +67,17 @@ public class PlayerWalkState : MonoBehaviour, IState<PlayerCtrl>
         }
     }
 
+    private void WalkSound()
+    {
+        int random = UnityEngine.Random.Range(1, 5);
+        SoundManager.Instance.PlayEffect($"FootstepGrass0{random}");
+
+        Invoke("WalkSound", 0.5f);
+    }
+
     public void ExecuteExit(PlayerCtrl sender)
     {
         m_player_ctrl.Animator.SetBool("IsMove", false);
+        CancelInvoke("WalkSound");
     }
 }

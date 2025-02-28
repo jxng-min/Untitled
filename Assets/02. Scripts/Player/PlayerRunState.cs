@@ -13,6 +13,8 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
 
             m_player_ctrl.Animator.SetBool("IsMove", true);
             m_player_ctrl.Animator.SetBool("LShift", true);
+
+            WalkSound();
         }
     }
 
@@ -68,5 +70,15 @@ public class PlayerRunState : MonoBehaviour, IState<PlayerCtrl>
     {
         m_player_ctrl.Animator.SetBool("IsMove", false);
         m_player_ctrl.Animator.SetBool("LShift", false);
+        
+        CancelInvoke("WalkSound");
+    }
+
+    private void WalkSound()
+    {
+        int random = UnityEngine.Random.Range(1, 5);
+        SoundManager.Instance.PlayEffect($"FootstepGrass0{random}");
+
+        Invoke("WalkSound", 0.4f);
     }
 }
