@@ -4653,6 +4653,10 @@ MonoBehaviour:
     m_init_count: 5
     m_Prefab: {fileID: 4505264060648398582, guid: 517d8cfadfb202500b8350254d2e09e5, type: 3}
     m_container: {fileID: 623532071}
+  - m_type: 2
+    m_init_count: 5
+    m_Prefab: {fileID: 1666773075030704828, guid: d8e17e4725c37bedfaabfabc9ac3cd1c, type: 3}
+    m_container: {fileID: 402064134}
 --- !u!4 &137808789
 Transform:
   m_ObjectHideFlags: 0
@@ -4668,6 +4672,7 @@ Transform:
   m_Children:
   - {fileID: 476378860}
   - {fileID: 623532072}
+  - {fileID: 402064135}
   m_Father: {fileID: 1476756596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &141102930
@@ -6987,7 +6992,7 @@ GameObject:
   - component: {fileID: 198625135}
   - component: {fileID: 198625136}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Background Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14759,6 +14764,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6349126723314822629, guid: 064d5eea756812a4faa56614d9c3d46d, type: 3}
   m_PrefabInstance: {fileID: 683786505}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &402064134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402064135}
+  m_Layer: 0
+  m_Name: Effect Sound Source Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402064135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402064134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137808789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &403848398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17411,7 +17447,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1524592710}
+        m_TargetAssemblyTypeName: SettingManager, Assembly-CSharp
+        m_MethodName: Toggle_SoundPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1001 &556804530
 PrefabInstance:
@@ -28564,6 +28612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 879206453}
   - component: {fileID: 879206454}
+  - component: {fileID: 879206455}
   m_Layer: 5
   m_Name: Toggle Parent
   m_TagString: Untagged
@@ -28618,6 +28667,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &879206455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879206452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1001 &879488717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35896,7 +35958,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1524592710}
+        m_TargetAssemblyTypeName: SettingManager, Assembly-CSharp
+        m_MethodName: Toggle_GamePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1001 &1013056119
 PrefabInstance:
@@ -37525,7 +37599,7 @@ GameObject:
   - component: {fileID: 1021094304}
   - component: {fileID: 1021094305}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Background Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45614,7 +45688,7 @@ GameObject:
   - component: {fileID: 1332345470}
   - component: {fileID: 1332345471}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Effect Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49007,6 +49081,7 @@ Transform:
   - {fileID: 1268643326}
   - {fileID: 1370581419}
   - {fileID: 1524592711}
+  - {fileID: 2025150745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477600465
@@ -50232,12 +50307,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_setting_ui_object: {fileID: 2022822615}
   m_canvas: {fileID: 2135555521}
-  m_sound_panel_toggle: {fileID: 0}
-  m_sound_panel: {fileID: 0}
-  m_game_panel_toggle: {fileID: 0}
-  m_game_panel: {fileID: 0}
+  m_sound_panel_toggle: {fileID: 555333676}
+  m_sound_panel: {fileID: 1911943879}
+  m_game_panel_toggle: {fileID: 1012217820}
+  m_game_panel: {fileID: 891906261}
   m_background_sound_toggle: {fileID: 198625136}
-  m_bacgkround_sound_slider: {fileID: 1021094305}
+  m_background_sound_slider: {fileID: 1021094305}
   m_effect_sound_toggle: {fileID: 1684393578}
   m_effect_sound_slider: {fileID: 1332345471}
   m_camera_shaker: {fileID: 433933188}
@@ -51292,7 +51367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xB7 \uBC30\uACBD\uC74C \uC81C\uC5B4"
+  m_text: "\xB7 \uD6A8\uACFC\uC74C \uC81C\uC5B4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84448a526aac0354aae9e13e6dd0f6db, type: 2}
   m_sharedMaterial: {fileID: 3295544267059725861, guid: 84448a526aac0354aae9e13e6dd0f6db, type: 2}
@@ -56238,7 +56313,7 @@ GameObject:
   - component: {fileID: 1684393577}
   - component: {fileID: 1684393578}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Effect Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65577,8 +65652,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 887171469}
-  - {fileID: 1911943880}
   - {fileID: 891906262}
+  - {fileID: 1911943880}
   - {fileID: 879206453}
   m_Father: {fileID: 2135555525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65879,6 +65954,167 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 448830, guid: 36cbe5e33698272459435a8f7f59bb45, type: 3}
   m_PrefabInstance: {fileID: 2024322038}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2025150744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2025150745}
+  - component: {fileID: 2025150747}
+  - component: {fileID: 2025150746}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2025150745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025150744}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1476756596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2025150746
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025150744}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2025150747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025150744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e95427b801496025974d1b36c82e1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_background_source: {fileID: 2025150746}
+  m_background_clips:
+  - {fileID: 8300000, guid: 4111b72ba979d774494cc3a088faeafd, type: 3}
+  m_effect_clips:
+  - {fileID: 8300000, guid: 9d02685940b92b2428ee583efb3856a8, type: 3}
+  - {fileID: 8300000, guid: 8b07250d785236c49ba7e9a0e0bd85a2, type: 3}
+  - {fileID: 8300000, guid: b11e259f36b5d1542a293028cc448d4a, type: 3}
+  - {fileID: 8300000, guid: 49cd14022f0984f4e9ac7c9ce107525b, type: 3}
+  - {fileID: 8300000, guid: 472a657f3a39f69479fc15945f62f88d, type: 3}
+  - {fileID: 8300000, guid: 777f3e4ea2dd33af0b02b285e16e87a3, type: 3}
+  - {fileID: 8300000, guid: 7d72d32884818350abe80de4842ea7b2, type: 3}
+  - {fileID: 8300000, guid: 6f565db74be81a66eb3a9aa7bbdc320e, type: 3}
+  - {fileID: 8300000, guid: f6b72104d71dd258cbe364f4ebdf2d3b, type: 3}
+  - {fileID: 8300000, guid: 8a128c065f2b58b87aec845fdf2e351d, type: 3}
+  - {fileID: 8300000, guid: e1c57b0f7ea430656b98f85e07bd58ba, type: 3}
+  - {fileID: 8300000, guid: c20611195b5244c3bad6d77f1e97fd16, type: 3}
+  - {fileID: 8300000, guid: 2b53891e41f008daba5efd43b16e401b, type: 3}
+  - {fileID: 8300000, guid: 966fbd1c5f9b565a9812844a88b6df95, type: 3}
+  - {fileID: 8300000, guid: 066bb87457509afc0a53c0a220abf189, type: 3}
 --- !u!1001 &2028049733
 PrefabInstance:
   m_ObjectHideFlags: 0
