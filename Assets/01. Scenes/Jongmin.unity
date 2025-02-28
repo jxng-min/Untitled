@@ -6992,7 +6992,7 @@ GameObject:
   - component: {fileID: 198625135}
   - component: {fileID: 198625136}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Background Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17447,7 +17447,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1524592710}
+        m_TargetAssemblyTypeName: SettingManager, Assembly-CSharp
+        m_MethodName: Toggle_SoundPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1001 &556804530
 PrefabInstance:
@@ -28600,6 +28612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 879206453}
   - component: {fileID: 879206454}
+  - component: {fileID: 879206455}
   m_Layer: 5
   m_Name: Toggle Parent
   m_TagString: Untagged
@@ -28654,6 +28667,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &879206455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879206452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1001 &879488717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35932,7 +35958,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1524592710}
+        m_TargetAssemblyTypeName: SettingManager, Assembly-CSharp
+        m_MethodName: Toggle_GamePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1001 &1013056119
 PrefabInstance:
@@ -37561,7 +37599,7 @@ GameObject:
   - component: {fileID: 1021094304}
   - component: {fileID: 1021094305}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Background Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45650,7 +45688,7 @@ GameObject:
   - component: {fileID: 1332345470}
   - component: {fileID: 1332345471}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Effect Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50269,12 +50307,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_setting_ui_object: {fileID: 2022822615}
   m_canvas: {fileID: 2135555521}
-  m_sound_panel_toggle: {fileID: 0}
-  m_sound_panel: {fileID: 0}
-  m_game_panel_toggle: {fileID: 0}
-  m_game_panel: {fileID: 0}
+  m_sound_panel_toggle: {fileID: 555333676}
+  m_sound_panel: {fileID: 1911943879}
+  m_game_panel_toggle: {fileID: 1012217820}
+  m_game_panel: {fileID: 891906261}
   m_background_sound_toggle: {fileID: 198625136}
-  m_bacgkround_sound_slider: {fileID: 1021094305}
+  m_background_sound_slider: {fileID: 1021094305}
   m_effect_sound_toggle: {fileID: 1684393578}
   m_effect_sound_slider: {fileID: 1332345471}
   m_camera_shaker: {fileID: 433933188}
@@ -51329,7 +51367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xB7 \uBC30\uACBD\uC74C \uC81C\uC5B4"
+  m_text: "\xB7 \uD6A8\uACFC\uC74C \uC81C\uC5B4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84448a526aac0354aae9e13e6dd0f6db, type: 2}
   m_sharedMaterial: {fileID: 3295544267059725861, guid: 84448a526aac0354aae9e13e6dd0f6db, type: 2}
@@ -56275,7 +56313,7 @@ GameObject:
   - component: {fileID: 1684393577}
   - component: {fileID: 1684393578}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Effect Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65614,8 +65652,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 887171469}
-  - {fileID: 1911943880}
   - {fileID: 891906262}
+  - {fileID: 1911943880}
   - {fileID: 879206453}
   m_Father: {fileID: 2135555525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

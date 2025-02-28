@@ -4,6 +4,10 @@ using UnityEngine;
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource m_background_source;
+    public AudioSource BGM
+    {
+        get { return m_background_source; }
+    }
 
     [SerializeField] private AudioClip[] m_background_clips;
     [SerializeField] private AudioClip[] m_effect_clips;

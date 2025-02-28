@@ -18,6 +18,7 @@ public class SettingManager : Singleton<SettingManager>
 
     [Header("환경설정 UI")]
     [SerializeField] private GameObject m_setting_ui_object;
+    
     [Header("오버레이 UI들이 위치하는 캔버스")]
     [SerializeField] private GameObject m_canvas;
 
@@ -33,7 +34,7 @@ public class SettingManager : Singleton<SettingManager>
     [Space(50)]
     [Header("배경음 제어")]
     [SerializeField] Toggle m_background_sound_toggle;
-    [SerializeField] Slider m_bacgkround_sound_slider;
+    [SerializeField] Slider m_background_sound_slider;
 
     [Header("효과음 제어")]
     [SerializeField] Toggle m_effect_sound_toggle;
@@ -115,7 +116,7 @@ public class SettingManager : Singleton<SettingManager>
         else
         {
             m_background_sound_toggle.isOn = true;
-            m_bacgkround_sound_slider.value = 0.5f;
+            m_background_sound_slider.value = 0.5f;
 
             m_effect_sound_toggle.isOn = true;
             m_effect_sound_slider.value = 0.5f;
@@ -133,10 +134,12 @@ public class SettingManager : Singleton<SettingManager>
         Setting = JsonUtility.FromJson<SettingData>(json_data);
 
         m_background_sound_toggle.isOn = Setting.BackgroundActive;
-        m_bacgkround_sound_slider.value = Setting.Backgroundvalue;
+        m_background_sound_slider.value = Setting.Backgroundvalue;
+        Debug.Log($"back : {Setting.Backgroundvalue}");
 
         m_effect_sound_toggle.isOn = Setting.EffectActive;
         m_effect_sound_slider.value = Setting.EffectValue;
+        Debug.Log($"eft : {Setting.EffectValue}");
 
         m_camera_shaker_toggle.isOn = Setting.CameraShakerActive;
         m_shader_toggle.isOn = Setting.VolumeActive;
@@ -147,10 +150,12 @@ public class SettingManager : Singleton<SettingManager>
     private void SaveSettingData()
     {
         Setting.BackgroundActive = m_background_sound_toggle.isOn;
-        Setting.Backgroundvalue = m_bacgkround_sound_slider.value;
+        Setting.Backgroundvalue = m_background_sound_slider.value;
+        Debug.Log($"back: {m_background_sound_slider.value}");
 
         Setting.EffectActive = m_effect_sound_toggle.isOn;
         Setting.EffectValue = m_effect_sound_slider.value;
+        Debug.Log($"eft: {m_effect_sound_slider.value}" );
 
         Setting.CameraShakerActive = m_camera_shaker_toggle.isOn;
         Setting.VolumeActive = m_shader_toggle.isOn;
@@ -159,6 +164,26 @@ public class SettingManager : Singleton<SettingManager>
 
         var json_data = JsonUtility.ToJson(Setting);
         File.WriteAllText(m_setting_data_path, json_data);
+    }
+
+    public void Toggle_SoundPanel()
+    {
+        if(m_sound_panel_toggle.isOn)
+        {
+            m_sound_panel.SetActive(true);
+            m_game_panel_toggle.isOn = false;
+            m_game_panel.SetActive(false);
+        }
+    }
+
+    public void Toggle_GamePanel()
+    {
+        if(m_game_panel_toggle.isOn)
+        {
+            m_game_panel.SetActive(true);
+            m_sound_panel_toggle.isOn = false;
+            m_sound_panel.SetActive(false);
+        }
     }
 
     public void Toggle_CameraShakingControl()
@@ -234,12 +259,13 @@ public class SettingManager : Singleton<SettingManager>
 
     public void Toggle_BackgroundSoundToggle()
     {
-        m_bacgkround_sound_slider.enabled = m_background_sound_toggle.isOn;
+        m_background_sound_slider.enabled = m_background_sound_toggle.isOn;
     }
 
     public void Slider_BackgroundSoundControl()
     {
-        // 배경음 크기 조절
+        Setting.Backgroundvalue = m_background_sound_slider.value;
+        SoundManager.Instance.BGM.volume = Setting.Backgroundvalue;
     }
 
     public void Toggle_EffectSoundToggle()
@@ -249,7 +275,6 @@ public class SettingManager : Singleton<SettingManager>
 
     public void Slider_EffectSoundControl()
     {
-        // 효과음 크기 조절
+        Setting.EffectValue = m_effect_sound_slider.value;
     }
-
 }
