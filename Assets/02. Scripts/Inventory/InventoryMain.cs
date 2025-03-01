@@ -48,6 +48,8 @@ public class InventoryMain : InventoryBase
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        SoundManager.Instance.PlayEffect("Button Click");
     }
 
     private void CloseInventory()
@@ -57,6 +59,8 @@ public class InventoryMain : InventoryBase
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SoundManager.Instance.PlayEffect("Button Click");
     }
 
     public void LoadItem(Item item, InventorySlot target_slot, int count = 1)

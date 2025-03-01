@@ -140,6 +140,7 @@ public class ItemRaycast : MonoBehaviour
 
                 DataManager.Instance.SaveInventory();
                 QuestManager.Instance.UpdateItemQuestCount();
+                SoundManager.Instance.PlayEffect("Get Item");
             }
 
             ItemInfoDisappear();

@@ -171,6 +171,7 @@ public class QuestManager : Singleton<QuestManager>
 
         QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
         UpdateItemQuestCount();
+        SoundManager.Instance.PlayEffect("Quest Receive");
     }
 
     public void CompleteQuest(int quest_id, bool is_give_reward = true)
@@ -194,6 +195,8 @@ public class QuestManager : Singleton<QuestManager>
         m_received_quests.Remove(quest_data);
 
         quest_data.QuestState = QuestState.CLEARED_PAST;
+
+        SoundManager.Instance.PlayEffect("Quest Complete");
     }
 
     public QuestState CheckQuestState(int quest_id)

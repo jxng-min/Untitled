@@ -148,6 +148,7 @@ public class NPCRaycast : MonoBehaviour
 
                             if(!ConversationManager.Instance.IsTalking)
                             {
+                                SoundManager.Instance.PlayBGM("Shop Background");
                                 m_current_npc.GetComponent<Merchant>().Trade();
                             }
                         }
@@ -163,6 +164,7 @@ public class NPCRaycast : MonoBehaviour
 
                             if(!ConversationManager.Instance.IsTalking)
                             {
+                                SoundManager.Instance.PlayBGM("Craft Station Background");
                                 m_current_npc.GetComponent<CraftingStation>().TryOpenDialog();
                             }
                         }

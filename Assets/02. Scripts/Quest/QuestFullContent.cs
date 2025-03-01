@@ -22,11 +22,13 @@ public class QuestFullContent : QuestCompactContent
     public void TOGGLE_CompactContent()
     {
         QuestUIManager.Instance.ToggleCompactQuestContent(m_quest_data, m_compact_content_toggle.isOn);
+        SoundManager.Instance.PlayEffect("Button Click");
     }
 
     public void BTN_DisplayCurrentQuest()
     {
         QuestUIManager.Instance.ToggleFullQuestContent(m_quest_data);
+        SoundManager.Instance.PlayEffect("Button Click");
     }
 
     public void BTN_Nav()
@@ -52,5 +54,7 @@ public class QuestFullContent : QuestCompactContent
                 NavigationManager.Instance.StartNavigation(m_quest_data.name, GameObject.Find("Player").GetComponent<Transform>().transform, m_quest_data.Destination);
                 break;            
         }
+        
+        SoundManager.Instance.PlayEffect("Button Click");
     }
 }

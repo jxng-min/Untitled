@@ -62,7 +62,7 @@ public class SettingManager : Singleton<SettingManager>
     [SerializeField] private Button m_game_exit_button;
     #endregion
 
-    private SettingData m_setting_data = new SettingData();
+    private SettingData m_setting_data;
     public SettingData Setting
     {
         get { return m_setting_data; }
@@ -74,6 +74,7 @@ public class SettingManager : Singleton<SettingManager>
         base.Awake();
 
         m_setting_data_path = Path.Combine(Application.persistentDataPath, "SettingData.json");
+        m_setting_data = new SettingData();
 
         Init();
     }
@@ -87,6 +88,8 @@ public class SettingManager : Singleton<SettingManager>
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.Instance.PlayEffect("Button Click");
+            
             if(!IsActive)
             {
                 IsActive = true;
@@ -115,14 +118,14 @@ public class SettingManager : Singleton<SettingManager>
         }
         else
         {
-            m_background_sound_toggle.isOn = true;
-            m_background_sound_slider.value = 0.5f;
+            Setting.BackgroundActive = m_background_sound_toggle.isOn = true;
+            Setting.Backgroundvalue = m_background_sound_slider.value = 0.5f;
 
-            m_effect_sound_toggle.isOn = true;
-            m_effect_sound_slider.value = 0.5f;
+            Setting.EffectActive = m_effect_sound_toggle.isOn = true;
+            Setting.EffectValue = m_effect_sound_slider.value = 0.5f;
 
-            m_camera_shaker_toggle.isOn = true;
-            m_shader_toggle.isOn = true;
+            Setting.CameraShakerActive = m_camera_shaker_toggle.isOn = true;
+            Setting.VolumeActive = m_shader_toggle.isOn = true;
 
             Screen.SetResolution(1920, 1080, Screen.fullScreen);
         }
@@ -131,15 +134,14 @@ public class SettingManager : Singleton<SettingManager>
     private void LoadSettingData()
     {
         var json_data = File.ReadAllText(m_setting_data_path);
+        Debug.Log(json_data);
         Setting = JsonUtility.FromJson<SettingData>(json_data);
 
         m_background_sound_toggle.isOn = Setting.BackgroundActive;
-        m_background_sound_slider.value = Setting.Backgroundvalue;
-        Debug.Log($"back : {Setting.Backgroundvalue}");
+        m_background_sound_slider.value = Mathf.Clamp(Setting.Backgroundvalue, 0f, 1f);
 
         m_effect_sound_toggle.isOn = Setting.EffectActive;
-        m_effect_sound_slider.value = Setting.EffectValue;
-        Debug.Log($"eft : {Setting.EffectValue}");
+        m_effect_sound_slider.value = Mathf.Clamp(Setting.EffectValue, 0f, 1f);
 
         m_camera_shaker_toggle.isOn = Setting.CameraShakerActive;
         m_shader_toggle.isOn = Setting.VolumeActive;
@@ -150,12 +152,10 @@ public class SettingManager : Singleton<SettingManager>
     private void SaveSettingData()
     {
         Setting.BackgroundActive = m_background_sound_toggle.isOn;
-        Setting.Backgroundvalue = m_background_sound_slider.value;
-        Debug.Log($"back: {m_background_sound_slider.value}");
+        Setting.Backgroundvalue = Mathf.Clamp(m_background_sound_slider.value, 0f, 1f);
 
         Setting.EffectActive = m_effect_sound_toggle.isOn;
-        Setting.EffectValue = m_effect_sound_slider.value;
-        Debug.Log($"eft: {m_effect_sound_slider.value}" );
+        Setting.EffectValue = Mathf.Clamp(m_effect_sound_slider.value, 0f, 1f);
 
         Setting.CameraShakerActive = m_camera_shaker_toggle.isOn;
         Setting.VolumeActive = m_shader_toggle.isOn;
@@ -265,7 +265,8 @@ public class SettingManager : Singleton<SettingManager>
     public void Slider_BackgroundSoundControl()
     {
         Setting.Backgroundvalue = m_background_sound_slider.value;
-        SoundManager.Instance.BGM.volume = Setting.Backgroundvalue;
+        SoundManager.Instance.UpdateBackgroundVolume();
+        
     }
 
     public void Toggle_EffectSoundToggle()

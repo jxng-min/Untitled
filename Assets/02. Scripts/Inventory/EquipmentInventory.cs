@@ -28,6 +28,8 @@ public class EquipmentInventory : InventoryBase
         {
             if(Input.GetKeyDown(KeyCode.U))
             {
+                SoundManager.Instance.PlayEffect("Button Click");
+                
                 if(m_inventory_base.activeInHierarchy)
                 {
                     m_inventory_base.SetActive(false);
