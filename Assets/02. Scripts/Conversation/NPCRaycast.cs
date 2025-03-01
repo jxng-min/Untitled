@@ -110,6 +110,26 @@ public class NPCRaycast : MonoBehaviour
                                     case 1:
                                         CheckQuest(quest_id1, 7, 2, 9, 1, 6, 1);
                                         break;
+
+                                    case 3:
+                                        CheckQuest(quest_id1, 10, 2, 12, 1, 13, 1);
+                                        break;
+                                    
+                                    case 4:
+                                        CheckQuest(quest_id1, 14, 2, 1, 1, 16, 1);
+                                        break;
+                                    
+                                    case 6:
+                                        CheckQuest(quest_id1, 17, 3, 20, 1, 21, 1);
+                                        break;
+                                    
+                                    case 9:
+                                        CheckQuest(quest_id1, 22, 2, 1, 1, 24, 1);
+                                        break;
+                                    
+                                    case 10:
+                                        CheckQuest(quest_id1, 25, 5, 30, 1, 31, 4);
+                                        break;
                                 }
                                 
                             }
@@ -126,6 +146,42 @@ public class NPCRaycast : MonoBehaviour
                                 {
                                     case 2:
                                         CheckQuest(quest_id2, 1, 2, 3, 1, 4, 2);
+                                        break;
+                                    
+                                    case 7:
+                                        CheckQuest(quest_id2, 6, 2, 8, 1, 9, 2);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 1);
+                            }
+                            break;
+
+                        case "Suspicious_NPC":
+                            if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id3))
+                            {
+                                switch(quest_id3)
+                                {
+                                    case 5:
+                                        CheckQuest(quest_id3, 1, 3, 4, 1, 5, 5);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                ConversationManager.Instance.Dialoging(m_current_npc.Info.ID, 0, 1);
+                            }
+                            break;
+
+                        case "Guard_NPC":
+                            if(m_current_npc.GetComponent<QuestNPC>().IsExistQuest(out int quest_id4))
+                            {
+                                switch(quest_id4)
+                                {
+                                    case 8:
+                                        CheckQuest(quest_id4, 1, 3, 4, 1, 5, 1);
                                         break;
                                 }
                             }

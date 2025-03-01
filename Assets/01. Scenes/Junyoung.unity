@@ -7045,6 +7045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2470a6c5fa56deaff95ac8d3c73d7122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_shortcut_ui_object: {fileID: 0}
   m_slot_parent: {fileID: 1748923232}
 --- !u!114 &281541036
 MonoBehaviour:

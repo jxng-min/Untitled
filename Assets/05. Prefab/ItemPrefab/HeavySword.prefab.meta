@@ -12,5 +12,5 @@ AssetOrigin:
   productId: 101668
   packageName: Heavy Sword
   packageVersion: 1.1.1
-  assetPath: Assets/WeaponScene/Prefab/HeavySword.prefab
+  assetPath: Assets/05. Prefab/ItemPrefab/HeavySword.prefab
   uploadId: 226308

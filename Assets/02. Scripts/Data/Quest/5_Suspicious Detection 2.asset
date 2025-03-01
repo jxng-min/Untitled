@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73e864887ec06beeb34c71a4fb77ff4, type: 3}
+  m_Name: 5_Suspicious Detection 2
+  m_EditorClassIdentifier: 
+  QuestState: 0
+  m_quest_id: 5
+  m_kill_quests: []
+  m_item_quests:
+  - m_particular_id: 0
+    m_is_particular_clear: 0
+    m_target_item_code: 1002
+    m_total_count: 1
+  m_prerequisite_quest_ids: 04000000
+  m_prerequisite_player_level: 5
+  m_reward_exp: 15
+  m_reward_items: []
+  m_reward_items_counts: 
+  m_quest_scene_name: Jongmin
+  m_source_position: {x: 42, y: 1.92, z: 158}
+  m_destination_position: {x: 83, y: 0, z: 138}
