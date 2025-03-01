@@ -62,6 +62,8 @@ public class QuestUIManager : Singleton<QuestUIManager>
         {
             if(Input.GetKeyDown(KeyCode.P))
             {
+                SoundManager.Instance.PlayEffect("Button Click");
+                
                 if(m_full_size_quest_ui_object.activeInHierarchy)
                 {
                     m_full_size_quest_ui_object.SetActive(false);

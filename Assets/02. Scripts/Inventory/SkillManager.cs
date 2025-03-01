@@ -42,6 +42,8 @@ public class SkillManager : Singleton<SkillManager>
         {
             if(Input.GetKeyDown(KeyCode.K))
             {
+                SoundManager.Instance.PlayEffect("Button Click");
+                
                 if(m_is_ui_active)
                 {
                     m_skill_ui_object.SetActive(false);

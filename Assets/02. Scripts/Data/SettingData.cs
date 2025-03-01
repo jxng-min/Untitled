@@ -28,7 +28,7 @@ public class SettingData
     public float EffectValue
     {
         get { return m_effect_slider_value; }
-        set { m_background_slider_value = value; }
+        set { m_effect_slider_value = value; }
     }
 
     [SerializeField] private bool m_camera_shaker_active;

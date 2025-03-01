@@ -92,6 +92,8 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        SoundManager.Instance.PlayEffect("Chest Open");
     }
 
     private void LoadData()
@@ -181,5 +183,7 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SoundManager.Instance.PlayEffect("Chest Close");
     }
 }

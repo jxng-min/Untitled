@@ -12,15 +12,20 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioClip[] m_background_clips;
     [SerializeField] private AudioClip[] m_effect_clips;
 
+    private string m_last_background_name;
+    public string LastBGM
+    {
+        get { return m_last_background_name; }
+    }
+
     private new void Awake()
     {
         base.Awake();
-
-        m_background_source.volume = SettingManager.Instance.Setting.Backgroundvalue;
     }
 
     private void Start()
     {
+        m_background_source.volume = SettingManager.Instance.Setting.Backgroundvalue;
         PlayBGM("Forest Background");
     }
 
@@ -45,8 +50,13 @@ public class SoundManager : Singleton<SoundManager>
         {
             if(m_background_source.isPlaying)
             {
+                if(m_background_source.clip is not null)
+                {
+                    m_last_background_name = m_background_source.clip.name;
+                }
+
                 yield return StartCoroutine(Fade(m_background_source, true, true));
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.3f);
             }
 
             m_background_source.clip = m_background_clips[target_index]; 
