@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_item_id: 102
   m_can_overlap: 0
-  m_is_interactivity: 0
+  m_is_interactivity: 1
   m_is_consumable: 0
   m_item_cooltime: -1
   m_item_type: 8
