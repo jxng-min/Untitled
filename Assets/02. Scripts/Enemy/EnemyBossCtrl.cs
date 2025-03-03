@@ -18,9 +18,7 @@ namespace Junyoung
 
         private bool m_is_phase_two_running = false;
 
-        public bool IsRegenerationing { get; set; } = false;
-        public bool IsNotCombating = false;
-
+        public bool IsNotCombating { get; set; } = false;
 
         public GameObject[] m_effect_prefabs;
 
@@ -43,20 +41,20 @@ namespace Junyoung
             m_enemy_back_state = gameObject.AddComponent<EnemyBossBackState>();
 
             m_canvas = GameObject.Find("Overlay Canvas");
-            RectTransform[] UIs =  m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
-            foreach(RectTransform UI in UIs)
+            RectTransform[] UIs = m_canvas.transform.GetComponentsInChildren<RectTransform>(true);
+            foreach (RectTransform UI in UIs)
             {
-                if(UI.gameObject.name == "Boss HP Panel")
+                if (UI.gameObject.name == "Boss HP Panel")
                 {
                     m_hp_panel = UI.gameObject;
                 }
-                else if(UI.gameObject.name == "HP Bar")
+                else if (UI.gameObject.name == "HP Bar")
                 {
                     m_hp_image = UI.gameObject.GetComponent<Image>();
                 }
             }
             ParticleSystem[] particles = transform.GetComponentsInChildren<ParticleSystem>(true);
-            foreach(ParticleSystem particle in particles)
+            foreach (ParticleSystem particle in particles)
             {
                 m_phase_two_effects.Add(particle.gameObject);
             }
@@ -67,11 +65,11 @@ namespace Junyoung
         {
             base.FixedUpdate();
             if (m_hp_panel)
-            { 
+            {
                 m_hp_image.fillAmount = EnemyStat.HP / OriginEnemyStat.HP;
                 ActiveHpBar();
             }
-            if(EnemyStat.HP <= OriginEnemyStat.HP/2)
+            if (EnemyStat.HP <= OriginEnemyStat.HP / 2)
             {
                 IsPhaseTwo = true;
             }
@@ -111,11 +109,9 @@ namespace Junyoung
 
         public IEnumerator Regeneration(float heal)
         {
-            IsRegenerationing = true;
+            Debug.Log("ȸ������");
             while (!(StateContext.NowState is EnemyDeadState))
             {
-                yield return new WaitForSeconds(1f);
-
                 if (IsNotCombating)
                 {
                     if (EnemyStat.HP + heal > OriginEnemyStat.HP)
@@ -132,18 +128,15 @@ namespace Junyoung
                 {
                     if (EnemyStat.HP + heal > OriginEnemyStat.HP/2)
                     {
-                        EnemyStat.HP = OriginEnemyStat.HP/2;
-                        break;
+                        EnemyStat.HP = OriginEnemyStat.HP/2;                       
                     }
                     else
                     {
                         UpdateHP(heal);
                     }
                 }
-
-
+                yield return new WaitForSeconds(1f);
             }
-            IsRegenerationing = false;
         }
 
         public override void SetDropItemBag()

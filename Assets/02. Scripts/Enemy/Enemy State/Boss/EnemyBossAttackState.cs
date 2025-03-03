@@ -65,6 +65,8 @@ namespace Junyoung
                         m_skill2_inner_projector = decal;
                     }
                 }
+
+                StartCoroutine(SkillCoolDown());
             }
 
             m_enemy_ctrl.IsHitting = false;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0689716b7ca4646be37031978dbf19, type: 3}
   m_Name: BossStat
   m_EditorClassIdentifier: 
-  m_hp: 70
+  m_hp: 100
   m_move_speed: 4
   m_atk_damage: 5
   m_atk_rate: 3

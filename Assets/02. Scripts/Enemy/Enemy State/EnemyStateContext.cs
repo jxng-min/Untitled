@@ -16,11 +16,12 @@ namespace Junyoung
         public void Transition(IEnemyState<EnemyCtrl> enemy_state)
         {
             if (NowState == enemy_state || m_enemy_ctrl.IsDead) { return; }
-
+            Debug.Log($"{enemy_state.ToString()}");
             NowState?.OnStateExit(m_enemy_ctrl);
 
             NowState = enemy_state;
             NowState?.OnStateEnter(m_enemy_ctrl);
+            
         }
 
 
