@@ -30,8 +30,11 @@ public class ShortcutManager : MonoBehaviour
     {
         if(!SettingManager.IsActive)
         {
+
             if(Input.GetKeyDown(KeyCode.L))
             {
+                SoundManager.Instance.PlayEffect("Button Click");
+                
                 if(!IsActive)
                 {
                     IsActive = true;

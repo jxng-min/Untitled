@@ -9,6 +9,7 @@ public class PlayerDeadState : MonoBehaviour, IState<PlayerCtrl>
         m_player_ctrl = sender;
         if(m_player_ctrl)
         {
+            SoundManager.Instance.PlayEffect("Player Dead");
             SetRandomTrigger();
         }
     }

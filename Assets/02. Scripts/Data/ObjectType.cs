@@ -4,4 +4,5 @@ public enum ObjectType
 {
     DamageIndicator,
     DialogueBubble,
+    EffectSource,
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bef920aefcbdb2d4fa8787275a5118dd
+guid: f7ada0af4f174f0694ca6a487b8f543d
 ShaderImporter:
   externalObjects: {}
   defaultTextures: []
@@ -7,3 +7,10 @@ ShaderImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 127325
+  packageName: Particle Pack
+  packageVersion: 3.1
+  assetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+  uploadId: 691001

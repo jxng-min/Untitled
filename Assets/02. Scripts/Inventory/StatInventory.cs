@@ -35,6 +35,8 @@ public class StatInventory : InventoryBase
 
             if(Input.GetKeyDown(KeyCode.O))
             {
+                SoundManager.Instance.PlayEffect("Button Click");
+                
                 if(m_inventory_base.activeInHierarchy)
                 {
                     m_inventory_base.SetActive(false);

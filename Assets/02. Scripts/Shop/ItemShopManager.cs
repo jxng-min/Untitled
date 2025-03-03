@@ -131,6 +131,8 @@ public class ItemShopManager : Singleton<ItemShopManager>
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.LastBGM);
     }
 
 

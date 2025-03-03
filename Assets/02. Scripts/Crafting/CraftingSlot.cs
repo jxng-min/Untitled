@@ -111,7 +111,7 @@ public class CraftingSlot : MonoBehaviour
     {
         m_is_crafting = true;
 
-        // TODO: 제작 사운드 추가
+        SoundManager.Instance.PlayEffect("Crafting");
 
         float process = 0f;
         while(process < 1f)

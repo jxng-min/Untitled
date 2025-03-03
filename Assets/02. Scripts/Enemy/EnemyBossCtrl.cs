@@ -10,7 +10,7 @@ namespace Junyoung
     public class EnemyBossCtrl : EnemyCtrl
     {
         private float m_detect_range = 15f;
-        [Header("º¸½º Ã¼·Â¹Ù")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½Â¹ï¿½")]
         private GameObject m_canvas;
         [SerializeField] private GameObject m_hp_panel;
         [SerializeField] private Image m_hp_image;
@@ -109,7 +109,7 @@ namespace Junyoung
 
         public IEnumerator Regeneration(float heal)
         {
-            Debug.Log("È¸º¹½ÃÀÛ");
+            Debug.Log("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             while (!(StateContext.NowState is EnemyDeadState))
             {
                 if (IsNotCombating)
@@ -158,12 +158,12 @@ namespace Junyoung
         }
         public void SetEnemyPool(IObjectPool<EnemyBossCtrl> pool)
         {
-            Debug.Log("BossÇ® ÃÊ±âÈ­");
+            Debug.Log("BossÇ® ï¿½Ê±ï¿½È­");
             this.ManagedPool = pool;
         }
         public override void ReturnToPool()
         {
-            Debug.Log($"{this.name} ¹ÝÈ¯ (Boss)");
+            Debug.Log($"{this.name} ï¿½ï¿½È¯ (Boss)");
             ManagedPool.Release(this as EnemyBossCtrl);
         }
 

@@ -16,17 +16,9 @@ public class SettingManager : Singleton<SettingManager>
 
     private string m_setting_data_path;
 
-    private new void Awake()
-    {
-        base.Awake();
-
-        m_setting_data_path = Path.Combine(Application.persistentDataPath, "SettingData.json");
-
-        Init();
-    }
-
     [Header("환경설정 UI")]
     [SerializeField] private GameObject m_setting_ui_object;
+    
     [Header("오버레이 UI들이 위치하는 캔버스")]
     [SerializeField] private GameObject m_canvas;
 
@@ -42,7 +34,7 @@ public class SettingManager : Singleton<SettingManager>
     [Space(50)]
     [Header("배경음 제어")]
     [SerializeField] Toggle m_background_sound_toggle;
-    [SerializeField] Slider m_bacgkround_sound_slider;
+    [SerializeField] Slider m_background_sound_slider;
 
     [Header("효과음 제어")]
     [SerializeField] Toggle m_effect_sound_toggle;
@@ -70,61 +62,21 @@ public class SettingManager : Singleton<SettingManager>
     [SerializeField] private Button m_game_exit_button;
     #endregion
 
-    private void Init()
+    private SettingData m_setting_data;
+    public SettingData Setting
     {
-        if(File.Exists(m_setting_data_path))
-        {
-            LoadSettingData();
-        }
-        else
-        {
-            m_background_sound_toggle.isOn = true;
-            m_bacgkround_sound_slider.value = 0.5f;
-
-            m_effect_sound_toggle.isOn = true;
-            m_effect_sound_slider.value = 0.5f;
-
-            m_camera_shaker_toggle.isOn = true;
-            m_shader_toggle.isOn = true;
-
-            Screen.SetResolution(1920, 1080, Screen.fullScreen);
-        }
+        get { return m_setting_data; }
+        set { m_setting_data = value; }
     }
 
-    private void LoadSettingData()
+    private new void Awake()
     {
-        var json_data = File.ReadAllText(m_setting_data_path);
-        var setting_data = JsonUtility.FromJson<SettingData>(json_data);
+        base.Awake();
 
-        m_background_sound_toggle.isOn = setting_data.BackgroundActive;
-        m_bacgkround_sound_slider.value = setting_data.Backgroundvalue;
+        m_setting_data_path = Path.Combine(Application.persistentDataPath, "SettingData.json");
+        m_setting_data = new SettingData();
 
-        m_effect_sound_toggle.isOn = setting_data.EffectActive;
-        m_effect_sound_slider.value = setting_data.EffectValue;
-
-        m_camera_shaker_toggle.isOn = setting_data.CameraShakerActive;
-        m_shader_toggle.isOn = setting_data.VolumeActive;
-
-        Screen.SetResolution((int)setting_data.Resolution.x, (int)setting_data.Resolution.y, Screen.fullScreen);
-    }
-
-    private void SaveSettingData()
-    {
-        SettingData setting_data = new SettingData();
-
-        setting_data.BackgroundActive = m_background_sound_toggle.isOn;
-        setting_data.Backgroundvalue = m_bacgkround_sound_slider.value;
-
-        setting_data.EffectActive = m_effect_sound_toggle.isOn;
-        setting_data.EffectValue = m_effect_sound_slider.value;
-
-        setting_data.CameraShakerActive = m_camera_shaker_toggle.isOn;
-        setting_data.VolumeActive = m_shader_toggle.isOn;
-
-        setting_data.Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
-
-        var json_data = JsonUtility.ToJson(setting_data);
-        File.WriteAllText(m_setting_data_path, json_data);
+        Init();
     }
 
     private void Start()
@@ -136,6 +88,8 @@ public class SettingManager : Singleton<SettingManager>
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.Instance.PlayEffect("Button Click");
+            
             if(!IsActive)
             {
                 IsActive = true;
@@ -153,6 +107,82 @@ public class SettingManager : Singleton<SettingManager>
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
+        }
+    }
+
+    private void Init()
+    {
+        if(File.Exists(m_setting_data_path))
+        {
+            LoadSettingData();
+        }
+        else
+        {
+            Setting.BackgroundActive = m_background_sound_toggle.isOn = true;
+            Setting.Backgroundvalue = m_background_sound_slider.value = 0.5f;
+
+            Setting.EffectActive = m_effect_sound_toggle.isOn = true;
+            Setting.EffectValue = m_effect_sound_slider.value = 0.5f;
+
+            Setting.CameraShakerActive = m_camera_shaker_toggle.isOn = true;
+            Setting.VolumeActive = m_shader_toggle.isOn = true;
+
+            Screen.SetResolution(1920, 1080, Screen.fullScreen);
+        }
+    }
+
+    private void LoadSettingData()
+    {
+        var json_data = File.ReadAllText(m_setting_data_path);
+        Debug.Log(json_data);
+        Setting = JsonUtility.FromJson<SettingData>(json_data);
+
+        m_background_sound_toggle.isOn = Setting.BackgroundActive;
+        m_background_sound_slider.value = Mathf.Clamp(Setting.Backgroundvalue, 0f, 1f);
+
+        m_effect_sound_toggle.isOn = Setting.EffectActive;
+        m_effect_sound_slider.value = Mathf.Clamp(Setting.EffectValue, 0f, 1f);
+
+        m_camera_shaker_toggle.isOn = Setting.CameraShakerActive;
+        m_shader_toggle.isOn = Setting.VolumeActive;
+
+        Screen.SetResolution((int)Setting.Resolution.x, (int)Setting.Resolution.y, Screen.fullScreen);
+    }
+
+    private void SaveSettingData()
+    {
+        Setting.BackgroundActive = m_background_sound_toggle.isOn;
+        Setting.Backgroundvalue = Mathf.Clamp(m_background_sound_slider.value, 0f, 1f);
+
+        Setting.EffectActive = m_effect_sound_toggle.isOn;
+        Setting.EffectValue = Mathf.Clamp(m_effect_sound_slider.value, 0f, 1f);
+
+        Setting.CameraShakerActive = m_camera_shaker_toggle.isOn;
+        Setting.VolumeActive = m_shader_toggle.isOn;
+
+        Setting.Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+
+        var json_data = JsonUtility.ToJson(Setting);
+        File.WriteAllText(m_setting_data_path, json_data);
+    }
+
+    public void Toggle_SoundPanel()
+    {
+        if(m_sound_panel_toggle.isOn)
+        {
+            m_sound_panel.SetActive(true);
+            m_game_panel_toggle.isOn = false;
+            m_game_panel.SetActive(false);
+        }
+    }
+
+    public void Toggle_GamePanel()
+    {
+        if(m_game_panel_toggle.isOn)
+        {
+            m_game_panel.SetActive(true);
+            m_sound_panel_toggle.isOn = false;
+            m_sound_panel.SetActive(false);
         }
     }
 
@@ -229,12 +259,14 @@ public class SettingManager : Singleton<SettingManager>
 
     public void Toggle_BackgroundSoundToggle()
     {
-        m_bacgkround_sound_slider.enabled = m_background_sound_toggle.isOn;
+        m_background_sound_slider.enabled = m_background_sound_toggle.isOn;
     }
 
     public void Slider_BackgroundSoundControl()
     {
-        // 배경음 크기 조절
+        Setting.Backgroundvalue = m_background_sound_slider.value;
+        SoundManager.Instance.UpdateBackgroundVolume();
+        
     }
 
     public void Toggle_EffectSoundToggle()
@@ -244,7 +276,6 @@ public class SettingManager : Singleton<SettingManager>
 
     public void Slider_EffectSoundControl()
     {
-        // 효과음 크기 조절
+        Setting.EffectValue = m_effect_sound_slider.value;
     }
-
 }

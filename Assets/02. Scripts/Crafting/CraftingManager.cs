@@ -120,6 +120,8 @@ public class CraftingManager : Singleton<CraftingManager>
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.LastBGM);
     }
 
     private void CheckCraftingSlot(CraftingSlot crafting_slot)

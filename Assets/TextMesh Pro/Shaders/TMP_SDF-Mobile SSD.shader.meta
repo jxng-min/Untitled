@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf0984c0cdac04c47a982799c49520cd
+guid: c8d12adcee749c344b8117cf7c7eb912
 ShaderImporter:
   externalObjects: {}
   defaultTextures: []
@@ -7,3 +7,10 @@ ShaderImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 127325
+  packageName: Particle Pack
+  packageVersion: 3.1
+  assetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader
+  uploadId: 691001
