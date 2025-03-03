@@ -169,7 +169,8 @@ namespace Junyoung
 
         public void ActiveHpBar()
         {
-            if (Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= EnemyStat.FollowRange)
+            if (Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= EnemyStat.FollowRange && 
+                !(StateContext.NowState is EnemyDeadState))
             {
                 m_hp_panel.SetActive(true);
             }

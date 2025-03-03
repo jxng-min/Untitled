@@ -54,7 +54,7 @@ namespace Junyoung
         }
         IEnumerator SpawnBossMangement()
         {
-            //while (true)
+            while (true)
             {
                 if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_transform))
                 {
@@ -63,9 +63,9 @@ namespace Junyoung
                     m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] = 0;
 
                 }
+                yield return new WaitForSeconds(10f);
                 if (m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] < 1)
                 {
-                    yield return new WaitForSeconds(10f);
                     m_enemy_factory.SpawnEnemy(EnemyType.Boss, m_boss_spawn_transform);
                 }
             }
