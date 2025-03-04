@@ -10,5 +10,6 @@ public enum EnemyState
     READY,
     ATTACK,
     GETDAMAGE,
-    DEAD
+    DEAD,
+    STUN
 }

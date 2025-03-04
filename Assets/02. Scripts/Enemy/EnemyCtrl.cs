@@ -20,6 +20,7 @@ namespace Junyoung
         IEnemyState<EnemyCtrl> m_enemy_dead_state;
         protected IEnemyState<EnemyCtrl> m_enemy_ready_state;
         protected IEnemyState<EnemyCtrl> m_enemy_attack_state;
+        private IEnemyState<EnemyCtrl> m_enemy_stun_state;
 
         public EnemyStateContext StateContext { get; private set; }
 
@@ -94,6 +95,7 @@ namespace Junyoung
             m_enemy_get_damage_state = gameObject.AddComponent<EnemyGetDamageState>();
             m_enemy_patrol_state = gameObject.AddComponent<EnemyPatrolState>();
             m_enemy_ready_state = gameObject.AddComponent<EnemyReadyState>();
+            m_enemy_stun_state = gameObject.AddComponent<EnemyStunState>();
 
             StateContext = new EnemyStateContext(this);
 
@@ -192,6 +194,8 @@ namespace Junyoung
                     StateContext.Transition(m_enemy_get_damage_state); break;
                 case EnemyState.DEAD:
                     StateContext.Transition(m_enemy_dead_state); break;
+                case EnemyState.STUN:
+                    StateContext.Transition(m_enemy_stun_state); break;
             }
         }
 
@@ -226,7 +230,7 @@ namespace Junyoung
         }
         public void UpdateHP(float value)//�ǰݽ� ȣ��
         {
-            //(m_enemy_get_damage_state as EnemyGetDamageState).Damage = value;
+            if(StateContext.NowState is EnemyDeadState) { return; }
             EnemyStat.HP += value;
             var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
             indicator.Init(transform.position + Vector3.up * 3f, value, value < 0f ? Color.red : Color.green);
@@ -234,7 +238,16 @@ namespace Junyoung
             {
                 ChangeState(EnemyState.DEAD);
             }
-            //ChangeState(EnemyState.GETDAMAGE);
+            if((StateContext.NowState == m_enemy_idle_state) || (StateContext.NowState is EnemyPatrolState) || (StateContext.NowState == m_enemy_back_state))
+            {
+                ChangeState(EnemyState.READY);
+            }
+        }
+
+        public void GetStun(float stun_time)
+        {
+            (m_enemy_stun_state as EnemyStunState).StunTime= stun_time;
+            ChangeState(EnemyState.STUN);
         }
 
         public void LookPlayer()
