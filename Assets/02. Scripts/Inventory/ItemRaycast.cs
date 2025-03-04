@@ -41,7 +41,14 @@ public class ItemRaycast : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
-            if(m_current_item.Item.Type > ItemType.NONE)
+            if (m_current_item.Item.Type == ItemType.Money) // 돈 아이템인지 확인
+            {
+                TryPickMoney();
+                ItemInfoDisappear();
+                return;
+            }
+
+            if (m_current_item.Item.Type > ItemType.NONE)
             {
                 InventorySlot[] all_items = m_inventory.GetAllItems();
 
@@ -139,6 +146,25 @@ public class ItemRaycast : MonoBehaviour
                 Destroy(m_current_item.gameObject);
 
                 DataManager.Instance.SaveInventory();
+                QuestManager.Instance.UpdateItemQuestCount();
+                SoundManager.Instance.PlayEffect("Get Item");
+            }
+
+            ItemInfoDisappear();
+        }
+    }
+
+    private void TryPickMoney()
+    {
+        if (m_is_pick_up_active)
+        {
+            if (m_current_item.Item.Type != ItemType.NONE)
+            {
+                DataManager.Instance.Data.Money += m_current_item.Item.Money;
+                Debug.Log($"현재 금액 : {DataManager.Instance.Data.Money}");
+                Destroy(m_current_item.gameObject);
+
+                DataManager.Instance.SavePlayerData();
                 QuestManager.Instance.UpdateItemQuestCount();
                 SoundManager.Instance.PlayEffect("Get Item");
             }

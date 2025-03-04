@@ -63,6 +63,10 @@ namespace Junyoung
 
         public List<ItemObject> m_drop_item_bag = new List<ItemObject>();
 
+        [Header("돈 드랍 관련")]
+        public int m_drop_money_min;
+        public int m_drop_money_max;
+
         public IObjectPool<EnemyCtrl> ManagedPool{ get; set; }
 
         private float m_rotation_speed = 3.5f;

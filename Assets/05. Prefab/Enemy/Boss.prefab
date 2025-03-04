@@ -3822,6 +3822,8 @@ MonoBehaviour:
   m_enemy_spawn_data: {fileID: 0}
   m_drop_item_manager: {fileID: 0}
   m_drop_item_bag: []
+  m_drop_money_min: 30
+  m_drop_money_max: 50
   m_state_name: 
   m_hp_panel: {fileID: 0}
   m_hp_image: {fileID: 0}

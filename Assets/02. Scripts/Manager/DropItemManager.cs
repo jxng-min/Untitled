@@ -40,4 +40,14 @@ public class DropItemManager : MonoBehaviour
         }
         return null;
     }
+
+    public GameObject DropRandomMoney(int min, int max, GameObject money_prefab)
+    {
+        int rand_money = Random.Range(min, max+1);
+
+        money_prefab.GetComponent<ItemPickUp>().Item.Money = rand_money;
+
+
+        return money_prefab;
+    }
 }

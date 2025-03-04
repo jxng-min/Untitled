@@ -14,4 +14,6 @@ public enum ItemType
     Consumable                  = 0b10000000,
     Ingredient                  = 0b100000000,
     Quest                       = 0b1000000000,
+
+    Money                       = 0b10000000000
 }
