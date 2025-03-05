@@ -111,15 +111,18 @@ public class QuestManager : Singleton<QuestManager>
         List<QuestSaveData> save_data_list = new List<QuestSaveData>();
         foreach(var quest in Quests.Values)
         {
-            QuestSaveData save_data = new QuestSaveData
+            if(quest.QuestState != QuestState.NEVER_RECEIVED)
             {
-                ID = quest.ID,
-                KillQuests = quest.KillQuests,
-                ItemQuests = quest.ItemQuests,
-                QuestState = quest.QuestState
-            };
+                QuestSaveData save_data = new QuestSaveData
+                {
+                    ID = quest.ID,
+                    KillQuests = quest.KillQuests,
+                    ItemQuests = quest.ItemQuests,
+                    QuestState = quest.QuestState
+                };
 
-            save_data_list.Add(save_data);
+                save_data_list.Add(save_data);
+            }
         }
 
         quest_data_list.SaveDataList = save_data_list.ToArray();
