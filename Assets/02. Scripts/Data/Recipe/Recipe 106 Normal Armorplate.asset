@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Recipe 106 Normal Armorplate
   m_EditorClassIdentifier: 
   m_require_items:
-  - m_item: {fileID: 11400000, guid: 9f17b2aea239ebe4ea85f5b1b946d7eb, type: 2}
+  - m_item: {fileID: 11400000, guid: 5f45c0da58edc6b4e827b10fef7550f1, type: 2}
     m_count: 1
   - m_item: {fileID: 11400000, guid: 7c5e12eb5c384cf699804d2b7e7fbe63, type: 2}
     m_count: 5

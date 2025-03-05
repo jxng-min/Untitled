@@ -15,8 +15,6 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.IsAttack = true;
             m_player_ctrl.Animator.SetTrigger("IsAttack");
-
-            SoundManager.Instance.PlayEffect("Player Attack 1");
         }
     }
 
@@ -57,6 +55,10 @@ public class PlayerAttackState : MonoBehaviour, IState<PlayerCtrl>
         {
             switch(ComboIndex)
             {
+                case 0:
+                    SoundManager.Instance.PlayEffect("Player Attack 1");
+                    break;
+
                 case 1:
                     SoundManager.Instance.PlayEffect("Player Attack 2");
                     break;

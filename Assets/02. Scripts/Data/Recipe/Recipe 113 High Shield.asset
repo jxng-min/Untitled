@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Recipe 113 High Shield
   m_EditorClassIdentifier: 
   m_require_items:
-  - m_item: {fileID: 11400000, guid: 4d6eaa1b37de67d83864279e73ccb7c1, type: 2}
+  - m_item: {fileID: 11400000, guid: bbecd3f0e20695209ad7a609834f5c3e, type: 2}
     m_count: 1
   - m_item: {fileID: 11400000, guid: 7c5e12eb5c384cf699804d2b7e7fbe63, type: 2}
     m_count: 10
