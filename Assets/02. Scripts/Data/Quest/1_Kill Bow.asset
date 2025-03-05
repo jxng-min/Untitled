@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73e864887ec06beeb34c71a4fb77ff4, type: 3}
   m_Name: 1_Kill Bow
   m_EditorClassIdentifier: 
-  QuestState: 0
+  QuestState: 3
   m_quest_id: 1
   m_kill_quests:
   - m_particular_id: 0
-    m_is_particular_clear: 0
+    m_is_particular_clear: 1
     m_target_enemy_code: 1
     m_total_count: 5
-    m_current_count: 0
+    m_current_count: 5
   m_item_quests: []
   m_prerequisite_quest_ids: 00000000
   m_prerequisite_player_level: 1

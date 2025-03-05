@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c44507c750f2b314a64ebaab9981925, type: 3}
+  m_Name: Recipe 105 Normal Helmet
+  m_EditorClassIdentifier: 
+  m_require_items:
+  - m_item: {fileID: 11400000, guid: e370c60a54cc2e43e8df52a17857b14d, type: 2}
+    m_count: 1
+  - m_item: {fileID: 11400000, guid: 7c5e12eb5c384cf699804d2b7e7fbe63, type: 2}
+    m_count: 5
+  m_result_item:
+    m_item: {fileID: 11400000, guid: 346f65aa9e00aa9be946b09de56e0e6f, type: 2}
+    m_count: 1
+  m_require_level: 6
+  m_crafting_time: 10
+  m_button_sprite: {fileID: -8988441530965576436, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}

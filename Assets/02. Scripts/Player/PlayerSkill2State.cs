@@ -72,6 +72,11 @@ public class PlayerSkill2State : MonoBehaviour, IState<PlayerCtrl>
         }
     }
 
+    public void Skill2_Sound()
+    {
+        SoundManager.Instance.PlayEffect("Skill2 Start");
+    }
+
     public void Skill2_End()
     {
         Destroy(m_effect);

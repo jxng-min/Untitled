@@ -21,7 +21,7 @@ MonoBehaviour:
     m_target_item_code: 1003
     m_total_count: 20
   - m_particular_id: 1
-    m_is_particular_clear: 0
+    m_is_particular_clear: 1
     m_target_item_code: 1004
     m_total_count: 20
   m_prerequisite_quest_ids: 06000000

@@ -20,7 +20,7 @@ MonoBehaviour:
     m_is_particular_clear: 0
     m_target_item_code: 105
     m_total_count: 1
-  m_prerequisite_quest_ids: 
+  m_prerequisite_quest_ids: 0400000005000000
   m_prerequisite_player_level: 6
   m_reward_exp: 20
   m_reward_items:
