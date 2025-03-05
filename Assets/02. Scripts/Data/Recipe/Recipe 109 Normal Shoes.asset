@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c44507c750f2b314a64ebaab9981925, type: 3}
+  m_Name: Recipe 109 Normal Shoes
+  m_EditorClassIdentifier: 
+  m_require_items:
+  - m_item: {fileID: 11400000, guid: 2368a20a1a114c4c8a80fa373ecf050b, type: 2}
+    m_count: 1
+  - m_item: {fileID: 11400000, guid: 7c5e12eb5c384cf699804d2b7e7fbe63, type: 2}
+    m_count: 5
+  m_result_item:
+    m_item: {fileID: 11400000, guid: 24d8750d4a7e2d5b79c2de870ae1e085, type: 2}
+    m_count: 1
+  m_require_level: 6
+  m_crafting_time: 10
+  m_button_sprite: {fileID: -8988441530965576436, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}

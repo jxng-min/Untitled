@@ -20245,7 +20245,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cfab096318acfc1428b814142e43d6e5, type: 2}
   - {fileID: 11400000, guid: 8c9c51a6054a99c22a4b2298874b18db, type: 2}
   - {fileID: 11400000, guid: 6eabc8ef00b607e3e9a67e4934aa2407, type: 2}
-  <QuestCount>k__BackingField: 3
+  - {fileID: 11400000, guid: 807c00d3f78ef3f4e9c039cb3f009056, type: 2}
+  - {fileID: 11400000, guid: 961ad429e2bd55e21a0d998809912171, type: 2}
+  - {fileID: 11400000, guid: 0ded637643bcfc6bc99e3b536eaad258, type: 2}
+  - {fileID: 11400000, guid: 369847a536df2f86aa08f2ad3d5c3215, type: 2}
+  - {fileID: 11400000, guid: daccd9249994d31f48693835061cd6df, type: 2}
+  - {fileID: 11400000, guid: 09006c7f239c5841f84704b1c67ee493, type: 2}
+  - {fileID: 11400000, guid: 94208bf11eacff31ca332f75d2f64166, type: 2}
+  - {fileID: 11400000, guid: be6b53d8d8e00fe069b4c8403562725c, type: 2}
+  <QuestCount>k__BackingField: 11
 --- !u!1001 &632958152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25807,6 +25815,16 @@ MonoBehaviour:
   m_global_recipes:
   - {fileID: 11400000, guid: 8214bc4d1ad3cdeeca49be8e6a7636d3, type: 2}
   - {fileID: 11400000, guid: 998b3412f263c30d4bf959096f785e80, type: 2}
+  - {fileID: 11400000, guid: df35d74b102aef6d38b863f0e9007241, type: 2}
+  - {fileID: 11400000, guid: 802b255a2ca2949c98595a9fcadd8294, type: 2}
+  - {fileID: 11400000, guid: e6977757482c80c389fb7c70c68d70d6, type: 2}
+  - {fileID: 11400000, guid: 16048753b5e9f2063b09ab8a05e6aef4, type: 2}
+  - {fileID: 11400000, guid: 2bb6b958772476e26a455a9f1e2e5fdf, type: 2}
+  - {fileID: 11400000, guid: 156cb4310fb2d3ab6b8a84355af9520b, type: 2}
+  - {fileID: 11400000, guid: 8996bc33f0e8ad1b59cd9f8ca735114b, type: 2}
+  - {fileID: 11400000, guid: a3e592d16bb73fd0681e60f870fec5bd, type: 2}
+  - {fileID: 11400000, guid: f411fa9e8124854d88dcd08e129a524e, type: 2}
+  - {fileID: 11400000, guid: 75e5b73fba7c237d2a30476c63df0b35, type: 2}
   m_global_recipes_temp_transform: {fileID: 971467760}
   m_crafting_ui_object: {fileID: 2014790082}
   m_recipe_content_transform: {fileID: 244084820}
