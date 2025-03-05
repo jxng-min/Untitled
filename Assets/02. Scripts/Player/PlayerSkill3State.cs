@@ -37,6 +37,8 @@ public class PlayerSkill3State : MonoBehaviour, IState<PlayerCtrl>
 
         m_effect = Instantiate(m_player_ctrl.Skill3Effect, transform.position, Quaternion.identity);
         m_player_ctrl.Camera.Shaking(0.3f, 0.2f);
+
+        SoundManager.Instance.PlayEffect("Skill1 E1");
     }
 
     private IEnumerator Skill3EffectEnd()
@@ -52,6 +54,11 @@ public class PlayerSkill3State : MonoBehaviour, IState<PlayerCtrl>
         {
             m_player_ctrl.ChangeState(PlayerState.DEAD);
         }
+    }
+
+    public void Skill3_Sound()
+    {
+        SoundManager.Instance.PlayEffect("Skill1 Start");
     }
 
     public void Skill3_End()

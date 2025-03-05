@@ -213,8 +213,6 @@ public class PlayerCtrl : MonoBehaviour
         DataManager.Instance.Data.Stat.HP += final_value;
 
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.red : Color.green);
-
-        DataManager.Instance.SavePlayerData();
     }
 
     public void UpdateMP(float value)
@@ -225,8 +223,6 @@ public class PlayerCtrl : MonoBehaviour
 
         var indicator = ObjectManager.Instance.GetObject(ObjectType.DamageIndicator).GetComponent<DamageIndicator>();
         indicator.Init(transform.position + Vector3.up * 3f, final_value, final_value < 0 ? Color.magenta : Color.blue);
-
-        DataManager.Instance.SavePlayerData();
     }
 
     public void ChangeState(PlayerState state)
