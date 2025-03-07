@@ -158,6 +158,8 @@ namespace Junyoung
 
         public virtual void FixedUpdate()
         {
+            if (GameManager.Instance.GameStatus != GameEventType.PLAYING && GameManager.Instance.GameStatus != GameEventType.DEAD) return;
+            
             m_state_name = StateContext.NowState.ToString();
             if (TotalAtkRate >= AttackDelay)
             {
@@ -170,6 +172,7 @@ namespace Junyoung
             }
             //FSM ����
             StateContext.OnStateUpdate();
+            
         }
 
         public void ChangeState(EnemyState state) // State ��ȯ

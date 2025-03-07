@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using Junyoung;
 
 public class SettingManager : Singleton<SettingManager>
 {
@@ -98,6 +99,7 @@ public class SettingManager : Singleton<SettingManager>
 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                EventBus.Publish(GameEventType.SETTING);
             }
             else
             {
@@ -106,6 +108,7 @@ public class SettingManager : Singleton<SettingManager>
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                EventBus.Publish(GameEventType.PLAYING);
             }
         }
     }

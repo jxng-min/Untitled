@@ -17,64 +17,95 @@ namespace Junyoung
         public Dictionary<Transform, Dictionary<EnemyType, int>> m_active_enemy_counts = new Dictionary<Transform, Dictionary<EnemyType, int>>();
 
         private Dictionary<EnemyType, int> m_max_enemy_by_type = new Dictionary<EnemyType, int> { { EnemyType.Axe, 2 },{ EnemyType.Bow ,1},{ EnemyType.Boss, 0 } };
-        
+
+        Coroutine m_spawn_coroutine;
+        Coroutine m_boss_coroutine;
         void Start()
         {
             m_enemy_factory = GetComponent<EnemyFactory>();
-            StartCoroutine(SpawnMangement());
-            StartCoroutine(SpawnBossMangement());
+
         }
 
         IEnumerator SpawnMangement() // 현재 소환되어있는 몬
         {
             while (true)
             {
-                yield return new WaitForSeconds(15f);
-                foreach (var spawn_pos in m_spawn_transforms)
+                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
                 {
-                    if (!m_active_enemy_counts.ContainsKey(spawn_pos))
+                    yield return new WaitForSeconds(15f);
+                    foreach (var spawn_pos in m_spawn_transforms)
                     {
-                        m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int>();
+                        if (!m_active_enemy_counts.ContainsKey(spawn_pos))
+                        {
+                            m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int>();
 
+                            foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                            {
+                                m_active_enemy_counts[spawn_pos][type] = 0;
+                            }
+                        }
                         foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
                         {
-                            m_active_enemy_counts[spawn_pos][type] = 0;
+                            if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
+                            {
+                                m_enemy_factory.SpawnEnemy(type, spawn_pos);
+                                yield return new WaitForSeconds(15f);
+                            }
                         }
                     }
-                    foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
-                    {
-                        if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
-                        {                           
-                            m_enemy_factory.SpawnEnemy(type, spawn_pos);
-                            yield return new WaitForSeconds(15f);
-                        }
-                    }
-                }               
+                }
+                yield return null;
             }
         }
         IEnumerator SpawnBossMangement()
         {
             while (true)
             {
-                if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_transform))
+                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
                 {
-                    m_active_enemy_counts[m_boss_spawn_transform] = new Dictionary<EnemyType, int>();
+                    if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_transform))
+                    {
+                        m_active_enemy_counts[m_boss_spawn_transform] = new Dictionary<EnemyType, int>();
 
-                    m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] = 0;
+                        m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] = 0;
 
+                    }
+                    yield return new WaitForSeconds(10f);
+                    if (m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] < 1)
+                    {
+                        m_enemy_factory.SpawnEnemy(EnemyType.Boss, m_boss_spawn_transform);
+                    }
                 }
-                yield return new WaitForSeconds(10f);
-                if (m_active_enemy_counts[m_boss_spawn_transform][EnemyType.Boss] < 1)
-                {
-                    m_enemy_factory.SpawnEnemy(EnemyType.Boss, m_boss_spawn_transform);
-                }
+                yield return null;
             }
         }
 
-        void Update()
+        private void Update()
         {
-            
-            
+            if( (GameManager.Instance.GameStatus == GameEventType.PLAYING 
+                || GameManager.Instance.GameStatus == GameEventType.DEAD))
+            {
+                if (m_spawn_coroutine == null)
+                {
+                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
+                    Debug.Log("적 소환 코루틴 시작");
+                    m_spawn_coroutine = StartCoroutine(SpawnMangement());
+                    m_boss_coroutine = StartCoroutine(SpawnBossMangement());
+                }
+            }
+            else 
+            {
+                if (m_spawn_coroutine != null)
+                {
+                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
+                    Debug.Log("적 소환 코루틴 일시 정지");
+                    StopCoroutine(m_spawn_coroutine);
+                    StopCoroutine(m_boss_coroutine);
+
+                    m_spawn_coroutine = null;
+                    m_boss_coroutine= null;
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Junyoung;
 
 public class PlayerCtrl : MonoBehaviour
 {
@@ -102,6 +103,12 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Start()
     {
+        EventBus.Subscribe(GameEventType.PLAYING, GameManager.Instance.Playing);
+        EventBus.Subscribe(GameEventType.SETTING, GameManager.Instance.Setting);
+        EventBus.Subscribe(GameEventType.DEAD, GameManager.Instance.Dead);
+
+        EventBus.Publish(GameEventType.PLAYING);
+
         transform.position = DataManager.Instance.Data.Position;
 
         UpdateAttackSpeed();
