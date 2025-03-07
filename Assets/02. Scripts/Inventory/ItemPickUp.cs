@@ -9,6 +9,7 @@ public class ItemPickUp : MonoBehaviour
         get { return m_item; }
     }
 
+
     [Header("아이템 인디케이터")]
     [SerializeField] private float m_indicator_height;
     public float IndicatorHeight

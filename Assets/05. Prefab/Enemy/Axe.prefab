@@ -519,9 +519,11 @@ MonoBehaviour:
   m_origin_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_enemy_stat: {fileID: 11400000, guid: 5026e3ddb012c9044b05401941c85eb0, type: 2}
   m_enemy_spawn_data: {fileID: 0}
-  m_drop_item_prefabs:
-  - {fileID: 7393320336947541842, guid: 96bc1d2cdcfe97f40bbc502366880666, type: 3}
-  - {fileID: 4134816041749529828, guid: 12b970411f2e1cc4dadb33aeda2a83d1, type: 3}
+  m_drop_item_manager: {fileID: 0}
+  m_drop_item_bag: []
+  m_drop_money_min: 5
+  m_drop_money_max: 10
+  m_state_name: 
 --- !u!1 &3343686155191377969 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 201253961220923684, guid: 7b6e0a18cabd18a4a939e5a3baa613a7, type: 3}

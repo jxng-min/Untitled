@@ -52,6 +52,14 @@ public class Item : ScriptableObject
         get { return m_item_sprite; }
     }
 
+    [Header("금액")]
+    [SerializeField] int m_money;
+    public int Money
+    {
+        get { return m_money; }
+        set { m_money = value; }
+    }
+
     public static bool CheckEquipmentType(ItemType type)
     {
         return type >= ItemType.Equipment_HELMET && type <= ItemType.Equipment_SHOES;
