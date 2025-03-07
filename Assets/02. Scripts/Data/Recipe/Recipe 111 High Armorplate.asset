@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c44507c750f2b314a64ebaab9981925, type: 3}
+  m_Name: Recipe 111 High Armorplate
+  m_EditorClassIdentifier: 
+  m_require_items:
+  - m_item: {fileID: 11400000, guid: 9f17b2aea239ebe4ea85f5b1b946d7eb, type: 2}
+    m_count: 1
+  - m_item: {fileID: 11400000, guid: 7c5e12eb5c384cf699804d2b7e7fbe63, type: 2}
+    m_count: 10
+  - m_item: {fileID: 11400000, guid: b2af7cce8ef47f3849f0ac84288bf819, type: 2}
+    m_count: 8
+  - m_item: {fileID: 11400000, guid: 1b99ecdc6320eab92a041768be224f9d, type: 2}
+    m_count: 5
+  m_result_item:
+    m_item: {fileID: 11400000, guid: 20e1e7e459d5595799dc906db40f5e7a, type: 2}
+    m_count: 1
+  m_require_level: 10
+  m_crafting_time: 30
+  m_button_sprite: {fileID: -8988441530965576436, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}

@@ -36,9 +36,15 @@ public class AnimationEventSender : MonoBehaviour
         m_player_attack?.Combo_Exist();
     }
 
+
     public void Skill1_End()
     {
         m_player_skill1?.Skill1_End();
+    }
+
+    public void Skill2_Sound()
+    {
+        m_player_skill2?.Skill2_Sound();
     }
 
     public void Skill2_End()
@@ -46,9 +52,19 @@ public class AnimationEventSender : MonoBehaviour
         m_player_skill2?.Skill2_End();
     }
 
+    public void Skill3_Sound()
+    {
+        m_player_skill3?.Skill3_Sound();
+    }
+
     public void Skill3_End()
     {
         m_player_skill3?.Skill3_End();
+    }
+
+    public void Skill4_Sound()
+    {
+        m_player_skill4?.Skill4_Sound();
     }
 
     public void Skill4_End()

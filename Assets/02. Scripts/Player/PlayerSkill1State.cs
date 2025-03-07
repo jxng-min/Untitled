@@ -36,6 +36,11 @@ public class PlayerSkill1State : MonoBehaviour, IState<PlayerCtrl>
 
         m_effect = Instantiate(m_player_ctrl.Skill1Effect, transform.position, Quaternion.identity);
         m_player_ctrl.Camera.Shaking(0.3f, 0.6f);
+
+        SoundManager.Instance.PlayEffect("Skill3 Start");
+
+        yield return new WaitForSeconds(1f);
+        SoundManager.Instance.PlayEffect("Skill3 E1");
     }
 
     private IEnumerator Skill1EffectEnd()

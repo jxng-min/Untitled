@@ -112,23 +112,23 @@ public class NPCRaycast : MonoBehaviour
                                         break;
 
                                     case 3:
-                                        CheckQuest(quest_id1, 10, 2, 12, 1, 13, 1);
+                                        CheckQuest(quest_id1, 10, 3, 13, 1, 14, 1);
                                         break;
                                     
                                     case 4:
-                                        CheckQuest(quest_id1, 14, 2, 1, 1, 16, 1);
+                                        CheckQuest(quest_id1, 15, 2, 1, 1, 17, 1);
                                         break;
                                     
                                     case 6:
-                                        CheckQuest(quest_id1, 17, 3, 20, 1, 21, 1);
+                                        CheckQuest(quest_id1, 18, 3, 21, 1, 22, 1);
                                         break;
                                     
                                     case 9:
-                                        CheckQuest(quest_id1, 22, 2, 1, 1, 24, 1);
+                                        CheckQuest(quest_id1, 23, 2, 1, 1, 24, 1);
                                         break;
                                     
                                     case 10:
-                                        CheckQuest(quest_id1, 25, 5, 30, 1, 31, 4);
+                                        CheckQuest(quest_id1, 26, 5, 31, 1, 32, 4);
                                         break;
                                 }
                                 

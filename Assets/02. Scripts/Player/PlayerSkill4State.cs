@@ -47,6 +47,8 @@ public class PlayerSkill4State : MonoBehaviour, IState<PlayerCtrl>
         m_effect = Instantiate(m_player_ctrl.Skill4Effect, transform.position + Vector3.up, Quaternion.identity);
         StartCoroutine(EffectScaler());
         m_player_ctrl.Camera.Shaking(0.3f, 1.5f);
+
+        SoundEffect();
     }
 
     private IEnumerator Skill4EffectEnd()
@@ -54,6 +56,15 @@ public class PlayerSkill4State : MonoBehaviour, IState<PlayerCtrl>
         yield return new WaitForSeconds(3f);
 
         Destroy(m_effect);
+        CancelInvoke("SoundEffect");
+    }
+
+    private void SoundEffect()
+    {
+        var random = UnityEngine.Random.Range(1, 3);
+        SoundManager.Instance.PlayEffect($"Skill4 E{random}");
+
+        Invoke("SoundEffect", 0.5f);
     }
 
     private IEnumerator EffectScaler()
@@ -72,6 +83,11 @@ public class PlayerSkill4State : MonoBehaviour, IState<PlayerCtrl>
 
             yield return null;
         }
+    }
+
+    public void Skill4_Sound()
+    {
+        SoundManager.Instance.PlayEffect("Skill4 Start");
     }
 
     public void Skill4_End()
