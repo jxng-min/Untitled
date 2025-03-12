@@ -29,23 +29,23 @@ public class AreaNameManager : MonoBehaviour
 
         m_area_name.gameObject.SetActive(false);
 
-        Collider[] colliders = GetComponentsInChildren<Collider>(); // ÀÚ½Ä ¿ÀºêÁ§Æ®ÀÇ Collider °¡Á®¿À±â
+        Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
             if (col.gameObject.name == "Area1")
             {
-                m_areas[col] = "[ ÀØÇôÁø ½£±æ ]";
+                m_areas[col] = "[ ìŠí˜€ì§„ ìˆ²ê¸¸ ]";
                 m_default_area = col;
             }
-            if (col.gameObject.name == "Area2") m_areas[col] = "[ °í¿äÇÑ Á¤ÂøÁö ]";
-            if (col.gameObject.name == "Area3") m_areas[col] = "[ ¸ê¸ÁÇÑ ¿Õ±¹ÀÇ ÆóÇã ]";
+            if (col.gameObject.name == "Area2") m_areas[col] = "[ ê³ ìš”í•œ ì •ì°©ì§€ ]";
+            if (col.gameObject.name == "Area3") m_areas[col] = "[ ë©¸ë§í•œ ì™•êµ­ì˜ íí—ˆ ]";
             Debug.Log(col.gameObject.name);
         }
     }
 
     public void TriggerEnter(Collider object_col, Collider area)
     {
-        if (object_col.CompareTag("Player") && m_areas.ContainsKey(area)) // ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ ±¸¿ª¿¡ µé¾î¿È
+        if (object_col.CompareTag("Player") && m_areas.ContainsKey(area))
         {
             ShowAreaName(area);
         }
@@ -53,7 +53,7 @@ public class AreaNameManager : MonoBehaviour
 
     public void TriggerExit(Collider object_col, Collider area)
     {
-        if (object_col.CompareTag("Player") && m_areas.ContainsKey(area)) // ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ ±¸¿ª¿¡¼­ ³ª°¨
+        if (object_col.CompareTag("Player") && m_areas.ContainsKey(area))
         {
            if(area != m_default_area)
             {
@@ -66,7 +66,7 @@ public class AreaNameManager : MonoBehaviour
     {
         m_area_name.text = m_areas[area];
         m_area_name.gameObject.SetActive(true);
-        m_area_name.color = new Color(m_area_name.color.r, m_area_name.color.g, m_area_name.color.b, 1f); // ºÒÅõ¸íÇÏ°Ô ¼³Á¤
+        m_area_name.color = new Color(m_area_name.color.r, m_area_name.color.g, m_area_name.color.b, 1f);
         if (m_fade_coroutine != null)
         {
             StopCoroutine(m_fade_coroutine);

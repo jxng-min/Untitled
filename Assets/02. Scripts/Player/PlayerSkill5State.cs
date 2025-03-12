@@ -89,6 +89,11 @@ public class PlayerSkill5State : MonoBehaviour, IState<PlayerCtrl>
         yield return StartCoroutine(Skill5EffectEnd());
     }
 
+    public void Skill5_Sound()
+    {
+        SoundManager.Instance.PlayEffect("Skill5 Start");
+    }
+
     public void Skill5_End()
     {
         m_player_ctrl.ChangeState(PlayerState.IDLE);
