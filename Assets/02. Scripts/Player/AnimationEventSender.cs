@@ -71,6 +71,11 @@ public class AnimationEventSender : MonoBehaviour
     {
         m_player_skill4?.Skill4_End();
     }
+
+    public void Skill5_Sound()
+    {
+        m_player_skill5?.Skill5_Sound();
+    }
     
     public void Skill5_End()
     {
