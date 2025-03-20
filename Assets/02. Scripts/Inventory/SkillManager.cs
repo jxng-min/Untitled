@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
-    private static bool m_is_ui_active = false;
+    private static bool m_is_active = false;
     public static bool IsActive
     {
-        get { return m_is_ui_active; }
+        get { return m_is_active; }
+        private set { m_is_active = value; }
     }
 
     [Header("모든 스킬 목록")]
@@ -28,7 +29,6 @@ public class SkillManager : Singleton<SkillManager>
     {
         base.Awake();
 
-        m_is_ui_active = false;
         m_skill_ui_object.SetActive(false);
     }
 
@@ -39,24 +39,28 @@ public class SkillManager : Singleton<SkillManager>
 
     private void Update()
     {
-        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
             if(Input.GetKeyDown(KeyCode.K))
             {
                 SoundManager.Instance.PlayEffect("Button Click");
                 
-                if(m_is_ui_active)
+                if(IsActive)
                 {
+                    IsActive = false;
+
                     m_skill_ui_object.SetActive(false);
-                    m_is_ui_active = false;
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
                 else
                 {
+                    IsActive = true;
+
+                    GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
+
                     m_skill_ui_object.SetActive(true);
-                    m_is_ui_active = true;
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;

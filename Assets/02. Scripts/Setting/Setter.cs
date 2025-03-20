@@ -133,7 +133,7 @@ public class Setter : MonoBehaviour
         SoundManager.Instance.PlayEffect("Button Click");
 
         SettingManager.Instance.Setting.CameraShakerActive = m_camera_shaking_toggle.isOn;
-        Camera.main.GetComponent<CameraShaker>().enabled = SettingManager.Instance.Setting.CameraShakerActive;
+        Camera.main.GetComponent<CameraShaker>().IsEnable = SettingManager.Instance.Setting.CameraShakerActive;
     }
 
     public void Toggle_GlobalVolume()

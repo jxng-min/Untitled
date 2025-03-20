@@ -50,16 +50,18 @@ namespace Junyoung
                 m_player_ctrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
 
                 DataManager.Instance.Initialize();
+                ItemShopManager.Instance.LoadData();
             }
             else
             {
-
             }
         }
 
         public void Setting()
         {
             GameState = GameEventType.SETTING;
+
+            Player.ChangeState(PlayerState.IDLE);
         }
 
         public void Dead()

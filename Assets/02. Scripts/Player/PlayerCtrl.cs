@@ -118,7 +118,10 @@ public class PlayerCtrl : MonoBehaviour
     {
         DataManager.Instance.Data.Position = transform.position;
 
-        if(GameManager.Instance.GameState == GameEventType.PLAYING)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING 
+            && !EquipmentInventory.IsActive && !InventoryMain.IsActive && !StatInventory.IsActive 
+            && !QuestUIManager.IsActive && !SkillManager.IsActive && !ItemShopManager.IsActive
+            && !CraftingManager.IsActive && !ConversationManager.Instance.IsTalking)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
             StateContext.ExecuteUpdate();
@@ -152,19 +155,33 @@ public class PlayerCtrl : MonoBehaviour
     }
 
     public void Jump(float power)
+    {
+        if(GameManager.Instance.GameState == GameEventType.PLAYING && IsGround && Input.GetButtonDown("Jump"))
         {
-            if(GameManager.Instance.GameState == GameEventType.PLAYING && IsGround && Input.GetButtonDown("Jump"))
-            {                
-                Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
-                Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
-                ChangeState(PlayerState.JUMPIN);
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
+            {
+                return;
             }
+            
+            Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
+            Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
+            ChangeState(PlayerState.JUMPIN);
         }
+    }
 
     public void Attack()
     {
         if(GameManager.Instance.GameState == GameEventType.PLAYING && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
+            {
+                return;
+            }
+
             ChangeState(PlayerState.ATTACK);
         }
     }
