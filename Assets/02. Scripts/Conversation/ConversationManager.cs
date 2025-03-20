@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using Junyoung;
 
 [System.Serializable]
 public class DialogueInfo
@@ -149,6 +147,8 @@ public class ConversationManager : Singleton<ConversationManager>
             return;
         }
 
+        GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
+
         m_is_talking = true;
         ToggleDialogue(m_is_talking);
 
@@ -174,6 +174,8 @@ public class ConversationManager : Singleton<ConversationManager>
 
             return;
         }
+
+        GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
 
         m_is_talking = true;
         ToggleDialogue(m_is_talking);

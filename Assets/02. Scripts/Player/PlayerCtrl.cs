@@ -119,7 +119,9 @@ public class PlayerCtrl : MonoBehaviour
         DataManager.Instance.Data.Position = transform.position;
 
         if(GameManager.Instance.GameState == GameEventType.PLAYING 
-            && !EquipmentInventory.IsActive && !InventoryMain.IsActive && !StatInventory.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive)
+            && !EquipmentInventory.IsActive && !InventoryMain.IsActive && !StatInventory.IsActive 
+            && !QuestUIManager.IsActive && !SkillManager.IsActive && !ItemShopManager.IsActive
+            && !CraftingManager.IsActive && !ConversationManager.Instance.IsTalking)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
             StateContext.ExecuteUpdate();
@@ -156,7 +158,9 @@ public class PlayerCtrl : MonoBehaviour
     {
         if(GameManager.Instance.GameState == GameEventType.PLAYING && IsGround && Input.GetButtonDown("Jump"))
         {
-            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive || QuestUIManager.IsActive || SkillManager.IsActive)
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
             {
                 return;
             }
@@ -171,7 +175,9 @@ public class PlayerCtrl : MonoBehaviour
     {
         if(GameManager.Instance.GameState == GameEventType.PLAYING && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
-            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive || QuestUIManager.IsActive || SkillManager.IsActive)
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
             {
                 return;
             }

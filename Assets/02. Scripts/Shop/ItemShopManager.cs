@@ -29,6 +29,7 @@ public class ItemShopManager : Singleton<ItemShopManager>
     public static bool IsActive
     {
         get { return m_is_active; }
+        private set { m_is_active = value; }
     }
 
     [Header("상점 루트 오브젝트")]
@@ -99,6 +100,8 @@ public class ItemShopManager : Singleton<ItemShopManager>
 
     public void OpenItemShop(ItemShopSlotInfo[] sell_items, int shop_level)
     {
+        IsActive = true;
+
         foreach(var item in sell_items)
         {
             var slot = Instantiate(m_shop_slot_prefab, Vector3.zero, Quaternion.identity, m_slot_instantiate_transform).GetComponent<ItemShopSlot>();
@@ -118,6 +121,8 @@ public class ItemShopManager : Singleton<ItemShopManager>
 
     public void CloseItemShop()
     {
+        IsActive = false;
+        
         foreach(var slot in m_current_slots)
         {
             Destroy(slot.gameObject);
