@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class EquipmentInventory : InventoryBase
 {
+    private static bool m_is_active = false;
+    public static bool IsActive
+    {
+        get { return m_is_active; }
+        private set { m_is_active = value; }
+    }
+
     private EquipmentEffect m_current_equipment_effect;
 
     public EquipmentEffect CurrentEquipmentEffect
@@ -17,14 +24,16 @@ public class EquipmentInventory : InventoryBase
 
     private void Update()
     {
-        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
             if(Input.GetKeyDown(KeyCode.U))
             {
                 SoundManager.Instance.PlayEffect("Button Click");
                 
-                if(m_inventory_base.activeInHierarchy)
+                if(IsActive)
                 {
+                    IsActive = false;
+
                     m_inventory_base.SetActive(false);
 
                     Cursor.lockState = CursorLockMode.Locked;
@@ -32,7 +41,11 @@ public class EquipmentInventory : InventoryBase
                 }
                 else
                 {
+                    IsActive = true;
+
                     m_inventory_base.SetActive(true);
+                    
+                    GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;

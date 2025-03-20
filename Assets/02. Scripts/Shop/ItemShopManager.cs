@@ -57,10 +57,9 @@ public class ItemShopManager : Singleton<ItemShopManager>
 
 
         m_shop_data_path = Path.Combine(Application.persistentDataPath, "ShopData.json");
-        LoadData();
     }
 
-    private void LoadData()
+    public void LoadData()
     {
         if(File.Exists(m_shop_data_path))
         {

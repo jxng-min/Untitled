@@ -29,7 +29,7 @@ public class ShortcutManager : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
 
             if(Input.GetKeyDown(KeyCode.L))

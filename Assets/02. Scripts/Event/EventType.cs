@@ -5,8 +5,7 @@ namespace Junyoung
         NONE = 0,
         LOADING = 1,
         PLAYING = 2,
-        INTERACTING = 3,
-        SETTING = 4,
-        DEAD = 5
+        SETTING = 3,
+        DEAD = 4
     }
 }
