@@ -72,6 +72,10 @@ public class SoundManager : Singleton<SoundManager>
             AudioSource effect_source = ObjectManager.Instance.GetObject(ObjectType.EffectSource).GetComponent<AudioSource>();
 
             effect_source.volume = SettingManager.Instance.Setting.EffectValue;
+            if(SettingManager.Instance.Setting.EffectActive is false)
+            {
+                effect_source.volume = 0f;
+            }
             effect_source.clip = m_effect_clips[target_index]; 
             effect_source.Play();
 

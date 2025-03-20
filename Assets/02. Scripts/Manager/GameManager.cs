@@ -12,8 +12,12 @@ namespace Junyoung
 
         public GameEventType GameState { get; private set; }
 
-        private void Start()
+        private bool m_can_init = false;
+
+        private new void Awake()
         {
+            base.Awake();
+
             EventBus.Subscribe(GameEventType.NONE, None);
             EventBus.Subscribe(GameEventType.LOADING, Loading);
             EventBus.Publish(GameEventType.NONE);
@@ -21,6 +25,8 @@ namespace Junyoung
         public void None()
         {
             GameState = GameEventType.NONE;
+
+            m_can_init = true;
 
             SettingManager.Instance.Initialize();
             SoundManager.Instance.UpdateBackgroundVolume();
@@ -37,7 +43,18 @@ namespace Junyoung
         {
             GameState = GameEventType.PLAYING;
 
-            m_player_ctrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+            if(m_can_init)
+            {
+                m_can_init = false;
+
+                m_player_ctrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+
+                DataManager.Instance.Initialize();
+            }
+            else
+            {
+
+            }
         }
 
         public void Setting()
