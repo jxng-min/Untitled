@@ -10,7 +10,7 @@ namespace Junyoung
     public class EnemyBossCtrl : EnemyCtrl
     {
         private float m_detect_range = 15f;
-        [Header("���� ü�¹�")]
+        [Header("패널")]
         private GameObject m_canvas;
         [SerializeField] private GameObject m_hp_panel;
         [SerializeField] private Image m_hp_image;
@@ -169,7 +169,7 @@ namespace Junyoung
 
         public void ActiveHpBar()
         {
-            if (Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= EnemyStat.FollowRange && 
+            if (Vector3.Distance(EnemySpawnData.SpawnVector.ToVector3(), Player.transform.position) <= EnemyStat.FollowRange && 
                 !(StateContext.NowState is EnemyDeadState))
             {
                 m_hp_panel.SetActive(true);
@@ -182,7 +182,7 @@ namespace Junyoung
 
         public override void DetectPlayer()
         {
-            if ((Vector3.Distance(EnemySpawnData.SpawnTransform.position, Player.transform.position) <= m_detect_range)
+            if ((Vector3.Distance(EnemySpawnData.SpawnVector.ToVector3(), Player.transform.position) <= m_detect_range)
                 && !(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState))
             {
                 ChangeState(EnemyState.FOUNDPLAYER);
