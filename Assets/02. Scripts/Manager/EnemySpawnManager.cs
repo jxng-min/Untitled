@@ -10,7 +10,7 @@ namespace Junyoung
 
         public int[] m_max_enemy_size = { 15, 10, 1 };
 
-        [Header("Àû ¼ÒÈ¯ À§Ä¡")]
+        [Header("ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡")]
         public Transform[] m_spawn_transforms;
         public Transform m_boss_spawn_transform;
 
@@ -26,11 +26,11 @@ namespace Junyoung
 
         }
 
-        IEnumerator SpawnMangement() // ÇöÀç ¼ÒÈ¯µÇ¾îÀÖ´Â ¸ó
+        IEnumerator SpawnMangement() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½
         {
             while (true)
             {
-                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
+                if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
                 {
                     yield return new WaitForSeconds(15f);
                     foreach (var spawn_pos in m_spawn_transforms)
@@ -61,7 +61,7 @@ namespace Junyoung
         {
             while (true)
             {
-                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
+                if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
                 {
                     if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_transform))
                     {
@@ -82,13 +82,13 @@ namespace Junyoung
 
         private void Update()
         {
-            if( (GameManager.Instance.GameStatus == GameEventType.PLAYING 
-                || GameManager.Instance.GameStatus == GameEventType.DEAD))
+            if( (GameManager.Instance.GameState == GameEventType.PLAYING 
+                || GameManager.Instance.GameState == GameEventType.DEAD))
             {
                 if (m_spawn_coroutine == null)
                 {
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
-                    Debug.Log("Àû ¼ÒÈ¯ ÄÚ·çÆ¾ ½ÃÀÛ");
+                    Debug.Log($"{GameManager.Instance.GameState}");
+                    Debug.Log("ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½");
                     m_spawn_coroutine = StartCoroutine(SpawnMangement());
                     m_boss_coroutine = StartCoroutine(SpawnBossMangement());
                 }
@@ -97,8 +97,8 @@ namespace Junyoung
             {
                 if (m_spawn_coroutine != null)
                 {
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
-                    Debug.Log("Àû ¼ÒÈ¯ ÄÚ·çÆ¾ ÀÏ½Ã Á¤Áö");
+                    Debug.Log($"{GameManager.Instance.GameState}");
+                    Debug.Log("ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Ú·ï¿½Æ¾ ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                     StopCoroutine(m_spawn_coroutine);
                     StopCoroutine(m_boss_coroutine);
 

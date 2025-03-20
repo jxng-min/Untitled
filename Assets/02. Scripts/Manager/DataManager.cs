@@ -14,9 +14,9 @@ public class DataManager : Singleton<DataManager>
     private Stat DefaultStat { get; set; }
     private Stat GrowthStat { get; set; }
 
-    [SerializeField] private InventoryMain m_main_inventory;
-    [SerializeField] private EquipmentInventory m_equipment_inventory;
-    [SerializeField] private ShortcutManager m_quick_inventory;
+    private InventoryMain m_main_inventory;
+    private EquipmentInventory m_equipment_inventory;
+    private ShortcutManager m_quick_inventory;
 
     public PlayerStatusCtrl StatusUI { get; private set; }
 
@@ -28,7 +28,14 @@ public class DataManager : Singleton<DataManager>
         GrowthStat = new Stat(10f, 10f, 5f, 0f, 0.5f);
 
         m_player_data_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-        
+    }
+
+    public void Initialize()
+    {
+        m_main_inventory = GameObject.Find("Inventory Manager").GetComponent<InventoryMain>();
+        m_equipment_inventory = GameObject.Find("Inventory Manager").GetComponent<EquipmentInventory>();
+        m_quick_inventory = GameObject.Find("Inventory Manager").GetComponent<ShortcutManager>();
+
         if(File.Exists(m_player_data_path))
         {
             LoadPlayerData();
@@ -53,10 +60,7 @@ public class DataManager : Singleton<DataManager>
         }
 
         StatusUI = GetComponent<PlayerStatusCtrl>();
-    }
 
-    private void Start()
-    {
         LoadInventory();
     }
 

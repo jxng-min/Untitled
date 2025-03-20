@@ -18,17 +18,6 @@ public class SoundManager : Singleton<SoundManager>
         get { return m_last_background_name; }
     }
 
-    private new void Awake()
-    {
-        base.Awake();
-    }
-
-    private void Start()
-    {
-        m_background_source.volume = SettingManager.Instance.Setting.Backgroundvalue;
-        PlayBGM("Forest Background");
-    }
-
     public void PlayBGM(string background_name)
     {
         StartCoroutine(ChangeBGM(background_name));
@@ -83,6 +72,10 @@ public class SoundManager : Singleton<SoundManager>
             AudioSource effect_source = ObjectManager.Instance.GetObject(ObjectType.EffectSource).GetComponent<AudioSource>();
 
             effect_source.volume = SettingManager.Instance.Setting.EffectValue;
+            if(SettingManager.Instance.Setting.EffectActive is false)
+            {
+                effect_source.volume = 0f;
+            }
             effect_source.clip = m_effect_clips[target_index]; 
             effect_source.Play();
 

@@ -1,9 +1,8 @@
+using Junyoung;
 using UnityEngine;
 
 public class EquipmentInventory : InventoryBase
 {
-    public static bool Active { get; set; } = false;
-
     private EquipmentEffect m_current_equipment_effect;
 
     public EquipmentEffect CurrentEquipmentEffect
@@ -18,13 +17,7 @@ public class EquipmentInventory : InventoryBase
 
     private void Update()
     {
-        if(Active)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
         {
             if(Input.GetKeyDown(KeyCode.U))
             {
@@ -33,7 +26,6 @@ public class EquipmentInventory : InventoryBase
                 if(m_inventory_base.activeInHierarchy)
                 {
                     m_inventory_base.SetActive(false);
-                    Active = false;
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -41,7 +33,6 @@ public class EquipmentInventory : InventoryBase
                 else
                 {
                     m_inventory_base.SetActive(true);
-                    Active = true;
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;

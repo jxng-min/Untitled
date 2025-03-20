@@ -158,7 +158,7 @@ namespace Junyoung
 
         public virtual void FixedUpdate()
         {
-            if (GameManager.Instance.GameStatus != GameEventType.PLAYING && GameManager.Instance.GameStatus != GameEventType.DEAD) return;
+            if (GameManager.Instance.GameState != GameEventType.PLAYING && GameManager.Instance.GameState != GameEventType.DEAD) return;
             
             m_state_name = StateContext.NowState.ToString();
             if (TotalAtkRate >= AttackDelay)

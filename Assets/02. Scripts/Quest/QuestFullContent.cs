@@ -1,3 +1,4 @@
+using Junyoung;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,11 +34,6 @@ public class QuestFullContent : QuestCompactContent
 
     public void BTN_Nav()
     {
-        // if(SceneManager.GetActiveScene().name != m_quest_data.Scene)
-        // {
-        //     return;
-        // }
-
         if(m_quest_data.name == NavigationManager.Instance.NavKeyName)
         {
             NavigationManager.Instance.TryStopNavigation(m_quest_data.name);
@@ -47,11 +43,11 @@ public class QuestFullContent : QuestCompactContent
         switch(QuestManager.Instance.CheckQuestState(m_quest_data.ID))
         {
             case QuestState.CLEAR:
-                NavigationManager.Instance.StartNavigation(m_quest_data.name, GameObject.Find("Player").GetComponent<Transform>().transform, m_quest_data.Source);
+                NavigationManager.Instance.StartNavigation(m_quest_data.name, GameManager.Instance.transform, m_quest_data.Source);
                 break;
             
             case QuestState.ON_GOING:
-                NavigationManager.Instance.StartNavigation(m_quest_data.name, GameObject.Find("Player").GetComponent<Transform>().transform, m_quest_data.Destination);
+                NavigationManager.Instance.StartNavigation(m_quest_data.name, GameManager.Instance.transform, m_quest_data.Destination);
                 break;            
         }
         

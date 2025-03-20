@@ -1,29 +1,24 @@
 using UnityEngine;
 using TMPro;
+using Junyoung;
 
 public class StatInventory : InventoryBase
 {
-    public static bool Active { get; set; } = false;
-
     [Header("Player's Stats")]
     [SerializeField] private TMP_Text m_attack_label;
     [SerializeField] private TMP_Text m_attack_rate_label;
     [SerializeField] private TMP_Text m_defense_label;
 
-    private PlayerCtrl m_player_ctrl;
-
     private new void Awake()
     {
         base.Awake();
-
-        m_player_ctrl = GameObject.Find("Player").GetComponent<PlayerCtrl>();
     }
 
     private void Update()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
         {
-            if(Active)
+            if(GameManager.Instance.GameState == GameEventType.INTERACTING)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -40,7 +35,6 @@ public class StatInventory : InventoryBase
                 if(m_inventory_base.activeInHierarchy)
                 {
                     m_inventory_base.SetActive(false);
-                    Active = false;
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -48,12 +42,11 @@ public class StatInventory : InventoryBase
                 else
                 {
                     m_inventory_base.SetActive(true);
-                    Active = true;
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                 }
             }
-        }        
+        }
     }
-}
+}  

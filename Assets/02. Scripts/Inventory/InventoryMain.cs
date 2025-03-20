@@ -1,3 +1,4 @@
+using Junyoung;
 using TMPro;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class InventoryMain : InventoryBase
 
     private void TryOpenInventory()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
         {
             if(Input.GetKeyDown(KeyCode.I))
             {
