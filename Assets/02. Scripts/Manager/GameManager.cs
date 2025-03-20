@@ -1,15 +1,16 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Junyoung
 {
     public class GameManager : Singleton<GameManager>
     {
         private PlayerCtrl m_player_ctrl;
+        public PlayerCtrl Player
+        {
+            get { return m_player_ctrl; }
+        }
 
-        public GameEventType GameStatus { get; private set; }
+        public GameEventType GameState { get; private set; }
 
         private void Start()
         {
@@ -19,32 +20,35 @@ namespace Junyoung
         }
         public void None()
         {
-            GameStatus = GameEventType.NONE;
+            GameState = GameEventType.NONE;
+
+            SettingManager.Instance.Initialize();
+            SoundManager.Instance.UpdateBackgroundVolume();
+            ObjectManager.Instance.Initialize();
+            NPCDataManager.Instance.Initialize();
         }
 
         public void Loading()
         {
-            GameStatus = GameEventType.LOADING;
+            GameState = GameEventType.LOADING;
         }
 
         public void Playing()
         {
-            GameStatus = GameEventType.PLAYING;
+            GameState = GameEventType.PLAYING;
 
             m_player_ctrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
         }
 
         public void Setting()
         {
-            GameStatus = GameEventType.SETTING;
-
+            GameState = GameEventType.SETTING;
         }
 
         public void Dead()
         {
-            GameStatus = GameEventType.DEAD;
+            GameState = GameEventType.DEAD;
 
         }
-
     }
 }

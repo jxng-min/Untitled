@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Junyoung;
 using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
@@ -38,7 +39,7 @@ public class SkillManager : Singleton<SkillManager>
 
     private void Update()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
         {
             if(Input.GetKeyDown(KeyCode.K))
             {

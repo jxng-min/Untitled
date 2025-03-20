@@ -20,17 +20,18 @@ public class NPCDataManager : Singleton<NPCDataManager>
     private string m_npc_data_path;
     private Dictionary<int, string> m_npc_name_dics;
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
+
         m_npc_data_path = Path.Combine(Application.persistentDataPath, "NPCData.json");
-
         m_npc_name_dics = new Dictionary<int, string>();
-
-        ParsingJson();
     }
 
-    private void ParsingJson()
+    public void Initialize()
     {
+        m_npc_name_dics.Clear();
+        
         if(File.Exists(m_npc_data_path))
         {
             var json_data = File.ReadAllText(m_npc_data_path);

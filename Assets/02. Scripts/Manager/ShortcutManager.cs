@@ -1,9 +1,10 @@
+using Junyoung;
 using UnityEngine;
 
 public class ShortcutManager : MonoBehaviour
 {
-    private static bool m_is_ui_active = true;
-    public static bool IsActive
+    private bool m_is_ui_active = true;
+    public bool IsActive
     {
         get { return m_is_ui_active; }
         set { m_is_ui_active = value; }
@@ -28,7 +29,7 @@ public class ShortcutManager : MonoBehaviour
 
     private void Update()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState <= GameEventType.INTERACTING)
         {
 
             if(Input.GetKeyDown(KeyCode.L))

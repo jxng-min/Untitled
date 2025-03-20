@@ -58,8 +58,7 @@ public class QuestUIManager : Singleton<QuestUIManager>
 
     private void TryOpenQuestUI()
     {
-        if(!SettingManager.IsActive)
-        {
+        // TODO: 퀘스트창 열려있는지 확인
             if(Input.GetKeyDown(KeyCode.P))
             {
                 SoundManager.Instance.PlayEffect("Button Click");
@@ -81,7 +80,6 @@ public class QuestUIManager : Singleton<QuestUIManager>
                     Cursor.visible = true;
                 }
             }
-        }
     }
 
     public void CompleteQuest(QuestData quest_data)

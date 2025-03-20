@@ -16,12 +16,7 @@ public class ObjectManager : Singleton<ObjectManager>
 {
     [SerializeField] private List<PoolInfo> m_pool_info_list;
 
-    private void Start()
-    {
-        Initialize();
-    }
-
-    private void Initialize()
+    public void Initialize()
     {
         foreach(PoolInfo info in m_pool_info_list)
         {

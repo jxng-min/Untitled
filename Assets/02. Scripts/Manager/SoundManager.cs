@@ -18,17 +18,6 @@ public class SoundManager : Singleton<SoundManager>
         get { return m_last_background_name; }
     }
 
-    private new void Awake()
-    {
-        base.Awake();
-    }
-
-    private void Start()
-    {
-        m_background_source.volume = SettingManager.Instance.Setting.Backgroundvalue;
-        PlayBGM("Forest Background");
-    }
-
     public void PlayBGM(string background_name)
     {
         StartCoroutine(ChangeBGM(background_name));
