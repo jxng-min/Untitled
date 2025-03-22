@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Junyoung;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,7 @@ public class LoadingManager : MonoBehaviour
     }
 
     [SerializeField] private CanvasGroup m_canvas_group;
-    [SerializeField] private Image m_progress_bar;
+    [SerializeField] private TMP_Text m_loading_rate_label;
     [SerializeField] private TMP_Text m_tool_tip_label;
     [SerializeField] [TextArea] private string[] m_tool_tips;
 
@@ -55,6 +56,8 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadScene(string scene_name, Action action = null)
     {
+        EventBus.Publish(GameEventType.LOADING);
+
         gameObject.SetActive(true);
         
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -68,7 +71,7 @@ public class LoadingManager : MonoBehaviour
 
     private IEnumerator LoadSceneProcess()
     {
-        m_progress_bar.fillAmount = 0.0f;
+        m_loading_rate_label.text = "0%";
 
         yield return StartCoroutine(Fade(true));
 
@@ -82,14 +85,14 @@ public class LoadingManager : MonoBehaviour
 
             if(op.progress < 0.9f)
             {
-                m_progress_bar.fillAmount = op.progress;
+                m_loading_rate_label.text = (op.progress * 100).ToString("F0") + "%";
             }
             else
             {
                 process += Time.deltaTime;
-                m_progress_bar.fillAmount = Mathf.Lerp(0.9f, 1f, process);
+                m_loading_rate_label.text = (Mathf.Lerp(0.9f, 1f, process) * 100).ToString("F0") + "%";
 
-                if(process > 1f)
+                if(m_loading_rate_label.text == "100%")
                 {
                     op.allowSceneActivation = true;
                     yield break;

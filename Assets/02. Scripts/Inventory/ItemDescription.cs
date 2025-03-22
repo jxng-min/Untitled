@@ -8,9 +8,6 @@ public class ItemDescription : MonoBehaviour
     [SerializeField] private GameObject m_tool_tip_object;
     [SerializeField] private Canvas m_canvas;
 
-    [Header("매니저")]
-    [SerializeField] private ItemDataManager m_item_data_manager;
-
     private TMP_Text m_text_label;
     private RectTransform m_rect_transform;
     private StringBuilder m_string_builder;
@@ -37,11 +34,11 @@ public class ItemDescription : MonoBehaviour
         m_string_builder.Clear();
 
         m_string_builder.Append("<b>");
-        m_string_builder.AppendLine(m_item_data_manager.GetName(id));
+        m_string_builder.AppendLine(ItemDataManager.Instance.GetName(id));
         m_string_builder.Append("</b>");
 
         m_string_builder.AppendLine();
-        m_string_builder.AppendLine(m_item_data_manager.GetDescription(id));
+        m_string_builder.AppendLine(ItemDataManager.Instance.GetDescription(id));
 
         m_text_label.SetText(m_string_builder.ToString());
 

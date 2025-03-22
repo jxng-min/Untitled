@@ -9,6 +9,7 @@ public class CraftingManager : Singleton<CraftingManager>
     public static bool IsActive
     {
         get { return m_is_ui_active; }
+        private set { m_is_ui_active = value; }
     }
 
     [Header("제작소에 상관 없이 전역으로 사용 가능한 레시피 목록")]
@@ -44,7 +45,7 @@ public class CraftingManager : Singleton<CraftingManager>
     {
         base.Awake();
 
-        m_is_ui_active = false;
+        IsActive = false;
         Init();
     } 
 
@@ -65,7 +66,7 @@ public class CraftingManager : Singleton<CraftingManager>
 
     public void TryOpenCraftingUI(CraftingRecipe[] recipes, bool use_global_recipe, string title)
     {
-        if(m_is_ui_active)
+        if(IsActive)
         {
             return;
         }
@@ -100,7 +101,7 @@ public class CraftingManager : Singleton<CraftingManager>
 
         m_ui_name_label.text = title;
         m_current_crafting_count = recipes.Length;
-        m_is_ui_active = true;
+        IsActive = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -116,7 +117,7 @@ public class CraftingManager : Singleton<CraftingManager>
         }
 
         m_crafting_ui_object.SetActive(false);
-        m_is_ui_active = false;
+        IsActive = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -151,7 +152,7 @@ public class CraftingManager : Singleton<CraftingManager>
 
     public void RefreshAllSlots()
     {
-        if(m_is_ui_active is false)
+        if(IsActive is false)
         {
             return;
         }

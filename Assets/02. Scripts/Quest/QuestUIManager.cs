@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Junyoung;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestUIManager : Singleton<QuestUIManager>
 {
-    private static bool m_is_ui_active = false;
+    private static bool m_is_active = false;
     public static bool IsActive
     {
-        get { return m_is_ui_active; }
+        get { return m_is_active; }
+        private set { m_is_active = value; }
     }
 
     [Header("전체 사이즈 퀘스트 UI 오브젝트")]
@@ -43,7 +45,6 @@ public class QuestUIManager : Singleton<QuestUIManager>
     {
         base.Awake();
 
-        m_is_ui_active = false;
 
         foreach(QuestContentData content_data in QuestManager.Instance.QuestContentReader.DataList)
         {
@@ -58,24 +59,28 @@ public class QuestUIManager : Singleton<QuestUIManager>
 
     private void TryOpenQuestUI()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
             if(Input.GetKeyDown(KeyCode.P))
             {
                 SoundManager.Instance.PlayEffect("Button Click");
                 
-                if(m_full_size_quest_ui_object.activeInHierarchy)
+                if(IsActive)
                 {
+                    IsActive = false;
+
                     m_full_size_quest_ui_object.SetActive(false);
-                    m_is_ui_active = false;
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
                 else
                 {
+                    IsActive = true;
+
                     m_full_size_quest_ui_object.SetActive(true);
-                    m_is_ui_active = true;
+
+                    GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;

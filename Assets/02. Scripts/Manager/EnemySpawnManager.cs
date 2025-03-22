@@ -10,6 +10,7 @@ namespace Junyoung
 
         public int[] m_max_enemy_size = { 15, 10, 1 };
 
+
         [Header("적 소환 위치")]
         public SVector3[] m_spawn_vectors;
         public SVector3 m_boss_spawn_vector;
@@ -26,11 +27,12 @@ namespace Junyoung
 
         }
 
+
         IEnumerator SpawnMangement() // 현재 소환되어있는 몬
         {
             while (true)
             {
-                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
+                if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
                 {
                     yield return new WaitForSeconds(15f);
                     foreach (var spawn_pos in m_spawn_vectors)
@@ -61,7 +63,7 @@ namespace Junyoung
         {
             while (true)
             {
-                if (GameManager.Instance.GameStatus == GameEventType.PLAYING || GameManager.Instance.GameStatus == GameEventType.DEAD)
+                if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
                 {
                     if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_vector))
                     {
@@ -82,11 +84,12 @@ namespace Junyoung
 
         private void Update()
         {
-            if( (GameManager.Instance.GameStatus == GameEventType.PLAYING 
-                || GameManager.Instance.GameStatus == GameEventType.DEAD))
+            if( (GameManager.Instance.GameState == GameEventType.PLAYING 
+                || GameManager.Instance.GameState == GameEventType.DEAD))
             {
                 if (m_spawn_coroutine == null)
                 {
+
                     Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
                     Debug.Log("적 소환 코루틴 시작");
                     m_spawn_coroutine = StartCoroutine(SpawnMangement());

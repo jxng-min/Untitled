@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Junyoung;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class ChestDataManager : Singleton<ChestDataManager>
     public static bool IsActive
     {
         get { return m_is_ui_active; }
+        private set { m_is_ui_active = value; }
     }
 
     private string m_chest_data_path;
@@ -59,6 +61,7 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
     public void TryOpenChestUI(int chest_id)
     {
+        IsActive = true;
         m_current_chest = null;
 
         foreach(var chest in m_chest_list)
@@ -152,6 +155,7 @@ public class ChestDataManager : Singleton<ChestDataManager>
 
     public void BTN_CloseUI()
     {
+        IsActive = false;
         if(m_chest_ui_object.activeInHierarchy && m_is_ui_active && m_current_chest is not null)
         {
             for(int i = 0; i < m_chest_slots.Length; i++)

@@ -118,24 +118,18 @@ public class PlayerCtrl : MonoBehaviour
     {
         DataManager.Instance.Data.Position = transform.position;
 
-        if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
-                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive && !SettingManager.IsActive)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING 
+            && !EquipmentInventory.IsActive && !InventoryMain.IsActive && !StatInventory.IsActive 
+            && !QuestUIManager.IsActive && !SkillManager.IsActive && !ItemShopManager.IsActive
+            && !CraftingManager.IsActive && !ConversationManager.Instance.IsTalking)
         {
             Direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+            StateContext.ExecuteUpdate();
         }
         
         CheckGround();
         CheckFalling();
         CheckBlocking();
-
-        if(!InventoryMain.Active && !EquipmentInventory.Active && !StatInventory.Active 
-                && !ConversationManager.Instance.IsTalking && !ItemShopManager.IsActive && !CraftingManager.IsActive 
-                && !ChestDataManager.IsActive && !QuestUIManager.IsActive && !SkillManager.IsActive && !SettingManager.IsActive)
-        {
-            StateContext.ExecuteUpdate();
-        }
-        
     }
 
     public void UpdateAttackSpeed()
@@ -161,25 +155,29 @@ public class PlayerCtrl : MonoBehaviour
     }
 
     public void Jump(float power)
+    {
+        if(GameManager.Instance.GameState == GameEventType.PLAYING && IsGround && Input.GetButtonDown("Jump"))
         {
-            if(IsGround && Input.GetButtonDown("Jump"))
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
             {
-                if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
-                {
-                    return;
-                }
-                
-                Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
-                Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
-                ChangeState(PlayerState.JUMPIN);
+                return;
             }
+            
+            Rigidbody.linearVelocity = new Vector3(Rigidbody.linearVelocity.x, 0, Rigidbody.linearVelocity.z);
+            Rigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
+            ChangeState(PlayerState.JUMPIN);
         }
+    }
 
     public void Attack()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING && Input.GetKeyDown(KeyCode.Mouse0) && IsGround)
         {
-            if(InventoryMain.Active || EquipmentInventory.Active || StatInventory.Active || ConversationManager.Instance.IsTalking)
+            if(EquipmentInventory.IsActive || InventoryMain.IsActive || StatInventory.IsActive 
+            || QuestUIManager.IsActive || SkillManager.IsActive || ItemShopManager.IsActive || CraftingManager.IsActive
+            || ConversationManager.Instance.IsTalking)
             {
                 return;
             }

@@ -1,9 +1,15 @@
+using Junyoung;
 using TMPro;
 using UnityEngine;
 
 public class InventoryMain : InventoryBase
 {
-    public static bool Active { get; set; } = false;
+    private static bool m_is_active = false;
+    public static bool IsActive
+    {
+        get { return m_is_active; }
+        private set { m_is_active = value; }
+    }
 
     [SerializeField] private TMP_Text m_money_label;
 
@@ -13,29 +19,35 @@ public class InventoryMain : InventoryBase
     }
 
     private void Update()
-    {
-        if(Active)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        
+    {  
         TryOpenInventory();
     }
 
     private void TryOpenInventory()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
             if(Input.GetKeyDown(KeyCode.I))
             {
-                if(!Active)
+                if(!IsActive)
                 {
+                    IsActive = true;
+
+                    GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
+
                     OpenInventory();
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                 }
                 else
                 {
+                    IsActive = false;
+
                     CloseInventory();
+
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
                 }
             }
         }
@@ -44,7 +56,6 @@ public class InventoryMain : InventoryBase
     private void OpenInventory()
     {
         m_inventory_base.SetActive(true);
-        Active = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -55,7 +66,6 @@ public class InventoryMain : InventoryBase
     private void CloseInventory()
     {
         m_inventory_base.SetActive(false);
-        Active = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

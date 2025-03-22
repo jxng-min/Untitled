@@ -1,33 +1,32 @@
 using UnityEngine;
 using TMPro;
+using Junyoung;
 
 public class StatInventory : InventoryBase
 {
-    public static bool Active { get; set; } = false;
+    private static bool m_is_active = false;
+    public static bool IsActive
+    {
+        get { return m_is_active; }
+        private set { m_is_active = value; }
+    }
 
     [Header("Player's Stats")]
     [SerializeField] private TMP_Text m_attack_label;
     [SerializeField] private TMP_Text m_attack_rate_label;
     [SerializeField] private TMP_Text m_defense_label;
 
-    private PlayerCtrl m_player_ctrl;
-
     private new void Awake()
     {
         base.Awake();
-
-        m_player_ctrl = GameObject.Find("Player").GetComponent<PlayerCtrl>();
     }
 
     private void Update()
     {
-        if(!SettingManager.IsActive)
+        if(GameManager.Instance.GameState == GameEventType.PLAYING)
         {
-            if(Active)
+            if(IsActive)
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                
                 m_attack_label.text = DataManager.Instance.Data.Stat.ATK.ToString();
                 m_attack_rate_label.text = DataManager.Instance.Data.Stat.Rate.ToString();
                 m_defense_label.text = DataManager.Instance.Data.Stat.DEF.ToString();
@@ -37,23 +36,27 @@ public class StatInventory : InventoryBase
             {
                 SoundManager.Instance.PlayEffect("Button Click");
                 
-                if(m_inventory_base.activeInHierarchy)
+                if(IsActive)
                 {
+                    IsActive = false;
+
                     m_inventory_base.SetActive(false);
-                    Active = false;
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
                 else
                 {
+                    IsActive = true;
+
+                    GameManager.Instance.Player.ChangeState(PlayerState.IDLE);
+
                     m_inventory_base.SetActive(true);
-                    Active = true;
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                 }
             }
-        }        
+        }
     }
-}
+}  
