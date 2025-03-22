@@ -6,8 +6,8 @@ namespace Junyoung
     public class EnemySpawnData : ScriptableObject
     {
         [SerializeField]
-        private Transform m_spawn_transform;
-        public Transform SpawnTransform { get { return m_spawn_transform; } set { m_spawn_transform = value; } }
+        private SVector3 m_spawn_vector;
+        public SVector3 SpawnVector { get { return m_spawn_vector; } set { m_spawn_vector = value; } }
 
         [SerializeField]
         private EnemyType m_enemy_type;

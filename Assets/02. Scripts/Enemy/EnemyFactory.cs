@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Pool;
 
@@ -22,10 +22,15 @@ namespace Junyoung
         private ObjectPool<EnemyBossCtrl> m_boss_pools;
 
         private EnemySpawnManager m_enemy_spawn_manager;
-        
+
+        private GameObject m_global_object;
+
+
         private void Awake()
         {
             m_enemy_spawn_manager = GetComponent<EnemySpawnManager>();
+
+            m_global_object = GameObject.Find("[Global]");
 
             for (int i =0; i< m_enemy_prefab.Count; i++)
             {
@@ -58,7 +63,7 @@ namespace Junyoung
             }
         }
 
-        public void SpawnEnemy(EnemyType type, Transform spawn_pos)
+        public void SpawnEnemy(EnemyType type, SVector3 spawn_pos)
         {
             EnemyCtrl new_enemy = null;
             switch (type)
@@ -85,8 +90,9 @@ namespace Junyoung
             }
 
             new_enemy.OriginEnemyStat = m_enemy_stat_list[(int)type];
-            new_enemy.Agent.Warp(spawn_pos.position);
-            new_enemy.EnemySpawnData.SpawnTransform = spawn_pos;
+            new_enemy.transform.SetParent(m_global_object.transform);
+            new_enemy.Agent.Warp(spawn_pos.ToVector3());
+            new_enemy.EnemySpawnData.SpawnVector = new SVector3 (spawn_pos.ToVector3());
             new_enemy.EnemySpawnData.EnemyType = type ;
 
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
@@ -105,7 +111,7 @@ namespace Junyoung
         public void OnReturnEnemy(EnemyCtrl enemy)
         {
             enemy.gameObject.SetActive(false);
-            m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnTransform][enemy.EnemySpawnData.EnemyType]--;
+            m_enemy_spawn_manager.m_active_enemy_counts[enemy.EnemySpawnData.SpawnVector][enemy.EnemySpawnData.EnemyType]--;
         }
 
         private void OnDestoryEnemy(EnemyCtrl enemy)
