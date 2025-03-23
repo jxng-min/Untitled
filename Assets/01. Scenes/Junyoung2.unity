@@ -386,9 +386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e738b3a08a96d8f87b2f3e89548170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_main_inventory: {fileID: 826860989}
-  m_equipment_inventory: {fileID: 826860988}
-  m_quick_inventory: {fileID: 826860993}
 --- !u!4 &4079976
 Transform:
   m_ObjectHideFlags: 0
@@ -5021,7 +5018,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: a505a6b158eb9b841b1c03294aa878ab, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 013aa415a32fa8740a9ad6443e9572df, type: 2}
   m_EnableTreeColliders: 0
 --- !u!218 &149868349
 Terrain:
@@ -5032,7 +5029,7 @@ Terrain:
   m_GameObject: {fileID: 149868347}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: a505a6b158eb9b841b1c03294aa878ab, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 013aa415a32fa8740a9ad6443e9572df, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -7922,7 +7919,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!114 &244084823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29114,7 +29110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!1 &842846050
 GameObject:
   m_ObjectHideFlags: 0
@@ -46479,7 +46474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!1001 &1320470066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51333,23 +51327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae635c37a5d08fe1f8d0624a0ac6a934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_setting_ui_object: {fileID: 2022822615}
-  m_canvas: {fileID: 2135555521}
-  m_sound_panel_toggle: {fileID: 2127868802}
-  m_sound_panel: {fileID: 2117169571}
-  m_game_panel_toggle: {fileID: 1555267063}
-  m_game_panel: {fileID: 1775014461}
-  m_background_sound_toggle: {fileID: 1958518003}
-  m_background_sound_slider: {fileID: 695342828}
-  m_effect_sound_toggle: {fileID: 1685650422}
-  m_effect_sound_slider: {fileID: 285050938}
-  m_camera_shaker: {fileID: 433933188}
-  m_camera_shaker_toggle: {fileID: 610450739}
-  m_shader_camera: {fileID: 433933187}
-  m_shader_toggle: {fileID: 1172764126}
-  m_resolution_drop_down: {fileID: 2133086093}
-  m_go_to_title_button: {fileID: 698886750}
-  m_game_exit_button: {fileID: 1477600467}
 --- !u!4 &1524592711
 Transform:
   m_ObjectHideFlags: 0
@@ -58556,7 +58533,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!1 &1755721829
 GameObject:
   m_ObjectHideFlags: 0
@@ -62494,7 +62470,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!114 &1876002133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63002,7 +62977,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!4 &1895566620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486230, guid: aa9fe96409fc3ed45af918569d1910a1, type: 3}
@@ -65586,7 +65560,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tool_tip_object: {fileID: 584361907}
   m_canvas: {fileID: 2135555524}
-  m_item_data_manager: {fileID: 181229060}
 --- !u!4 &1972002330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 828319914620344979, guid: 29751d957b5110c4b986d987ec3f7c67, type: 3}

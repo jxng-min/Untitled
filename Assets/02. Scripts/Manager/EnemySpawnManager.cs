@@ -90,7 +90,6 @@ namespace Junyoung
                 if (m_spawn_coroutine == null)
                 {
 
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
                     Debug.Log("적 소환 코루틴 시작");
                     m_spawn_coroutine = StartCoroutine(SpawnMangement());
                     m_boss_coroutine = StartCoroutine(SpawnBossMangement());
@@ -100,7 +99,6 @@ namespace Junyoung
             {
                 if (m_spawn_coroutine != null)
                 {
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
                     Debug.Log("적 소환 코루틴 일시 정지");
                     StopCoroutine(m_spawn_coroutine);
                     StopCoroutine(m_boss_coroutine);

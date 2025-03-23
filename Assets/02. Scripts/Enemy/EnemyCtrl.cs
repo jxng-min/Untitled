@@ -11,16 +11,16 @@ namespace Junyoung
     public class EnemyCtrl : MonoBehaviour
     {
         //Enemt State
-        protected IEnemyState<EnemyCtrl> m_enemy_idle_state;
-        IEnemyState<EnemyCtrl> m_enemy_patrol_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_back_state;
-        IEnemyState<EnemyCtrl> m_enemy_found_player_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_follow_state;
-        IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
-        IEnemyState<EnemyCtrl> m_enemy_dead_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_ready_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_attack_state;
-        private IEnemyState<EnemyCtrl> m_enemy_stun_state;
+        public IEnemyState<EnemyCtrl> m_enemy_idle_state;
+        public IEnemyState<EnemyCtrl> m_enemy_patrol_state;
+        public IEnemyState<EnemyCtrl> m_enemy_back_state;
+        public IEnemyState<EnemyCtrl> m_enemy_found_player_state;
+        public IEnemyState<EnemyCtrl> m_enemy_follow_state;
+        public IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
+        public IEnemyState<EnemyCtrl> m_enemy_dead_state;
+        public IEnemyState<EnemyCtrl> m_enemy_ready_state;
+        public IEnemyState<EnemyCtrl> m_enemy_attack_state;
+        public IEnemyState<EnemyCtrl> m_enemy_stun_state;
 
         public EnemyStateContext StateContext { get; private set; }
 
