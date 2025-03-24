@@ -7,13 +7,12 @@ namespace Junyoung
 {
     public class EnemySaveLoadManager : MonoBehaviour
     {
-        //public List<GameObject> m_playing_enemies;
         private string m_save_path;
         private GameObject m_global_object;
 
         private void Awake()
         {
-            m_save_path = Application.persistentDataPath + "/EnemySaveData";
+            m_save_path = Application.persistentDataPath + "/EnemySaveData.json";
             m_global_object = GameObject.Find("[Global]");
         }
 
