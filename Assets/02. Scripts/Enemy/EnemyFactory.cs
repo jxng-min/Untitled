@@ -63,7 +63,7 @@ namespace Junyoung
             }
         }
 
-        public void SpawnEnemy(EnemyType type, SVector3 spawn_pos)
+        public void SpawnEnemy(EnemyType type, Vector3 spawn_pos)
         {
             EnemyCtrl new_enemy = null;
             switch (type)
@@ -91,12 +91,41 @@ namespace Junyoung
 
             new_enemy.OriginEnemyStat = m_enemy_stat_list[(int)type];
             new_enemy.transform.SetParent(m_global_object.transform);
-            new_enemy.Agent.Warp(spawn_pos.ToVector3());
-            new_enemy.EnemySpawnData.SpawnVector = new SVector3 (spawn_pos.ToVector3());
+            new_enemy.Agent.Warp(spawn_pos);
+            new_enemy.EnemySpawnData.SpawnVector = spawn_pos;
             new_enemy.EnemySpawnData.EnemyType = type ;
 
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
-        } 
+        }
+
+        public void SpawnEnemy(SVector3 vector,SQuaternion quaternion, EnemyStat stat, EnemySpawnData spawn_data, EnemyState state)
+        {
+            EnemyCtrl new_enemy = null;
+            switch (spawn_data.EnemyType)
+            {
+                case EnemyType.Bow:
+                    {
+                        new_enemy = m_bow_pools.Get();
+                        (new_enemy as EnemyBowCtrl).SetEnemyPool(m_bow_pools);
+                    }
+                    break;
+                case EnemyType.Boss:
+                    {
+                        new_enemy = m_boss_pools.Get();
+                        (new_enemy as EnemyBossCtrl).SetEnemyPool(m_boss_pools);
+                    }
+                    break;
+                case EnemyType.Axe:
+                default:
+                    new_enemy = m_axe_pools.Get();
+                    new_enemy.SetEnemyPool(m_axe_pools);
+                    break;
+            }
+            new_enemy.LoadInit(vector, quaternion, m_enemy_stat_list[(int)spawn_data.EnemyType],
+                stat, spawn_data, state, m_global_object);
+            Debug.Log($"소환 백터 Vector3 : {spawn_data.SpawnVector} ");
+            m_enemy_spawn_manager.m_active_enemy_counts[spawn_data.SpawnVector][spawn_data.EnemyType]++;
+        }
 
         private T CreateEnemy<T>(EnemyType type) where T : EnemyCtrl
         {

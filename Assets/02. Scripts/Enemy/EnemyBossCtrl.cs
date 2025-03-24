@@ -169,7 +169,7 @@ namespace Junyoung
 
         public void ActiveHpBar()
         {
-            if (Vector3.Distance(EnemySpawnData.SpawnVector.ToVector3(), Player.transform.position) <= EnemyStat.FollowRange && 
+            if (Vector3.Distance(EnemySpawnData.SpawnVector, Player.transform.position) <= EnemyStat.FollowRange && 
                 !(StateContext.NowState is EnemyDeadState))
             {
                 m_hp_panel.SetActive(true);
@@ -182,7 +182,7 @@ namespace Junyoung
 
         public override void DetectPlayer()
         {
-            if ((Vector3.Distance(EnemySpawnData.SpawnVector.ToVector3(), Player.transform.position) <= m_detect_range)
+            if ((Vector3.Distance(EnemySpawnData.SpawnVector, Player.transform.position) <= m_detect_range)
                 && !(Player.GetComponent<PlayerCtrl>().StateContext.Current is PlayerDeadState))
             {
                 ChangeState(EnemyState.FOUNDPLAYER);

@@ -8,11 +8,11 @@ namespace Junyoung
         public SVector3 m_position;
         public SQuaternion m_rotation;
 
-        public EnemyStat m_stat;
-        public EnemySpawnData m_spawn_data;
+        public SEnemyStat m_stat;
+        public SEnemySpawnData m_spawn_data;
         public EnemyState m_enemy_state;
 
-        public EnemySaveData(SVector3 position, SQuaternion rotation, EnemyStat stat, EnemySpawnData spawn_data, EnemyState enemy_state)
+        public EnemySaveData(SVector3 position, SQuaternion rotation, SEnemyStat stat, SEnemySpawnData spawn_data, EnemyState enemy_state)
         {
             m_position = position;
             m_rotation = rotation;

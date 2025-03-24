@@ -7,7 +7,7 @@ namespace Junyoung
 {
     public class EnemySaveLoadManager : MonoBehaviour
     {
-        public List<GameObject> m_playing_enemies;
+        //public List<GameObject> m_playing_enemies;
         private string m_save_path;
         private GameObject m_global_object;
 
@@ -29,16 +29,15 @@ namespace Junyoung
                 EnemySaveData data = new EnemySaveData(
                     new SVector3(t.gameObject.transform.position),
                     new SQuaternion(t.gameObject.transform.rotation),
-                    t.gameObject.GetComponent<EnemyCtrl>().EnemyStat,
-                    t.gameObject.GetComponent<EnemyCtrl>().EnemySpawnData,
+                    new SEnemyStat(t.gameObject.GetComponent<EnemyCtrl>().EnemyStat),
+                    new SEnemySpawnData(t.gameObject.GetComponent<EnemyCtrl>().EnemySpawnData),
                     t.gameObject.GetComponent<EnemyCtrl>().StateContext.NowStateEnum);
-                
                 save_data_list.Add(data);
             }
 
             string json = JsonUtility.ToJson(new SWrapper<EnemySaveData>(save_data_list), true);
             File.WriteAllText(m_save_path, json);
-
+            Debug.Log(json);
         }
 
         public List<EnemySaveData> LoadEnemies()

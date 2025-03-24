@@ -84,6 +84,19 @@ namespace Junyoung
             ChangeState(EnemyState.IDLE);
         }
 
+        public void LoadInit(SVector3 vector, SQuaternion quaternion, EnemyStat origin_stat,
+            EnemyStat stat, EnemySpawnData spawn_data, EnemyState state, GameObject parent)
+        {
+            OriginEnemyStat = origin_stat;
+            transform.SetParent(parent.transform);
+            Agent.Warp(vector.ToVector3());
+            transform.rotation = quaternion.ToQuaternion();
+            EnemyStat = stat;
+            EnemySpawnData = spawn_data;
+            ChangeState(state);
+            Debug.Log("로드 데이터로 초기화 완료");
+        }
+
         public virtual void Awake()
         {
             m_enemy_idle_state = gameObject.AddComponent<EnemyIdleState>();
