@@ -7,45 +7,63 @@ namespace Junyoung
     public class EnemySpawnManager : MonoBehaviour
     {
         private EnemyFactory m_enemy_factory;
+        private EnemySaveLoadManager m_save_load_manager;
 
         public int[] m_max_enemy_size = { 15, 10, 1 };
 
 
         [Header("적 소환 위치")]
-        public SVector3[] m_spawn_vectors;
-        public SVector3 m_boss_spawn_vector;
+        public Vector3[] m_spawn_vectors;
+        public Vector3 m_boss_spawn_vector;
 
-        public Dictionary<SVector3, Dictionary<EnemyType, int>> m_active_enemy_counts = new Dictionary<SVector3, Dictionary<EnemyType, int>>();
+        public Dictionary<Vector3, Dictionary<EnemyType, int>> m_active_enemy_counts = new Dictionary<Vector3, Dictionary<EnemyType, int>>();
 
         private Dictionary<EnemyType, int> m_max_enemy_by_type = new Dictionary<EnemyType, int> { { EnemyType.Axe, 2 },{ EnemyType.Bow ,1},{ EnemyType.Boss, 0 } };
 
         Coroutine m_spawn_coroutine;
         Coroutine m_boss_coroutine;
+
+        private void Awake()
+        {
+            //m_active_enemy_counts 딕셔너리 초기화
+            foreach (var spawn_pos in m_spawn_vectors)
+            {
+                if (!m_active_enemy_counts.ContainsKey(spawn_pos))
+                {
+                    m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int>();
+
+                    foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                    {
+                        m_active_enemy_counts[spawn_pos][type] = 0;
+                    }
+                }
+            }
+            if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_vector))
+            {
+                m_active_enemy_counts[m_boss_spawn_vector] = new Dictionary<EnemyType, int>();
+
+                m_active_enemy_counts[m_boss_spawn_vector][EnemyType.Boss] = 0;
+            }
+        }
+
         void Start()
         {
             m_enemy_factory = GetComponent<EnemyFactory>();
+            m_save_load_manager = GameObject.Find("Eenemy Save Load Manager").GetComponent<EnemySaveLoadManager>();
 
+            LoadEnemies();
         }
 
 
-        IEnumerator SpawnMangement() // 현재 소환되어있는 몬
+        IEnumerator SpawnMangement() // 몬스터 수를 체크후 소환하는 코루틴
         {
-            while (true)
+            while (true) // 체크
             {
                 if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
-                {
-                    yield return new WaitForSeconds(15f);
+                {                 
                     foreach (var spawn_pos in m_spawn_vectors)
                     {
-                        if (!m_active_enemy_counts.ContainsKey(spawn_pos))
-                        {
-                            m_active_enemy_counts[spawn_pos] = new Dictionary<EnemyType, int>();
-
-                            foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
-                            {
-                                m_active_enemy_counts[spawn_pos][type] = 0;
-                            }
-                        }
+                        yield return new WaitForSeconds(15f);
                         foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
                         {
                             if (m_active_enemy_counts[spawn_pos][type] < m_max_enemy_by_type[type])
@@ -65,13 +83,6 @@ namespace Junyoung
             {
                 if (GameManager.Instance.GameState == GameEventType.PLAYING || GameManager.Instance.GameState == GameEventType.DEAD)
                 {
-                    if (!m_active_enemy_counts.ContainsKey(m_boss_spawn_vector))
-                    {
-                        m_active_enemy_counts[m_boss_spawn_vector] = new Dictionary<EnemyType, int>();
-
-                        m_active_enemy_counts[m_boss_spawn_vector][EnemyType.Boss] = 0;
-
-                    }
                     yield return new WaitForSeconds(10f);
                     if (m_active_enemy_counts[m_boss_spawn_vector][EnemyType.Boss] < 1)
                     {
@@ -79,6 +90,17 @@ namespace Junyoung
                     }
                 }
                 yield return null;
+            }
+        }
+
+        public void LoadEnemies()
+        {
+            List<EnemySaveData> data_list = m_save_load_manager.LoadEnemies();
+            if (data_list == null) return;
+
+            foreach(EnemySaveData data in data_list)
+            {
+                m_enemy_factory.SpawnEnemy(data.m_position, data.m_rotation, data.m_stat.ToEnemyStat(), data.m_spawn_data.ToEnemySpawnData(), data.m_enemy_state);
             }
         }
 
@@ -90,7 +112,6 @@ namespace Junyoung
                 if (m_spawn_coroutine == null)
                 {
 
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
                     Debug.Log("적 소환 코루틴 시작");
                     m_spawn_coroutine = StartCoroutine(SpawnMangement());
                     m_boss_coroutine = StartCoroutine(SpawnBossMangement());
@@ -100,7 +121,6 @@ namespace Junyoung
             {
                 if (m_spawn_coroutine != null)
                 {
-                    Debug.Log($"{GameManager.Instance.GameStatus.ToString()}");
                     Debug.Log("적 소환 코루틴 일시 정지");
                     StopCoroutine(m_spawn_coroutine);
                     StopCoroutine(m_boss_coroutine);

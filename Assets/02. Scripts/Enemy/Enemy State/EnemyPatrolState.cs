@@ -19,7 +19,7 @@ namespace Junyoung
                 m_agent = m_enemy_ctrl.Agent;
             }
             m_agent.stoppingDistance = 1f;
-            Vector3 pos = RandomPos(m_enemy_ctrl.EnemySpawnData.SpawnVector.ToVector3(), m_enemy_ctrl.PatrolRange); // ���� ���� ������ ��ġ ����
+            Vector3 pos = RandomPos(m_enemy_ctrl.EnemySpawnData.SpawnVector, m_enemy_ctrl.PatrolRange); // ���� ���� ������ ��ġ ����
             m_agent.SetDestination(pos);
             m_enemy_ctrl.Animator.SetBool("isPatrol", true);
         }
@@ -60,7 +60,7 @@ namespace Junyoung
             if (m_enemy_ctrl == null) return;
             
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.EnemySpawnData.SpawnVector.ToVector3(), m_enemy_ctrl.PatrolRange);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.EnemySpawnData.SpawnVector, m_enemy_ctrl.PatrolRange);
         }
 
 

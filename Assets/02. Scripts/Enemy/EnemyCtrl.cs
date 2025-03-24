@@ -11,16 +11,16 @@ namespace Junyoung
     public class EnemyCtrl : MonoBehaviour
     {
         //Enemt State
-        protected IEnemyState<EnemyCtrl> m_enemy_idle_state;
-        IEnemyState<EnemyCtrl> m_enemy_patrol_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_back_state;
-        IEnemyState<EnemyCtrl> m_enemy_found_player_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_follow_state;
-        IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
-        IEnemyState<EnemyCtrl> m_enemy_dead_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_ready_state;
-        protected IEnemyState<EnemyCtrl> m_enemy_attack_state;
-        private IEnemyState<EnemyCtrl> m_enemy_stun_state;
+        public IEnemyState<EnemyCtrl> m_enemy_idle_state;
+        public IEnemyState<EnemyCtrl> m_enemy_patrol_state;
+        public IEnemyState<EnemyCtrl> m_enemy_back_state;
+        public IEnemyState<EnemyCtrl> m_enemy_found_player_state;
+        public IEnemyState<EnemyCtrl> m_enemy_follow_state;
+        public IEnemyState<EnemyCtrl> m_enemy_get_damage_state;
+        public IEnemyState<EnemyCtrl> m_enemy_dead_state;
+        public IEnemyState<EnemyCtrl> m_enemy_ready_state;
+        public IEnemyState<EnemyCtrl> m_enemy_attack_state;
+        public IEnemyState<EnemyCtrl> m_enemy_stun_state;
 
         public EnemyStateContext StateContext { get; private set; }
 
@@ -57,6 +57,7 @@ namespace Junyoung
         public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����
         public bool IsHitting { get; set; } = false;                                             
         public bool IsDead { get; set; }  = false;
+        public bool IsAlreadyDead { get; set; } = false;
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
@@ -81,7 +82,24 @@ namespace Junyoung
             CanAtk = true;
             IsHit = false;
             IsDead = false;
+            IsAlreadyDead = false;
             ChangeState(EnemyState.IDLE);
+        }
+
+        public void LoadInit(SVector3 vector, SQuaternion quaternion, EnemyStat origin_stat,
+            EnemyStat stat, EnemySpawnData spawn_data, EnemyState state, GameObject parent)
+        {
+            OriginEnemyStat = origin_stat;
+            transform.SetParent(parent.transform);
+            Agent.Warp(vector.ToVector3());
+            transform.rotation = quaternion.ToQuaternion();
+            EnemyStat = stat;
+            EnemySpawnData = spawn_data;
+            if (state == EnemyState.DEAD)
+            {
+                IsAlreadyDead = true;
+            }
+            ChangeState(state);          
         }
 
         public virtual void Awake()

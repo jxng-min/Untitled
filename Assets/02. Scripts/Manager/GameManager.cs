@@ -14,6 +14,8 @@ namespace Junyoung
 
         private bool m_can_init = false;
 
+        private EnemySaveLoadManager m_enemy_save_load_manager;
+
         private new void Awake()
         {
             base.Awake();
@@ -60,6 +62,13 @@ namespace Junyoung
         public void Setting()
         {
             GameState = GameEventType.SETTING;
+
+            if(m_enemy_save_load_manager == null)
+            {
+                m_enemy_save_load_manager = GameObject.Find("Enemy Save Load Manager").GetComponent<EnemySaveLoadManager>();
+            }
+
+            m_enemy_save_load_manager.SaveEnemies();
 
             Player.ChangeState(PlayerState.IDLE);
         }

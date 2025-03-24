@@ -33,7 +33,7 @@ namespace Junyoung
 
         public virtual void DistanceCheck()
         {
-            if (Vector3.Distance(m_enemy_ctrl.EnemySpawnData.SpawnVector.ToVector3(), m_enemy_ctrl.Player.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
+            if (Vector3.Distance(m_enemy_ctrl.EnemySpawnData.SpawnVector, m_enemy_ctrl.Player.transform.position) <= m_enemy_ctrl.EnemyStat.FollowRange)
             {
                 m_agent.SetDestination(m_player.transform.position);
             }
@@ -54,7 +54,7 @@ namespace Junyoung
         {
             if (m_enemy_ctrl == null) return;
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(m_enemy_ctrl.EnemySpawnData.SpawnVector.ToVector3(), m_enemy_ctrl.EnemyStat.FollowRange);
+            Gizmos.DrawWireSphere(m_enemy_ctrl.EnemySpawnData.SpawnVector, m_enemy_ctrl.EnemyStat.FollowRange);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Junyoung
                 m_enemy_ctrl = sender;
                 m_agent = m_enemy_ctrl.Agent;
             }
-            m_agent.SetDestination(m_enemy_ctrl.EnemySpawnData.SpawnVector.ToVector3());
+            m_agent.SetDestination(m_enemy_ctrl.EnemySpawnData.SpawnVector);
             m_enemy_ctrl.Animator.SetBool("isBack", true);
             m_agent.speed *= 1.4f; // 복귀시 이동속도 증가
         }
