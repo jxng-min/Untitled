@@ -57,6 +57,7 @@ namespace Junyoung
         public bool IsHit { get; set; } = false;// ������ ���� �ߴ��� ����
         public bool IsHitting { get; set; } = false;                                             
         public bool IsDead { get; set; }  = false;
+        public bool IsAlreadyDead { get; set; } = false;
         public float TotalAtkRate { get; set; } = 0; // ���� �ִϸ��̼� ��� �ð� + ���ݰ� ��� �ð�
         public float AttackDelay { get; set; } = 0f; // TotalAtkRate���� �����ϸ� CanAtk�� Ȱ��ȭ ��Ű�� ��
 
@@ -81,6 +82,7 @@ namespace Junyoung
             CanAtk = true;
             IsHit = false;
             IsDead = false;
+            IsAlreadyDead = false;
             ChangeState(EnemyState.IDLE);
         }
 
@@ -93,8 +95,11 @@ namespace Junyoung
             transform.rotation = quaternion.ToQuaternion();
             EnemyStat = stat;
             EnemySpawnData = spawn_data;
-            ChangeState(state);
-            Debug.Log("로드 데이터로 초기화 완료");
+            if (state == EnemyState.DEAD)
+            {
+                IsAlreadyDead = true;
+            }
+            ChangeState(state);          
         }
 
         public virtual void Awake()

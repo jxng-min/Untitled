@@ -98,7 +98,7 @@ namespace Junyoung
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_pos][type]++;
         }
 
-        public void SpawnEnemy(SVector3 vector,SQuaternion quaternion, EnemyStat stat, EnemySpawnData spawn_data, EnemyState state)
+        public void SpawnEnemy(SVector3 vector, SQuaternion quaternion, EnemyStat stat, EnemySpawnData spawn_data, EnemyState state)
         {
             EnemyCtrl new_enemy = null;
             switch (spawn_data.EnemyType)
@@ -123,7 +123,7 @@ namespace Junyoung
             }
             new_enemy.LoadInit(vector, quaternion, m_enemy_stat_list[(int)spawn_data.EnemyType],
                 stat, spawn_data, state, m_global_object);
-            Debug.Log($"소환 백터 Vector3 : {spawn_data.SpawnVector} ");
+
             m_enemy_spawn_manager.m_active_enemy_counts[spawn_data.SpawnVector][spawn_data.EnemyType]++;
         }
 

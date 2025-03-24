@@ -25,6 +25,11 @@ public class DropItemManager : MonoBehaviour
         }
     }
 
+    public void InitItemBag(List<ItemObject> bag)
+    {
+        bag.Clear();
+    }
+
     public GameObject DropRandomItem(List<ItemObject> bag)
     {
         int rand = Random.Range(0, 101);

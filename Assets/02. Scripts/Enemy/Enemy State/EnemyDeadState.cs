@@ -11,10 +11,15 @@ namespace Junyoung
             {
                 m_enemy_ctrl = sender;
             }
-            if (m_enemy_ctrl.IsDead) return;
-            m_enemy_ctrl.IsDead = true;
 
             m_enemy_ctrl.Animator.SetTrigger("Dead");
+
+            if (m_enemy_ctrl.IsAlreadyDead)
+            {
+                Invoke("Destroy", 4f);
+                return;          
+            }
+            m_enemy_ctrl.IsDead = true;
 
             DropItem();
 
@@ -33,6 +38,7 @@ namespace Junyoung
 
         private void DropItem()
         {
+            Debug.Log("아이템 드랍");
             var item_prefab = m_enemy_ctrl.m_drop_item_manager.DropRandomItem(m_enemy_ctrl.m_drop_item_bag);
 
             if (item_prefab)
