@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4375219721627809829}
   - component: {fileID: -5808981557254876847}
   m_Layer: 7
-  m_Name: "\uD5EC\uBA67"
+  m_Name: 100_Basic Helmet
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88544236ebdeca5dba8bcb80c7ff2e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_item: {fileID: 11400000, guid: ca1e796c54ef02d409a149081501cd87, type: 2}
+  m_item: {fileID: 11400000, guid: e370c60a54cc2e43e8df52a17857b14d, type: 2}
   m_indicator_height: 0
 --- !u!54 &-5808981557254876847
 Rigidbody:
@@ -149,5 +149,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0

@@ -16,6 +16,8 @@ namespace Junyoung
 
         private EnemySaveLoadManager m_enemy_save_load_manager;
 
+        private DropItemManager m_drop_item_manager;
+
         private new void Awake()
         {
             base.Awake();
@@ -66,9 +68,11 @@ namespace Junyoung
             if(m_enemy_save_load_manager == null)
             {
                 m_enemy_save_load_manager = GameObject.Find("Enemy Save Load Manager").GetComponent<EnemySaveLoadManager>();
+                m_drop_item_manager = GameObject.Find("DropItemManager").GetComponent<DropItemManager>();
             }
 
             m_enemy_save_load_manager.SaveEnemies();
+            m_drop_item_manager.SaveItems();
 
             Player.ChangeState(PlayerState.IDLE);
         }

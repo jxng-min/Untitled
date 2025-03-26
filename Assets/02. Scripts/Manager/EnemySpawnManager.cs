@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
 
 namespace Junyoung
 {
@@ -51,7 +53,15 @@ namespace Junyoung
             m_enemy_factory = GetComponent<EnemyFactory>();
             m_save_load_manager = GameObject.Find("Eenemy Save Load Manager").GetComponent<EnemySaveLoadManager>();
 
-            LoadEnemies();
+            if (!File.Exists(m_save_load_manager.m_enemy_save_path))
+            {
+                Debug.Log("저장된 적 소환 데이터가 없음");
+            }
+            else
+            {
+                SpawnLoadEnemies();
+            }
+            
         }
 
 
@@ -93,7 +103,7 @@ namespace Junyoung
             }
         }
 
-        public void LoadEnemies()
+        public void SpawnLoadEnemies()
         {
             List<EnemySaveData> data_list = m_save_load_manager.LoadEnemies();
             if (data_list == null) return;
