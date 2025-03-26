@@ -7,12 +7,12 @@ namespace Junyoung
 {
     public class EnemySaveLoadManager : MonoBehaviour
     {
-        private string m_save_path;
+        public string m_enemy_save_path;
         private GameObject m_global_object;
 
         private void Awake()
         {
-            m_save_path = Application.persistentDataPath + "/EnemySaveData.json";
+            m_enemy_save_path = Application.persistentDataPath + "/EnemySaveData.json";
             m_global_object = GameObject.Find("[Global]");
         }
 
@@ -35,19 +35,19 @@ namespace Junyoung
             }
 
             string json = JsonUtility.ToJson(new SWrapper<EnemySaveData>(save_data_list), true);
-            File.WriteAllText(m_save_path, json);
+            File.WriteAllText(m_enemy_save_path, json);
             Debug.Log(json);
         }
 
         public List<EnemySaveData> LoadEnemies()
         {
-            if(!File.Exists(m_save_path))
+            if(!File.Exists(m_enemy_save_path))
             {
                 Debug.Log("저장된 적 데이터가 없음");
                 return null;
             }
 
-            string json = File.ReadAllText(m_save_path);
+            string json = File.ReadAllText(m_enemy_save_path);
             SWrapper<EnemySaveData> swrapper = JsonUtility.FromJson<SWrapper<EnemySaveData>>(json);
             Debug.Log($"적 데이터 로드 완료");
             return swrapper.items;
